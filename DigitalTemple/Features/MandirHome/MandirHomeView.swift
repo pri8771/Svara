@@ -1,14 +1,16 @@
 import SwiftUI
 import SwiftData
 
-/// The mandir — a quiet, living sacred space and the anchor of the whole app.
-/// Not a feed. Shows the presiding devata, the active sankalp, the next sacred
-/// date, a gentle return action, and recent memories. Every other screen is a
-/// push onto this NavigationStack.
+/// The mandir — an altar-first sacred space and the anchor of the whole app.
+/// A persistent altar (header, lamp, mode selector) sits at the top; beneath it
+/// the selected mode swaps between simply being present (Altar), placing an
+/// Offering, leaving a Reflection, or reading the Thread of returns. Not a feed,
+/// not a dashboard, no tab bar — deeper screens are pushes onto this stack.
 struct MandirHomeView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel: MandirHomeViewModel
     @State private var path: [MandirRoute] = []
+    @State private var mode: MandirMode = .altar
 
     init(mandir: DigitalMandir) {
         _viewModel = State(initialValue: MandirHomeViewModel(mandir: mandir))
@@ -17,30 +19,31 @@ struct MandirHomeView: View {
     var body: some View {
         NavigationStack(path: $path) {
             ScrollView {
-                VStack(alignment: .leading, spacing: Theme.Metrics.sectionSpacing) {
-                    MandirHeader(viewModel: viewModel)
-                    ReturnCard { performReturn() }
-                    activeSankalpSection
-                    nextSacredDateSection
-                    memoriesSection
+                VStack(spacing: Theme.Metrics.sectionSpacing) {
+                    AltarHeader(
+                        greeting: viewModel.greeting,
+                        mandirName: viewModel.mandir.name,
+                        devataName: viewModel.presidingDevata?.name,
+                        onSettings: { path.append(.settings) }
+                    )
+
+                    AltarStateView(
+                        isLit: viewModel.isLit,
+                        devataDevanagari: viewModel.presidingDevata?.nameDevanagari,
+                        onLight: lightLamp
+                    )
+
+                    MandirModeSelector(selection: $mode) { viewModel.logMode($0) }
+
+                    surface
+                        .transition(.opacity)
                 }
                 .screenPadding()
                 .padding(.vertical, 20)
             }
             .scrollIndicators(.hidden)
             .sacredScreen()
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        path.append(.settings)
-                    } label: {
-                        Image(systemName: "gearshape")
-                            .foregroundStyle(Theme.Palette.inkSecondary)
-                    }
-                    .accessibilityLabel("Settings")
-                }
-            }
+            .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(for: MandirRoute.self) { route in
                 destination(for: route)
             }
@@ -52,112 +55,51 @@ struct MandirHomeView: View {
         .tint(Theme.Palette.accent)
     }
 
-    // MARK: Sections
+    // MARK: Mode surfaces
 
     @ViewBuilder
-    private var activeSankalpSection: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack {
-                SectionHeader(title: "Your Sankalp", devanagari: "संकल्प")
-                Spacer()
-                Button("New") { path.append(.newSankalp) }
-                    .font(.sacredLabel)
-                    .foregroundStyle(Theme.Palette.accent)
-            }
-
-            if viewModel.activeSankalps.isEmpty {
-                SacredCard {
-                    QuietState(
-                        glyph: "📿",
-                        message: "No sankalp rests here yet.\nName an intention to hold."
-                    )
-                }
-                .onTapGesture { path.append(.newSankalp) }
-            } else {
-                ForEach(viewModel.activeSankalps) { sankalp in
-                    SankalpCard(
-                        sankalp: sankalp,
-                        devata: viewModel.devata(for: sankalp, context: modelContext),
-                        onReflect: { path.append(.reflect(sankalp)) },
-                        onFulfill: { path.append(.fulfillSankalp(sankalp)) }
-                    )
-                    .onTapGesture { viewModel.logSankalpViewed() }
-                }
-            }
+    private var surface: some View {
+        switch mode {
+        case .altar:
+            AltarSurface(
+                heldSankalp: viewModel.heldSankalp,
+                nextSacredDate: viewModel.nextSacredDate,
+                onMakeSankalp: { path.append(.newSankalp) },
+                onReflect: { withAnimation { mode = .reflect } },
+                onOpenSacredTime: { path.append(.sacredTime) }
+            )
+        case .offer:
+            OfferView(
+                mandir: viewModel.mandir,
+                heldSankalp: viewModel.heldSankalp,
+                onCommitted: returnToAltar
+            )
+        case .reflect:
+            ReflectView(
+                mandir: viewModel.mandir,
+                heldSankalp: viewModel.heldSankalp,
+                onCommitted: returnToAltar,
+                onFulfill: { path.append(.fulfillSankalp($0)) },
+                onMakeSankalp: { path.append(.newSankalp) }
+            )
+        case .thread:
+            ThreadView(
+                mandir: viewModel.mandir,
+                onChanged: { viewModel.refresh(context: modelContext) }
+            )
         }
     }
 
-    @ViewBuilder
-    private var nextSacredDateSection: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack {
-                SectionHeader(title: "Sacred Time", devanagari: "पर्व")
-                Spacer()
-                Button("All dates") {
-                    viewModel.logSacredTimeViewed()
-                    path.append(.sacredTime)
-                }
-                .font(.sacredLabel)
-                .foregroundStyle(Theme.Palette.accent)
-            }
+    // MARK: Actions
 
-            if let date = viewModel.nextSacredDate {
-                Button {
-                    viewModel.logSacredTimeViewed()
-                    path.append(.sacredTime)
-                } label: {
-                    NextSacredDateCard(entry: date)
-                }
-                .buttonStyle(.plain)
-            } else {
-                SacredCard { QuietState(glyph: "🗓️", message: "No upcoming dates.") }
-            }
-        }
+    private func lightLamp() {
+        viewModel.lightLamp(context: modelContext)
     }
 
-    @ViewBuilder
-    private var memoriesSection: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack {
-                SectionHeader(title: "Memories", devanagari: "स्मृति")
-                Spacer()
-                Button("Add") { path.append(.newMemory) }
-                    .font(.sacredLabel)
-                    .foregroundStyle(Theme.Palette.accent)
-            }
-
-            if viewModel.recentMemories.isEmpty {
-                SacredCard {
-                    QuietState(
-                        glyph: "🌸",
-                        message: "Memories you preserve will gather here."
-                    )
-                }
-                .onTapGesture { path.append(.newMemory) }
-            } else {
-                VStack(spacing: 12) {
-                    ForEach(viewModel.recentMemories) { memory in
-                        MemoryRow(memory: memory)
-                    }
-                    Button("View all memories") {
-                        viewModel.logMemoriesViewed()
-                        path.append(.memories)
-                    }
-                    .buttonStyle(.sacredQuiet)
-                }
-            }
-        }
-    }
-
-    // MARK: Return action
-
-    private func performReturn() {
-        viewModel.logReturned()
-        if let active = viewModel.activeSankalps.first {
-            path.append(.reflect(active))
-        } else {
-            path.append(.newMemory)
-        }
+    /// After an offering or reflection, refresh and settle back at the altar.
+    private func returnToAltar() {
+        viewModel.refresh(context: modelContext)
+        withAnimation(.easeInOut) { mode = .altar }
     }
 
     // MARK: Destinations
@@ -167,14 +109,8 @@ struct MandirHomeView: View {
         switch route {
         case let .fulfillSankalp(sankalp):
             SankalpFulfillmentView(sankalp: sankalp)
-        case let .reflect(sankalp):
-            ReflectionEntryView(sankalp: sankalp)
         case .newSankalp:
             NewSankalpView(mandir: viewModel.mandir)
-        case .memories:
-            MemoriesView(mandir: viewModel.mandir)
-        case .newMemory:
-            NewMemoryView(mandir: viewModel.mandir)
         case .sacredTime:
             SacredTimeView()
         case .settings:
@@ -182,77 +118,6 @@ struct MandirHomeView: View {
         case .devotionalIdentity:
             DevotionalIdentityEditView(mandir: viewModel.mandir)
         }
-    }
-}
-
-// MARK: - Header
-
-private struct MandirHeader: View {
-    let viewModel: MandirHomeViewModel
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(viewModel.greeting)
-                .font(.sacredCaption)
-                .foregroundStyle(Theme.Palette.inkSecondary)
-
-            Text(viewModel.mandir.name)
-                .font(.mandirTitle)
-                .foregroundStyle(Theme.Palette.ink)
-
-            if let devata = viewModel.presidingDevata {
-                HStack(spacing: 8) {
-                    Text(devata.nameDevanagari)
-                        .font(.devanagari)
-                        .foregroundStyle(Theme.Palette.gold)
-                    Text("· \(devata.name) presides")
-                        .font(.sacredLabel)
-                        .foregroundStyle(Theme.Palette.inkSecondary)
-                }
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
-// MARK: - Return card
-
-private struct ReturnCard: View {
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 14) {
-                Text("🪔")
-                    .font(.system(size: 30))
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Return to your mandir")
-                        .font(.sacredHeadline)
-                        .foregroundStyle(Theme.Palette.ink)
-                    Text("Sit a moment. Light a lamp within.")
-                        .font(.sacredLabel)
-                        .foregroundStyle(Theme.Palette.inkSecondary)
-                }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(.footnote)
-                    .foregroundStyle(Theme.Palette.gold)
-            }
-            .padding(Theme.Metrics.cardPadding)
-            .frame(maxWidth: .infinity)
-            .background(
-                LinearGradient(
-                    colors: [Theme.Palette.surface, Theme.Palette.gold.opacity(0.18)],
-                    startPoint: .leading, endPoint: .trailing
-                )
-            )
-            .clipShape(RoundedRectangle(cornerRadius: Theme.Metrics.cornerRadius, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: Theme.Metrics.cornerRadius, style: .continuous)
-                    .stroke(Theme.Palette.gold.opacity(0.4), lineWidth: 1)
-            )
-        }
-        .buttonStyle(.plain)
     }
 }
 
@@ -264,6 +129,7 @@ private struct MandirHomePreview: View {
         container = try! ModelContainer(
             for: DigitalMandir.self, DevotionalIdentity.self, Devata.self,
             Sankalp.self, Reflection.self, Memory.self, SacredDateEntry.self,
+            MandirReturn.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         mandir = DigitalMandir(name: "Aai's Corner")

@@ -2,10 +2,10 @@ import Foundation
 import SwiftData
 import Observation
 
-/// Drives the mandir home — the anchor of the app. Loads the presiding devata,
-/// active sankalps, the next sacred date, and recent memories from the store,
-/// and refreshes whenever the person returns to the home (e.g. after fulfilling
-/// a sankalp or saving a memory in a pushed screen).
+/// Drives the altar-first mandir home. Loads the presiding devata, the held
+/// sankalp, today's lamp state, and the next sacred date, and records the act
+/// of lighting the lamp (a return). Refreshes whenever the person comes back to
+/// the altar after a ritual surface or a pushed screen.
 @MainActor
 @Observable
 final class MandirHomeViewModel {
@@ -14,9 +14,8 @@ final class MandirHomeViewModel {
     private(set) var presidingDevata: Devata?
     private(set) var identity: DevotionalIdentity?
     private(set) var activeSankalps: [Sankalp] = []
-    private(set) var preservedSankalps: [Sankalp] = []
+    private(set) var isLit: Bool = false
     private(set) var nextSacredDate: SacredDateEntry?
-    private(set) var recentMemories: [Memory] = []
 
     private let analytics: AnalyticsService
 
@@ -25,24 +24,31 @@ final class MandirHomeViewModel {
         self.analytics = analytics
     }
 
-    /// (Re)load everything shown on the home from the store.
+    /// The single intention held before the altar (the most recent active vow).
+    var heldSankalp: Sankalp? { activeSankalps.first }
+
+    /// (Re)load everything the altar depends on.
     func refresh(context: ModelContext) {
         let mandirRepo = MandirRepository(context: context)
         let timeRepo = SacredTimeRepository(context: context)
 
         presidingDevata = mandirRepo.devata(id: mandir.primaryDevataId)
         identity = mandirRepo.identity(for: mandir.id)
-
-        let all = mandirRepo.sankalps(for: mandir.id)
-        activeSankalps = all.filter { $0.status == .active }
-        preservedSankalps = all.filter { $0.status == .fulfilled || $0.status == .preserved }
-
+        activeSankalps = mandirRepo.activeSankalps(for: mandir.id)
+        isLit = mandirRepo.hasReturnedToday(mandirId: mandir.id)
         nextSacredDate = timeRepo.next()
-        recentMemories = Array(mandirRepo.memories(for: mandir.id).prefix(3))
     }
 
-    func devata(for sankalp: Sankalp, context: ModelContext) -> Devata? {
-        MandirRepository(context: context).devata(id: sankalp.devataId)
+    func devata(id: UUID?, context: ModelContext) -> Devata? {
+        MandirRepository(context: context).devata(id: id)
+    }
+
+    /// Light the lamp: record a return (presence before the altar).
+    func lightLamp(context: ModelContext) {
+        let repo = MandirRepository(context: context)
+        repo.recordReturn(mandirId: mandir.id, sankalpId: heldSankalp?.id)
+        isLit = true
+        analytics.log(.altarLit)
     }
 
     /// A warm, time-of-day greeting using the person's chosen name if given.
@@ -60,8 +66,5 @@ final class MandirHomeViewModel {
     }
 
     func logOpened() { analytics.log(.mandirOpened) }
-    func logReturned() { analytics.log(.mandirReturned) }
-    func logMemoriesViewed() { analytics.log(.memoriesViewed) }
-    func logSacredTimeViewed() { analytics.log(.sacredTimeViewed) }
-    func logSankalpViewed() { analytics.log(.sankalpViewed) }
+    func logMode(_ mode: MandirMode) { analytics.log(.mandirModeSelected(mode: mode.rawValue)) }
 }

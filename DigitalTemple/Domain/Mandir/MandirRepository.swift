@@ -171,6 +171,47 @@ struct MandirRepository {
         return memory
     }
 
+    // MARK: Returns (the Thread)
+
+    func returns(for mandirId: UUID) -> [MandirReturn] {
+        let predicate = #Predicate<MandirReturn> { $0.mandirId == mandirId }
+        let descriptor = FetchDescriptor(
+            predicate: predicate,
+            sortBy: [SortDescriptor(\MandirReturn.date, order: .reverse)]
+        )
+        return (try? context.fetch(descriptor)) ?? []
+    }
+
+    /// Whether the lamp has already been lit (any return recorded) today.
+    func hasReturnedToday(mandirId: UUID) -> Bool {
+        let startOfDay = Calendar.current.startOfDay(for: Date())
+        let predicate = #Predicate<MandirReturn> {
+            $0.mandirId == mandirId && $0.date >= startOfDay
+        }
+        let count = (try? context.fetchCount(FetchDescriptor(predicate: predicate))) ?? 0
+        return count > 0
+    }
+
+    @discardableResult
+    func recordReturn(
+        mandirId: UUID,
+        sankalpId: UUID? = nil,
+        offeringKind: OfferingKind? = nil,
+        reflectionId: UUID? = nil,
+        note: String? = nil
+    ) -> MandirReturn {
+        let entry = MandirReturn(
+            mandirId: mandirId,
+            sankalpId: sankalpId,
+            offeringKind: offeringKind,
+            reflectionId: reflectionId,
+            note: note
+        )
+        context.insert(entry)
+        save()
+        return entry
+    }
+
     // MARK: Persistence
 
     func save() {

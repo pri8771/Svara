@@ -26,7 +26,7 @@ struct NextSacredDateCard: View {
                         if let dev = entry.nameDevanagari {
                             Text(dev)
                                 .font(.sacredCaption)
-                                .foregroundStyle(Theme.Palette.gold)
+                                .foregroundStyle(Theme.Palette.brass)
                         }
                     }
                     Text(entry.nextOccurrence.sacredRelativePhrase)
@@ -36,7 +36,7 @@ struct NextSacredDateCard: View {
                 Spacer(minLength: 0)
                 Image(systemName: "chevron.right")
                     .font(.footnote)
-                    .foregroundStyle(Theme.Palette.gold)
+                    .foregroundStyle(Theme.Palette.brass)
             }
         }
     }
@@ -56,7 +56,7 @@ struct SacredDateRow: View {
                     if let dev = entry.nameDevanagari {
                         Text(dev)
                             .font(.sacredCaption)
-                            .foregroundStyle(Theme.Palette.gold)
+                            .foregroundStyle(Theme.Palette.brass)
                     }
                     Spacer()
                     Text(entry.nextOccurrence.sacredShortString)
@@ -76,7 +76,7 @@ struct SacredDateRow: View {
                     if let devata = entry.devataAssociation {
                         Text("· \(devata)")
                             .font(.sacredLabel)
-                            .foregroundStyle(Theme.Palette.gold)
+                            .foregroundStyle(Theme.Palette.brass)
                     }
                 }
             }

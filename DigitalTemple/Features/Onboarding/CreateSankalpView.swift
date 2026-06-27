@@ -106,7 +106,7 @@ struct IntentionChip: View {
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 9)
-            .foregroundStyle(isSelected ? .white : Theme.Palette.ink)
+            .foregroundStyle(isSelected ? Theme.Palette.background : Theme.Palette.ink)
             .background(isSelected ? Theme.Palette.accent : Theme.Palette.surface)
             .clipShape(Capsule())
             .overlay(

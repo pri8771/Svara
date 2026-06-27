@@ -37,7 +37,7 @@ struct NewMemoryView: View {
                                         }
                                         .padding(.horizontal, 14)
                                         .padding(.vertical, 9)
-                                        .foregroundStyle(t == type ? .white : Theme.Palette.ink)
+                                        .foregroundStyle(t == type ? Theme.Palette.background : Theme.Palette.ink)
                                         .background(t == type ? Theme.Palette.accent : Theme.Palette.surface)
                                         .clipShape(Capsule())
                                         .overlay(Capsule().stroke(t == type ? .clear : Theme.Palette.hairline, lineWidth: 1))

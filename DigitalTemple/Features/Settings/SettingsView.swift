@@ -31,7 +31,7 @@ struct SettingsView: View {
                                 Spacer()
                                 Image(systemName: "chevron.right")
                                     .font(.footnote)
-                                    .foregroundStyle(Theme.Palette.gold)
+                                    .foregroundStyle(Theme.Palette.brass)
                             }
                         }
                     }
@@ -66,7 +66,7 @@ struct SettingsView: View {
                                 .foregroundStyle(Theme.Palette.inkSecondary)
                             Text("Version \(appVersion)")
                                 .font(.sacredLabel)
-                                .foregroundStyle(Theme.Palette.gold)
+                                .foregroundStyle(Theme.Palette.brass)
                         }
                     }
                 }

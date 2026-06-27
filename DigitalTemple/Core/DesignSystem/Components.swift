@@ -2,17 +2,17 @@ import SwiftUI
 
 // MARK: - Background
 
-/// The quiet ground of every screen: warm paper with a faint lamplight glow
-/// rising from the base, evoking a diya in a still room.
+/// The dim room around the altar: warm near-black with a low marigold glow
+/// rising from the base, like lamplight pooling on the floor.
 struct ScreenBackground: View {
     var body: some View {
         ZStack {
             Theme.Palette.background.ignoresSafeArea()
             RadialGradient(
-                colors: [Theme.Palette.gold.opacity(0.16), .clear],
+                colors: [Theme.Palette.flame.opacity(0.12), .clear],
                 center: .bottom,
                 startRadius: 0,
-                endRadius: 460
+                endRadius: 480
             )
             .ignoresSafeArea()
         }
@@ -21,7 +21,7 @@ struct ScreenBackground: View {
 
 // MARK: - Card
 
-/// A raised surface for a single sacred object (a sankalp, a memory, a date).
+/// A raised dark surface for a single sacred object.
 struct SacredCard<Content: View>: View {
     var content: Content
 
@@ -33,31 +33,31 @@ struct SacredCard<Content: View>: View {
         content
             .padding(Theme.Metrics.cardPadding)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Theme.Palette.surface)
+            .background(Theme.Palette.surfaceRaised)
             .clipShape(RoundedRectangle(cornerRadius: Theme.Metrics.cornerRadius, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: Theme.Metrics.cornerRadius, style: .continuous)
                     .stroke(Theme.Palette.hairline, lineWidth: 1)
             )
-            .shadow(color: Theme.Palette.ink.opacity(0.05), radius: 10, x: 0, y: 4)
+            .shadow(color: .black.opacity(0.35), radius: 12, x: 0, y: 6)
     }
 }
 
 // MARK: - Buttons
 
-/// The weighty, devotional primary action.
+/// The weighty, devotional primary action — marigold with dark ink for contrast.
 struct SacredButtonStyle: ButtonStyle {
     var prominent: Bool = true
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.sacredHeadline)
-            .foregroundStyle(prominent ? Color.white : Theme.Palette.ink)
+            .foregroundStyle(prominent ? Theme.Palette.background : Theme.Palette.ink)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 15)
             .background(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(prominent ? Theme.Palette.accent : Theme.Palette.surface)
+                    .fill(prominent ? Theme.Palette.marigold : Theme.Palette.surfaceRaised)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
@@ -76,7 +76,7 @@ extension ButtonStyle where Self == SacredButtonStyle {
 
 // MARK: - Section header
 
-/// A small, calm label that opens a section of the home screen.
+/// A small, calm label that opens a section.
 struct SectionHeader: View {
     let title: String
     var devanagari: String? = nil
@@ -91,7 +91,7 @@ struct SectionHeader: View {
             if let devanagari {
                 Text(devanagari)
                     .font(.sacredCaption)
-                    .foregroundStyle(Theme.Palette.gold)
+                    .foregroundStyle(Theme.Palette.brass)
             }
             Spacer()
         }
@@ -109,7 +109,7 @@ struct QuietState: View {
         VStack(spacing: 12) {
             Text(glyph)
                 .font(.system(size: 34))
-                .opacity(0.7)
+                .opacity(0.8)
             Text(message)
                 .font(.sacredCaption)
                 .foregroundStyle(Theme.Palette.inkSecondary)

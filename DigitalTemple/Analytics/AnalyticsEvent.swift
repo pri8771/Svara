@@ -17,7 +17,14 @@ enum AnalyticsEvent {
 
     // Mandir
     case mandirOpened
-    case mandirReturned                       // the "return" action on home
+    case altarLit                             // the lamp lit via the hold-wick return
+    case mandirModeSelected(mode: String)     // altar / offer / reflect / thread
+
+    // Offerings
+    case offeringMade(kind: String)
+
+    // Thread
+    case threadViewed
 
     // Sankalp
     case sankalpCreated(type: String)
@@ -45,7 +52,10 @@ enum AnalyticsEvent {
         case .devatasChosen: return "devatas_chosen"
         case .onboardingCompleted: return "onboarding_completed"
         case .mandirOpened: return "mandir_opened"
-        case .mandirReturned: return "mandir_returned"
+        case .altarLit: return "altar_lit"
+        case .mandirModeSelected: return "mandir_mode_selected"
+        case .offeringMade: return "offering_made"
+        case .threadViewed: return "thread_viewed"
         case .sankalpCreated: return "sankalp_created"
         case .sankalpFulfilled: return "sankalp_fulfilled"
         case .sankalpViewed: return "sankalp_viewed"
@@ -69,6 +79,10 @@ enum AnalyticsEvent {
             return ["intention_type": type]
         case let .reflectionAdded(mood):
             return ["mood": mood]
+        case let .mandirModeSelected(mode):
+            return ["mode": mode]
+        case let .offeringMade(kind):
+            return ["offering_kind": kind]
         case let .memorySaved(type):
             return ["memory_type": type]
         default:

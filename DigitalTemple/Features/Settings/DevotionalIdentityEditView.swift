@@ -57,7 +57,7 @@ struct DevotionalIdentityEditView: View {
                                     HStack {
                                         Text(d.nameDevanagari)
                                             .font(.devanagari)
-                                            .foregroundStyle(Theme.Palette.gold)
+                                            .foregroundStyle(Theme.Palette.brass)
                                         Text(d.name)
                                             .font(.sacredHeadline)
                                             .foregroundStyle(Theme.Palette.ink)

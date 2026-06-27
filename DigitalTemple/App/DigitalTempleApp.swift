@@ -19,7 +19,8 @@ struct DigitalTempleApp: App {
                 Sankalp.self,
                 Reflection.self,
                 Memory.self,
-                SacredDateEntry.self
+                SacredDateEntry.self,
+                MandirReturn.self
             )
         } catch {
             fatalError("Could not create the local mandir store: \(error)")

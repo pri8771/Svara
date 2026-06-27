@@ -59,7 +59,7 @@ private struct DevataTile: View {
                 HStack {
                     Text(devata.nameDevanagari)
                         .font(.devanagari)
-                        .foregroundStyle(Theme.Palette.gold)
+                        .foregroundStyle(Theme.Palette.brass)
                     Spacer()
                     Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                         .foregroundStyle(isSelected ? Theme.Palette.accent : Theme.Palette.hairline)

@@ -95,7 +95,7 @@ struct NewSankalpView: View {
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 9)
-            .foregroundStyle(selected ? .white : Theme.Palette.ink)
+            .foregroundStyle(selected ? Theme.Palette.background : Theme.Palette.ink)
             .background(selected ? Theme.Palette.accent : Theme.Palette.surface)
             .clipShape(Capsule())
             .overlay(Capsule().stroke(selected ? .clear : Theme.Palette.hairline, lineWidth: 1))

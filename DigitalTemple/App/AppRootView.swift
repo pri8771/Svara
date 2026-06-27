@@ -31,6 +31,7 @@ struct AppRootView: View {
     AppRootView()
         .modelContainer(for: [
             DigitalMandir.self, DevotionalIdentity.self, Devata.self,
-            Sankalp.self, Reflection.self, Memory.self, SacredDateEntry.self
+            Sankalp.self, Reflection.self, Memory.self, SacredDateEntry.self,
+            MandirReturn.self
         ], inMemory: true)
 }
