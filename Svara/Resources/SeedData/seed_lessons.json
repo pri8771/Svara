@@ -1,0 +1,157 @@
+[
+  {
+    "id": "lesson.ganesha.intro",
+    "title": "Om Gam Ganapataye",
+    "subtitle": "Your very first mantra",
+    "theme": "courage",
+    "level": 1,
+    "xp": 20,
+    "mantraID": "mantra.ganesha",
+    "isPremium": false,
+    "steps": [
+      {
+        "id": "l1.s1",
+        "kind": "intro",
+        "prompt": "Meet Ganesha",
+        "detail": "Ganesha, the elephant-headed deity, is known as the remover of obstacles. His mantra is often chanted before anything new.",
+        "options": []
+      },
+      {
+        "id": "l1.s2",
+        "kind": "listen",
+        "prompt": "Om Gam Ganapataye Namaha",
+        "detail": "Chant it slowly three times. Feel the 'Gam' resonate.",
+        "options": []
+      },
+      {
+        "id": "l1.s3",
+        "kind": "meaning",
+        "prompt": "What it means",
+        "detail": "“Salutations to Ganesha, remover of obstacles.” It clears the path before you begin.",
+        "options": []
+      },
+      {
+        "id": "l1.s4",
+        "kind": "multipleChoice",
+        "prompt": "Ganesha is known as the remover of…",
+        "options": ["Obstacles", "Rivers", "Mountains", "Stars"],
+        "correctIndex": 0
+      },
+      {
+        "id": "l1.s5",
+        "kind": "fillBlank",
+        "prompt": "Om Gam Ganapataye ______",
+        "detail": "Complete the mantra.",
+        "options": ["Namaha", "Svaha", "Shanti", "Aim"],
+        "correctIndex": 0
+      }
+    ]
+  },
+  {
+    "id": "lesson.gayatri.basics",
+    "title": "The Gayatri Mantra",
+    "subtitle": "A prayer for a clear mind",
+    "theme": "wisdom",
+    "level": 2,
+    "xp": 25,
+    "mantraID": "mantra.gayatri",
+    "isPremium": false,
+    "steps": [
+      {
+        "id": "l2.s1",
+        "kind": "intro",
+        "prompt": "The dawn prayer",
+        "detail": "The Gayatri Mantra is among the oldest, traditionally chanted at sunrise.",
+        "options": []
+      },
+      {
+        "id": "l2.s2",
+        "kind": "listen",
+        "prompt": "Om bhur bhuvah svah…",
+        "detail": "Listen to the rhythm. Don't worry about perfect pronunciation.",
+        "options": []
+      },
+      {
+        "id": "l2.s3",
+        "kind": "meaning",
+        "prompt": "What we ask for",
+        "detail": "Not wealth or success — but a brighter, clearer mind. It is a prayer for wisdom itself.",
+        "options": []
+      },
+      {
+        "id": "l2.s4",
+        "kind": "multipleChoice",
+        "prompt": "The Gayatri Mantra is a prayer for…",
+        "options": ["A clear mind", "Rain", "Victory in battle", "Long hair"],
+        "correctIndex": 0
+      }
+    ]
+  },
+  {
+    "id": "lesson.saraswati.focus",
+    "title": "Saraswati & Focus",
+    "subtitle": "The student's mantra",
+    "theme": "knowledge",
+    "level": 3,
+    "xp": 25,
+    "mantraID": "mantra.saraswati",
+    "isPremium": false,
+    "steps": [
+      {
+        "id": "l3.s1",
+        "kind": "intro",
+        "prompt": "Goddess of learning",
+        "detail": "Saraswati holds a veena and a book — music and knowledge flowing together.",
+        "options": []
+      },
+      {
+        "id": "l3.s2",
+        "kind": "listen",
+        "prompt": "Om Aim Saraswatyai Namaha",
+        "detail": "The seed sound 'Aim' is associated with speech and learning.",
+        "options": []
+      },
+      {
+        "id": "l3.s3",
+        "kind": "multipleChoice",
+        "prompt": "Saraswati is the goddess of…",
+        "options": ["Knowledge & arts", "War", "The sea", "Fire"],
+        "correctIndex": 0
+      }
+    ]
+  },
+  {
+    "id": "lesson.shanti.peace",
+    "title": "A Prayer for All",
+    "subtitle": "The Shanti Mantra",
+    "theme": "compassion",
+    "level": 4,
+    "xp": 30,
+    "mantraID": "mantra.shanti",
+    "isPremium": true,
+    "steps": [
+      {
+        "id": "l4.s1",
+        "kind": "intro",
+        "prompt": "Goodwill for everyone",
+        "detail": "The Shanti Mantra wishes happiness and freedom from suffering for all beings.",
+        "options": []
+      },
+      {
+        "id": "l4.s2",
+        "kind": "listen",
+        "prompt": "Sarve bhavantu sukhinah…",
+        "detail": "Chant it slowly, picturing the circle of care widening outward.",
+        "options": []
+      },
+      {
+        "id": "l4.s3",
+        "kind": "fillBlank",
+        "prompt": "Sarve bhavantu ______ (happy)",
+        "detail": "Complete the line.",
+        "options": ["Sukhinah", "Niramayah", "Bhadrani", "Shanti"],
+        "correctIndex": 0
+      }
+    ]
+  }
+]

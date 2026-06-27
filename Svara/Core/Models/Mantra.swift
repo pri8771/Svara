@@ -21,6 +21,12 @@ struct Mantra: Identifiable, Codable, Hashable {
     /// Optional bundled audio file name (without extension).
     let audioFileName: String?
 
+    // Provenance (optional; see ContentProvenanceCarrying).
+    let sourceName: String?
+    let sourceNote: String?
+    let traditionNote: String?
+    let reviewStatus: ContentReviewStatus?
+
     init(
         id: String,
         title: String,
@@ -32,7 +38,11 @@ struct Mantra: Identifiable, Codable, Hashable {
         theme: SpiritualTheme,
         repetitions: Int = 11,
         durationMinutes: Int = 3,
-        audioFileName: String? = nil
+        audioFileName: String? = nil,
+        sourceName: String? = nil,
+        sourceNote: String? = nil,
+        traditionNote: String? = nil,
+        reviewStatus: ContentReviewStatus? = nil
     ) {
         self.id = id
         self.title = title
@@ -45,5 +55,11 @@ struct Mantra: Identifiable, Codable, Hashable {
         self.repetitions = repetitions
         self.durationMinutes = durationMinutes
         self.audioFileName = audioFileName
+        self.sourceName = sourceName
+        self.sourceNote = sourceNote
+        self.traditionNote = traditionNote
+        self.reviewStatus = reviewStatus
     }
 }
+
+extension Mantra: ContentProvenanceCarrying {}

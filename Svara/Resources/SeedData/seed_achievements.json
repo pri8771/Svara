@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ach.firstStep",
+    "title": "First Step",
+    "detail": "Complete your first practice.",
+    "systemImage": "figure.walk",
+    "requirement": { "type": "totalPractices", "value": 1 },
+    "bonusPoints": 25
+  },
+  {
+    "id": "ach.streak3",
+    "title": "Finding Rhythm",
+    "detail": "Reach a 3-day streak.",
+    "systemImage": "flame.fill",
+    "requirement": { "type": "streakDays", "value": 3 },
+    "bonusPoints": 50
+  },
+  {
+    "id": "ach.streak7",
+    "title": "One Week Strong",
+    "detail": "Reach a 7-day streak.",
+    "systemImage": "flame.circle.fill",
+    "requirement": { "type": "streakDays", "value": 7 },
+    "bonusPoints": 100
+  },
+  {
+    "id": "ach.streak30",
+    "title": "Devoted",
+    "detail": "Reach a 30-day streak.",
+    "systemImage": "crown.fill",
+    "requirement": { "type": "streakDays", "value": 30 },
+    "bonusPoints": 300
+  },
+  {
+    "id": "ach.practices10",
+    "title": "Steady Practice",
+    "detail": "Complete 10 practices.",
+    "systemImage": "leaf.fill",
+    "requirement": { "type": "totalPractices", "value": 10 },
+    "bonusPoints": 75
+  },
+  {
+    "id": "ach.practices50",
+    "title": "Inner Discipline",
+    "detail": "Complete 50 practices.",
+    "systemImage": "figure.mind.and.body",
+    "requirement": { "type": "totalPractices", "value": 50 },
+    "bonusPoints": 200
+  },
+  {
+    "id": "ach.firstLesson",
+    "title": "Eager Learner",
+    "detail": "Finish your first lesson.",
+    "systemImage": "graduationcap.fill",
+    "requirement": { "type": "lessonsCompleted", "value": 1 },
+    "bonusPoints": 30
+  },
+  {
+    "id": "ach.lessons5",
+    "title": "Scholar",
+    "detail": "Finish 5 lessons.",
+    "systemImage": "books.vertical.fill",
+    "requirement": { "type": "lessonsCompleted", "value": 5 },
+    "bonusPoints": 120
+  },
+  {
+    "id": "ach.points500",
+    "title": "Five Hundred",
+    "detail": "Earn 500 Svara Points.",
+    "systemImage": "sparkles",
+    "requirement": { "type": "totalPoints", "value": 500 },
+    "bonusPoints": 0
+  },
+  {
+    "id": "ach.festival",
+    "title": "In the Spirit",
+    "detail": "Observe your first festival.",
+    "systemImage": "party.popper.fill",
+    "requirement": { "type": "festivalsObserved", "value": 1 },
+    "bonusPoints": 50
+  }
+]

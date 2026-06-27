@@ -1,0 +1,142 @@
+[
+  {
+    "id": "festival.gurupurnima",
+    "name": "Guru Purnima",
+    "date": "2026-07-29",
+    "tagline": "Honouring the teachers who light the way",
+    "significance": "A day to thank the mentors, guides and teachers — formal or not — who have shaped who you are.",
+    "story": "Guru Purnima falls on the full-moon day honouring Sage Vyasa, who is traditionally credited with compiling the Vedas. The word 'guru' is often explained as 'one who dispels darkness'. The day reminds us that knowledge passed on with care is itself precious.",
+    "activities": [
+      "Message a teacher or mentor to say thank you.",
+      "Write down one lesson someone taught you that you still live by.",
+      "Spend ten minutes learning something with full attention."
+    ],
+    "theme": "knowledge",
+    "systemImage": "moon.circle.fill",
+    "traditionNote": "Customs and emphasis vary by region, lineage and family.",
+    "reviewStatus": "humanReviewed"
+  },
+  {
+    "id": "festival.rakshabandhan",
+    "name": "Raksha Bandhan",
+    "date": "2026-08-28",
+    "tagline": "The thread that ties us together",
+    "significance": "A celebration of the bond between siblings — and of care, loyalty and looking out for one another.",
+    "story": "Sisters tie a 'rakhi', a sacred thread, around their brothers' wrists, and brothers promise to look after them. Over time the festival has grown to celebrate every relationship built on protection and love, well beyond blood ties.",
+    "activities": [
+      "Reach out to a sibling or a friend who feels like family.",
+      "Tie or send a rakhi — even a digital one counts.",
+      "Recall a time someone had your back, and thank them."
+    ],
+    "theme": "protection",
+    "systemImage": "link.circle.fill",
+    "traditionNote": "Observance differs across regions and families.",
+    "reviewStatus": "humanReviewed"
+  },
+  {
+    "id": "festival.janmashtami",
+    "name": "Krishna Janmashtami",
+    "date": "2026-09-04",
+    "deity": "Krishna",
+    "tagline": "The midnight birth of joy and mischief",
+    "significance": "Celebrating the birth of Krishna — playful, wise, and a reminder to act with love and courage even in difficult times.",
+    "story": "Krishna was born at midnight in a prison cell, and his father is said to have carried him across a flooding river to safety. From butter-stealing child to the charioteer of the Bhagavad Gita, his life suggests that joy and duty can live side by side.",
+    "activities": [
+      "Read one verse from the Bhagavad Gita.",
+      "Do something playful and unselfconscious today.",
+      "Reflect: where can you act with courage and lightness?"
+    ],
+    "theme": "devotion",
+    "systemImage": "flame.circle.fill",
+    "traditionNote": "Dates and customs vary by region and calendar.",
+    "reviewStatus": "humanReviewed"
+  },
+  {
+    "id": "festival.ganeshchaturthi",
+    "name": "Ganesh Chaturthi",
+    "date": "2026-09-14",
+    "deity": "Ganesha",
+    "tagline": "Welcoming the remover of obstacles",
+    "significance": "A joyful start-of-things festival — good for setting intentions and clearing what stands in your way.",
+    "story": "For several days, homes and streets welcome Ganesha, then lovingly return his clay form to the water — a reminder that beginnings and endings are part of one cycle, and nothing worth doing needs to be permanent or perfect.",
+    "activities": [
+      "Name one obstacle you want to move past this month.",
+      "Chant 'Om Gam Ganapataye Namaha' eleven times.",
+      "Begin one small thing you've been putting off."
+    ],
+    "theme": "courage",
+    "systemImage": "sparkles",
+    "traditionNote": "The length and form of celebration vary widely by region.",
+    "reviewStatus": "humanReviewed"
+  },
+  {
+    "id": "festival.navaratri",
+    "name": "Navaratri",
+    "date": "2026-10-11",
+    "deity": "Durga",
+    "tagline": "Nine nights of inner strength",
+    "significance": "Nine nights honouring the divine feminine and the strength to face what feels bigger than us.",
+    "story": "Navaratri celebrates Durga's victory over a seemingly invincible foe — a story often read as the inner strength to meet our own fears. Across India it takes many forms: garba and dandiya in the west, Golu displays in the south, Durga Puja in the east.",
+    "activities": [
+      "Name one fear you'd like to meet with courage this week.",
+      "Move your body — dance, walk, stretch — for a few minutes.",
+      "Notice a moment you were stronger than you expected."
+    ],
+    "theme": "courage",
+    "systemImage": "moon.stars.fill",
+    "traditionNote": "Navaratri is observed very differently across regions and communities.",
+    "reviewStatus": "humanReviewed"
+  },
+  {
+    "id": "festival.diwali",
+    "name": "Diwali",
+    "date": "2026-11-08",
+    "deity": "Lakshmi",
+    "tagline": "The festival of lights",
+    "significance": "The triumph of light over darkness and knowledge over ignorance — a time for renewal, gratitude and fresh starts.",
+    "story": "Diwali is associated with Rama's return to Ayodhya after fourteen years, his path lit by rows of lamps. In many regions it also honours Lakshmi. Lighting a lamp is a quiet vow to keep an inner light burning.",
+    "activities": [
+      "Light a diya or candle and set an intention.",
+      "Clear and tidy one small space for a fresh start.",
+      "Share food or time with someone you care about."
+    ],
+    "theme": "prosperity",
+    "systemImage": "lightbulb.circle.fill",
+    "traditionNote": "The legends and rituals of Diwali vary by region and family.",
+    "reviewStatus": "humanReviewed"
+  },
+  {
+    "id": "festival.makarsankranti",
+    "name": "Makar Sankranti & Pongal",
+    "date": "2027-01-14",
+    "tagline": "A harvest of gratitude",
+    "significance": "Marking the sun's turn toward longer days — a harvest festival of thanks and new energy.",
+    "story": "Celebrated as Makar Sankranti, Pongal, Lohri, Bihu and more, this is one of the few festivals tied to the solar calendar. Kites, sesame sweets, and the first harvest all mark a turn toward warmth and light.",
+    "activities": [
+      "Name three things from the past season you're grateful for.",
+      "Eat something seasonal and local today.",
+      "Step outside and notice the sun a little longer than usual."
+    ],
+    "theme": "prosperity",
+    "systemImage": "sun.max.fill",
+    "traditionNote": "Known by many names and customs across regions; Pongal spans several days in the south.",
+    "reviewStatus": "humanReviewed"
+  },
+  {
+    "id": "festival.holi",
+    "name": "Holi",
+    "date": "2027-03-03",
+    "tagline": "Colour, renewal and letting go",
+    "significance": "The festival of colours: a joyful reset, a chance to repair bonds and start fresh.",
+    "story": "Holi welcomes spring and is linked to the story of Prahlada and the burning away of arrogance. Playing with colour dissolves the usual distances between people — for a day, everyone meets as equals.",
+    "activities": [
+      "Make peace with someone over a small grudge.",
+      "Add a splash of colour to your day, however small.",
+      "Let go of one thing that's been weighing on you."
+    ],
+    "theme": "compassion",
+    "systemImage": "paintpalette.fill",
+    "traditionNote": "Holi's stories and play vary considerably by region.",
+    "reviewStatus": "humanReviewed"
+  }
+]

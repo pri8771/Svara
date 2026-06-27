@@ -113,8 +113,40 @@ under `Svara/` are picked up automatically — no `.pbxproj` surgery needed.
 
 ---
 
+## Content & guardrails (Phase 2A)
+
+- **`ProductGuardrails.md`** (repo root) is the binding source of truth for what
+  Svara is and is not (anti-Primandir constraints, tone, gamification ethics,
+  content sensitivity). Read it before adding features or content.
+- **Seed content loads from JSON** in `Svara/Resources/SeedData/`
+  (`seed_mantras`, `seed_lessons`, `seed_festivals`, `seed_stories`,
+  `seed_shlokas`, `seed_achievements`) via `SeedContentProvider`, with the
+  in-code `SeedContent` arrays as an offline fallback.
+- **`ContentValidation`** checks required fields, lesson ordering, parseable
+  festival dates, present premium flags, and forbidden Primandir-style terms in
+  user-facing labels.
+- **Shared content models** added: `ShlokaOfDay` (widget-ready display text +
+  deep links), `LessonProgress`, `DailyCheckIn`. All carry optional provenance
+  (`sourceName`, `sourceNote`, `traditionNote`, `reviewStatus`) and are
+  documented for later Firebase mapping. Private reflection text in
+  `DailyCheckIn` is **local-only** (never synced in Phase 2A).
+
+## Testing
+
+Unit tests live in `SvaraTests/` (a hosted test target — `Bundle.main` is the
+app bundle, so bundled seed JSON is reachable):
+
+- `SeedDecodingTests` — JSON decoding + Codable round-trips for every model
+- `ContentValidationTests` — required fields, targets, premium-flag presence
+- `LessonOrderingTests` — valid, unique lesson ordering
+- `ShlokaSelectorTests` — deterministic shloka-of-day selection + deep-link parsing
+- `ForbiddenTermsTests` — forbidden-term detection and a bell-free symbol system
+
+Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platform=iOS Simulator,name=iPhone 15'`.
+
 ## Roadmap
 
 - Phase 1 ✅ — foundation: navigation, models, design system, services, seed content
+- Phase 2A ✅ — product guardrails, JSON seed content, validation, shared models, tests
 - Phase 2 — Firebase wiring, real audio for mantras, content authoring
 - Phase 3 — personalised daily plan, richer streaks, widgets & Live Activities

@@ -1,0 +1,103 @@
+[
+  {
+    "id": "shloka.gita.2.47",
+    "sanskritText": "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।",
+    "transliteration": "karmanye vadhikaraste ma phaleshu kadachana",
+    "translation": "You have a right to your actions, but never to the fruits of your actions.",
+    "meaning": "One common reading: give your best to the work itself and loosen your grip on outcomes. A gentle antidote to anxiety about results.",
+    "theme": "discipline",
+    "sourceName": "Bhagavad Gita 2.47",
+    "traditionNote": "Translations vary; this is one widely-shared rendering.",
+    "reviewStatus": "sourced",
+    "deepLinkTarget": "today"
+  },
+  {
+    "id": "shloka.asato.ma",
+    "sanskritText": "असतो मा सद्गमय ।",
+    "transliteration": "asato ma sadgamaya",
+    "translation": "Lead me from the unreal to the real.",
+    "meaning": "A prayer for clarity — to move from confusion toward truth, from darkness toward light.",
+    "theme": "wisdom",
+    "sourceName": "Brihadaranyaka Upanishad 1.3.28",
+    "reviewStatus": "sourced",
+    "deepLinkTarget": "stories"
+  },
+  {
+    "id": "shloka.saha.navavatu",
+    "sanskritText": "सह नाववतु ।",
+    "transliteration": "saha navavatu",
+    "translation": "May we be protected together.",
+    "meaning": "One way to understand this: learning and growth are shared. A wish for goodwill between teacher and student, and among friends.",
+    "theme": "compassion",
+    "sourceName": "Taittiriya Upanishad",
+    "reviewStatus": "sourced",
+    "deepLinkTarget": "learn"
+  },
+  {
+    "id": "shloka.om",
+    "transliteration": "om",
+    "translation": "The primordial sound.",
+    "meaning": "Often described as the sound from which all begins — a single syllable to gather attention and settle the breath.",
+    "theme": "devotion",
+    "traditionNote": "Interpretations of Om are many; traditions vary by region and family.",
+    "reviewStatus": "humanReviewed",
+    "deepLinkTarget": "mantra:mantra.om"
+  },
+  {
+    "id": "shloka.vakratunda",
+    "sanskritText": "वक्रतुण्ड महाकाय ।",
+    "transliteration": "vakratunda mahakaya",
+    "translation": "O Lord with the curved trunk and mighty form…",
+    "meaning": "The opening of a much-loved invocation to Ganesha, asking for a clear path before beginning anything new.",
+    "theme": "courage",
+    "reviewStatus": "humanReviewed",
+    "deepLinkTarget": "story:story.ganesha.beginnings"
+  },
+  {
+    "id": "shloka.lokah.samastah",
+    "transliteration": "lokah samastah sukhino bhavantu",
+    "translation": "May all beings everywhere be happy and free.",
+    "meaning": "A closing prayer of universal goodwill — widening care beyond ourselves to everyone.",
+    "theme": "compassion",
+    "reviewStatus": "humanReviewed",
+    "deepLinkTarget": "today"
+  },
+  {
+    "id": "shloka.gita.6.5",
+    "transliteration": "uddhared atmanatmanam",
+    "translation": "Lift yourself by your own self.",
+    "meaning": "One reading: you are your own ally. Self-discipline is a form of self-kindness, not punishment.",
+    "theme": "discipline",
+    "sourceName": "Bhagavad Gita 6.5",
+    "reviewStatus": "sourced",
+    "deepLinkTarget": "profile"
+  },
+  {
+    "id": "shloka.saraswati",
+    "transliteration": "saraswati namastubhyam",
+    "translation": "Salutations to you, Saraswati.",
+    "meaning": "A student's invocation before study, inviting focus and the free flow of learning.",
+    "theme": "knowledge",
+    "reviewStatus": "humanReviewed",
+    "deepLinkTarget": "lesson:lesson.saraswati.focus"
+  },
+  {
+    "id": "shloka.tat.tvam.asi",
+    "transliteration": "tat tvam asi",
+    "translation": "That thou art.",
+    "meaning": "One of the great Upanishadic sayings, pointing to a deep kinship between the self and all that is.",
+    "theme": "wisdom",
+    "sourceName": "Chandogya Upanishad 6.8.7",
+    "reviewStatus": "sourced",
+    "deepLinkTarget": "stories"
+  },
+  {
+    "id": "shloka.shanti",
+    "transliteration": "om shanti shanti shanti",
+    "translation": "Peace, peace, peace.",
+    "meaning": "Peace invoked three times — for body, mind, and the world around us. A calm way to close the day.",
+    "theme": "compassion",
+    "reviewStatus": "humanReviewed",
+    "deepLinkTarget": "mantra:mantra.shanti"
+  }
+]
