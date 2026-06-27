@@ -1,0 +1,32 @@
+/* My Mandir — Hindi localization (हिन्दी).
+   Stub for a future version. Keys mirror en.lproj; translations here are a
+   starting point and should be reviewed before shipping Hindi. */
+
+"app.name" = "मेरा मंदिर";
+
+/* Onboarding */
+"onboarding.welcome.title" = "मेरा मंदिर";
+"onboarding.welcome.subtitle" = "आपका अपना एक शांत स्थान — एक संकल्प धारण करने, लौटने और स्मरण करने के लिए।";
+"onboarding.welcome.begin" = "आरंभ करें";
+"onboarding.intention.title" = "आप यहाँ क्यों हैं?";
+"onboarding.name.title" = "अपने मंदिर को नाम दें";
+"onboarding.devata.title" = "आप किसे आमंत्रित करेंगे?";
+"onboarding.sankalp.title" = "अपना संकल्प लें";
+"onboarding.enterMandir" = "मेरे मंदिर में प्रवेश करें";
+
+/* Home */
+"home.sankalp" = "आपका संकल्प";
+"home.sacredTime" = "पावन समय";
+"home.memories" = "स्मृतियाँ";
+"home.return.title" = "अपने मंदिर लौटें";
+"home.return.subtitle" = "एक पल बैठें। भीतर एक दीप जलाएँ।";
+
+/* Sankalp */
+"sankalp.reflect" = "चिंतन करें";
+"sankalp.fulfill" = "पूर्ण करें";
+"sankalp.fulfilled.title" = "यह पूर्ण हुआ";
+
+/* Common */
+"common.continue" = "आगे बढ़ें";
+"common.save" = "सहेजें";
+"common.close" = "बंद करें";

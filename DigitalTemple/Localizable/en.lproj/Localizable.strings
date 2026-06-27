@@ -1,0 +1,33 @@
+/* My Mandir — English (base) localization.
+   v0 ships with English copy inline in the views. These keys are the seam for
+   full localization in a later version; add NSLocalizedString lookups as the
+   copy is externalized. */
+
+"app.name" = "My Mandir";
+
+/* Onboarding */
+"onboarding.welcome.title" = "My Mandir";
+"onboarding.welcome.subtitle" = "A quiet place of your own — to hold an intention, to return, and to remember.";
+"onboarding.welcome.begin" = "Begin";
+"onboarding.intention.title" = "Why are you here?";
+"onboarding.name.title" = "Name your mandir";
+"onboarding.devata.title" = "Who will you welcome?";
+"onboarding.sankalp.title" = "Make your sankalp";
+"onboarding.enterMandir" = "Enter my mandir";
+
+/* Home */
+"home.sankalp" = "Your Sankalp";
+"home.sacredTime" = "Sacred Time";
+"home.memories" = "Memories";
+"home.return.title" = "Return to your mandir";
+"home.return.subtitle" = "Sit a moment. Light a lamp within.";
+
+/* Sankalp */
+"sankalp.reflect" = "Reflect";
+"sankalp.fulfill" = "Fulfill";
+"sankalp.fulfilled.title" = "It is fulfilled";
+
+/* Common */
+"common.continue" = "Continue";
+"common.save" = "Save";
+"common.close" = "Close";

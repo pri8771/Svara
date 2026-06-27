@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Ganesha",
+    "nameDevanagari": "गणेश",
+    "tradition": "Shaiva/Vaishnava",
+    "summary": "The remover of obstacles, invoked at every beginning.",
+    "symbolicNote": "Welcomed first into the mandir — he clears the path before any sacred work."
+  },
+  {
+    "name": "Shiva",
+    "nameDevanagari": "शिव",
+    "tradition": "Shaiva",
+    "summary": "The auspicious one, lord of stillness and transformation.",
+    "symbolicNote": "Presides over endings that make space for renewal."
+  },
+  {
+    "name": "Vishnu",
+    "nameDevanagari": "विष्णु",
+    "tradition": "Vaishnava",
+    "summary": "The preserver who sustains the order of the world.",
+    "symbolicNote": "Held close in vows of protection and continuity."
+  },
+  {
+    "name": "Lakshmi",
+    "nameDevanagari": "लक्ष्मी",
+    "tradition": "Vaishnava",
+    "summary": "Goddess of prosperity, grace, and abundance.",
+    "symbolicNote": "Invited in gratitude and for the wellbeing of the home."
+  },
+  {
+    "name": "Durga",
+    "nameDevanagari": "दुर्गा",
+    "tradition": "Shakta",
+    "summary": "The invincible mother, fierce and protective.",
+    "symbolicNote": "Turned to for courage and shelter in hard seasons."
+  },
+  {
+    "name": "Hanuman",
+    "nameDevanagari": "हनुमान",
+    "tradition": "Vaishnava/Shaiva",
+    "summary": "The devoted one, embodiment of strength and service.",
+    "symbolicNote": "A companion for vows that ask for steadfastness."
+  },
+  {
+    "name": "Krishna",
+    "nameDevanagari": "कृष्ण",
+    "tradition": "Vaishnava",
+    "summary": "The divine lover, teacher of the Gita.",
+    "symbolicNote": "Held in joy, longing, and the practice of letting go."
+  },
+  {
+    "name": "Saraswati",
+    "nameDevanagari": "सरस्वती",
+    "tradition": "Shaiva/Vaishnava",
+    "summary": "Goddess of wisdom, learning, and the arts.",
+    "symbolicNote": "Sought at the start of study and creative work."
+  },
+  {
+    "name": "Rama",
+    "nameDevanagari": "राम",
+    "tradition": "Vaishnava",
+    "summary": "The ideal one, who keeps his word through every trial.",
+    "symbolicNote": "A presence for personal vows and quiet integrity."
+  },
+  {
+    "name": "Parvati",
+    "nameDevanagari": "पार्वती",
+    "tradition": "Shaiva",
+    "summary": "The mountain goddess, devotion made patient and enduring.",
+    "symbolicNote": "Honoured in reconnection and the slow keeping of love."
+  },
+  {
+    "name": "Murugan",
+    "nameDevanagari": "முருகன்",
+    "tradition": "Shaiva (South)",
+    "summary": "The divine youth, vanquisher of inner darkness.",
+    "symbolicNote": "Beloved across the South; called on for clarity and resolve."
+  },
+  {
+    "name": "Kali",
+    "nameDevanagari": "काली",
+    "tradition": "Shakta",
+    "summary": "The fierce protector who cuts through illusion.",
+    "symbolicNote": "Met in grief and in the fearless facing of truth."
+  }
+]

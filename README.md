@@ -1,120 +1,129 @@
-# Svara
+# My Mandir — Digital Temple (iOS v0)
 
-**A daily spiritual wellness app rooted in Hindu culture.**
-Think *Headspace meets Duolingo* with a Hindu spiritual soul — a warm, gamified
-daily companion for Indians aged 18–35, in India and across the diaspora.
+**A sacred relationship system for Hindu life — not a content, mantra, or
+meditation app.**
 
-Svara is **not** a virtual temple and **not** a religion-heavy app. It's a gentle,
-modern daily habit: three-minute practices, bite-sized lessons, the stories behind
-the festivals you grew up with, and the symbols behind the deities.
+My Mandir gives a person a single, private *Digital Mandir*: a quiet living
+sacred space. They make a **Sankalp** (a sacred intention or vow), and return
+to it over time — to reflect, to remember, and to preserve. The home screen
+*is* the mandir. There is no feed, no tab bar, no streaks, and no noise.
 
-> Built with SwiftUI, iOS 17+, MVVM. This repository contains the Phase 1
-> foundation: a fully navigable app running on local seed content, with every
-> backend dependency hidden behind a protocol so Firebase and StoreKit can be
-> switched on without touching feature code.
+> Built with SwiftUI (iOS 17+), MVVM, and SwiftData. Fully offline — the app
+> makes **no network calls**, ever. All content lives in local seed JSON loaded
+> once on first launch.
 
 ---
 
-## Features (MVP)
+## The v0 experience
 
-| Tab | What it does |
-| --- | --- |
-| **Today** | Daily 3-minute practices (morning mantra, evening prayer, midday breath, gratitude), a streak banner, and a mantra of the day. Guided, timed practice player that awards Svara Points. |
-| **Learn** | Duolingo-style lessons that teach mantras/slokas step by step — intro, listen, meaning, and interactive quizzes — with XP and progress. |
-| **Festivals** | Upcoming festival moments with a countdown, the story, why it matters, and small activities to mark the day. |
-| **Stories** | Stories & Symbols organised by human themes (courage, wisdom, devotion…), each with the tale, its meaning, and a takeaway. |
-| **Profile** | Streak, Svara Points, best streak, achievements grid, settings, and the Svara Plus upgrade. |
+1. **Onboarding (5 steps)** — Welcome → "Why are you here?" → Name your mandir →
+   Choose your devatas → Make your first sankalp (optional but encouraged).
+2. **The Mandir home** — the anchor. Shows the presiding devata, the active
+   sankalp, the next sacred date, a gentle *return* action, and recent
+   memories. Everything else is a push onto this `NavigationStack`.
+3. **Hold and return** — reflect on a sankalp (with a quiet mood), fulfill it
+   with a closing acknowledgment (preserved forever as a memory), browse Sacred
+   Time, and save memories.
 
-Gamification: **streaks**, **Svara Points**, and **achievements** that unlock with a
-celebratory toast.
+### What v0 deliberately does **not** include
 
-Not in MVP: community feed.
+No donations/payments, no content feed / daily darshan / mantra library /
+temple list, no AI chat or guru, no gamification (no streaks, points, or
+achievements), and no social/sharing. These omissions are the product.
 
 ---
 
 ## Architecture
 
 ```
-Svara/
-├── App/                     App entry, DI container, root navigation
-│   ├── SvaraApp.swift        @main, appearance, Firebase seam
-│   ├── AppEnvironment.swift  Composition root: owns services + session state (@Observable)
-│   ├── RootView.swift        Onboarding → Auth → Main routing
-│   └── MainTabView.swift     The 5-tab spine + achievement toast
+DigitalTemple/
+├── App/                     App entry + root routing
+│   ├── DigitalTempleApp.swift   @main, builds the SwiftData container, seeds on launch
+│   └── AppRootView.swift        Onboarding vs. Mandir home
 ├── Core/
-│   ├── Models/              UserProfile, DailyPractice, Mantra, Lesson,
-│   │                        Festival, StorySymbol, PracticeSession, Achievement
-│   ├── Services/            Protocol-based services + local implementations
-│   │   ├── AuthService            (+ MockAuthService, FirebaseAuthService seam)
-│   │   ├── ContentRepository      (+ LocalContentRepository, Firestore seam)
-│   │   ├── ProgressService        (+ LocalProgressService, StreakCalculator)
-│   │   ├── NotificationService    (+ LocalNotificationService)
-│   │   ├── StoreService           (StoreKit 2, freemium)
-│   │   └── Persistence            (KeyValueStore over UserDefaults)
-│   └── DesignSystem/        SvaraTheme (colors/spacing/gradients), typography,
-│                            SvaraCard, PracticeCard, PrimaryButton, common UI
-├── Features/                One folder per surface, MVVM
-│   ├── Onboarding / Auth
-│   ├── Today  (TodayViewModel, TodayView, PracticePlayerView)
-│   ├── Learn  (LearnViewModel, LearnView, LessonPlayerView)
-│   ├── Festivals / Stories / Profile
-│   └── Shared (MantraDetailView)
-└── Resources/               Assets, seed content, StoreKit config
-    ├── SeedContent.swift     6 mantras, 4 practices, 4 lessons, 5 festivals, 6 stories, 10 achievements
-    └── Svara.storekit
+│   ├── DesignSystem/        Theme (palette/metrics), Typography, Components, Color+Hex
+│   ├── Extensions/          Date+Sacred (recurrence, relative phrases), View helpers
+│   └── Constants/           AppConstants (keys, resource names)
+├── Domain/
+│   ├── Models/              Devata, Sankalp, Reflection, Memory (+ their enums)
+│   ├── Mandir/              DigitalMandir + MandirRepository (central data access)
+│   ├── DevotionalIdentity/  DevotionalIdentity
+│   ├── SacredTime/          SacredDateEntry (+ Region) + SacredTimeRepository
+│   └── Seed/                SeedLoader (first-launch JSON → SwiftData, idempotent)
+├── Features/
+│   ├── Onboarding/          5 step views + OnboardingViewModel
+│   ├── MandirHome/          MandirHomeView + MandirHomeViewModel + MandirRoute
+│   ├── Sankalp/             SankalpCard, NewSankalpView, ReflectionEntryView,
+│   │                        SankalpFulfillmentView
+│   ├── Memory/              MemoriesView, NewMemoryView, MemoryRow
+│   ├── SacredTime/          SacredTimeView, SacredDateCard
+│   └── Settings/            SettingsView, DevotionalIdentityEditView
+├── Analytics/               AnalyticsEvent enum + AnalyticsService (console, Firebase-ready)
+├── FeatureFlags/            FeatureFlag enum (v1/v2 features declared but off)
+├── Localizable/             en.lproj + hi.lproj stubs
+├── SeedData/                devatas.json, sacredDates.json
+└── Resources/               Assets.xcassets, Preview Content
 ```
 
 ### Patterns
 
-- **MVVM** — each feature has an `@Observable` view model; views are declarative.
-- **Dependency injection** — `AppEnvironment` is the single composition root,
-  injected via SwiftUI's `.environment(...)`. It holds every service *by protocol*.
-- **Observation** — uses the iOS 17 `@Observable` macro throughout.
-- **Protocol seams** — no feature code references Firebase, Firestore, UserDefaults
-  or a concrete backend directly.
+- **MVVM.** Views are declarative; `@Observable` view models hold state and
+  intent (`OnboardingViewModel`, `MandirHomeViewModel`). Persistence lives
+  behind `MandirRepository` / `SacredTimeRepository`, so future seams (iCloud
+  sync, etc.) don't ripple into feature code. Live lists use SwiftData `@Query`.
+- **SwiftData.** Seven `@Model` types in one local store. Cross-references use
+  `UUID`s (`mandirId`, `sankalpId`, `devataId`) rather than hard relationships,
+  keeping v0 simple and migration-friendly.
+- **Analytics.** Every devotional moment is an `AnalyticsEvent` with a stable
+  snake_case `name` and a `parameters` dictionary. v0 logs to the console via
+  `os.Logger`; a `FirebaseAnalyticsSink` can be added without touching call
+  sites.
+- **Feature flags.** `FeatureFlag` declares the planned v1/v2 surface (daily
+  darshan, reminders, iCloud sync, shared mandir, …) all flagged **off**, so the
+  expansion path is wired but inert. Visible in a debug-only inspector in
+  Settings.
 
 ---
 
-## Backend integration (production seams)
+## Domain model
 
-Everything runs offline today on bundled seed content. To go live:
+| Model | Key fields |
+| --- | --- |
+| `DigitalMandir` | `name`, `primaryDevataId?`, `createdDate` |
+| `DevotionalIdentity` | `displayName`, `onboardingIntention`, `traditionLeaning?`, `mandirId` |
+| `Devata` | `name`, `nameDevanagari`, `tradition`, `summary`, `symbolicNote`, `isChosen` (seeded; 12) |
+| `Sankalp` | `intention`, `forWhom?`, `intentionType` (8), `devataId?`, `startDate`, `dueDate?`, `status` (active/fulfilled/preserved/dormant), `mandirId` |
+| `Reflection` | `sankalpId`, `content`, `mood` (quiet/grateful/hopeful/heavy/at_peace), `date` |
+| `Memory` | `title`, `content`, `date`, `type` (reflection/moment/tradition/offering), `mandirId` |
+| `SacredDateEntry` | `name`, `nameDevanagari?`, `date`, `yearlyRecurring`, `devataAssociation?`, `significance`, `regionRelevance` ([Region]), `tradition?` (seeded) |
 
-### Firebase Auth + Firestore
-1. Add the `firebase-ios-sdk` Swift Package (FirebaseAuth, FirebaseFirestore).
-2. Drop `GoogleService-Info.plist` into the app target (it's git-ignored).
-3. Uncomment `FirebaseApp.configure()` in `SvaraApp.init`.
-4. Swap `MockAuthService` → `FirebaseAuthService` and `LocalContentRepository`
-   → `FirestoreContentRepository` in `AppEnvironment.live()`.
+**8 Sankalp intentions:** healing, gratitude, grief, renewal, protection,
+festivalObservance, personalVow, reconnection.
 
-See `FirebaseAuthService.swift` and the commented `FirestoreContentRepository`
-in `ContentRepository.swift` — both already conform to the protocols.
-
-### StoreKit 2 (freemium "Svara Plus")
-`StoreService.swift` is real StoreKit 2: it loads products, processes purchases,
-listens for transaction updates, and derives entitlement from
-`Transaction.currentEntitlements`. Product IDs live in `SvaraProductID`. The
-`Svara.storekit` configuration lets you test purchases in the simulator —
-select it under *Scheme → Run → Options → StoreKit Configuration*.
-
-### Local notifications
-`NotificationService` schedules gentle morning/evening reminders via
-`UserNotifications`, wired to the toggles in Settings.
+**12 Devatas:** Ganesha, Shiva, Vishnu, Lakshmi, Durga, Hanuman, Krishna,
+Saraswati, Rama, Parvati, Murugan, Kali.
 
 ---
 
-## Getting started
+## Acceptance criteria (v0) — status
 
-1. Open `Svara.xcodeproj` in Xcode 16+.
-2. Select the **Svara** scheme and an iOS 17+ simulator.
-3. Run. No package resolution or signing is required for the local build.
-
-The project uses Xcode's file-system-synchronized groups, so new files added
-under `Svara/` are picked up automatically — no `.pbxproj` surgery needed.
+- ✅ App works fully offline — no network calls.
+- ✅ Onboarding builds a private mandir (name, presiding devata, identity).
+- ✅ Create a sankalp (during onboarding and from the home).
+- ✅ Add a reflection (with mood) to a sankalp.
+- ✅ Fulfill a sankalp with a closing acknowledgment screen (preserved as a memory).
+- ✅ Save a memory.
+- ✅ View Sacred Time as an upcoming-dates list (not a calendar grid).
+- ✅ No tab bar — navigation is `NavigationStack` pushes from the mandir home.
 
 ---
 
-## Roadmap
+## Building
 
-- Phase 1 ✅ — foundation: navigation, models, design system, services, seed content
-- Phase 2 — Firebase wiring, real audio for mantras, content authoring
-- Phase 3 — personalised daily plan, richer streaks, widgets & Live Activities
+Open `DigitalTemple.xcodeproj` in Xcode 16+ and run the **DigitalTemple**
+scheme on an iOS 17+ simulator or device. The project uses Xcode's synchronized
+file groups, so files added under `DigitalTemple/` are picked up automatically.
+
+> Note on dates: lunar festival dates in `sacredDates.json` are seeded with
+> their 2026 Gregorian dates and shown forward-looking. Precise multi-year
+> panchang calculation is a planned enhancement (see `FeatureFlag`).
