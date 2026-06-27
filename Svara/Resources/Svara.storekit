@@ -1,0 +1,99 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "SVARA_STOREKIT_CONFIG",
+  "nonRenewingSubscriptions" : [],
+  "products" : [
+    {
+      "displayPrice" : "79",
+      "familyShareable" : false,
+      "internalID" : "SVARA_LIFETIME",
+      "localizations" : [
+        {
+          "description" : "Unlock all of Svara forever — every lesson, story and festival.",
+          "displayName" : "Svara Plus — Lifetime",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.svara.plus.lifetime",
+      "referenceName" : "Svara Plus Lifetime",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "SVARA",
+    "_developerTeamID" : "",
+    "_lastSynchronizedDate" : 0
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "SVARA_PLUS_GROUP",
+      "localizations" : [],
+      "name" : "Svara Plus",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "3.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "SVARA_MONTHLY",
+          "introductoryOffer" : {
+            "internalID" : "SVARA_MONTHLY_TRIAL",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to every lesson, story and festival, billed monthly.",
+              "displayName" : "Svara Plus — Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.svara.plus.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Svara Plus Monthly",
+          "subscriptionGroupID" : "SVARA_PLUS_GROUP",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "29.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "SVARA_YEARLY",
+          "introductoryOffer" : {
+            "internalID" : "SVARA_YEARLY_TRIAL",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to every lesson, story and festival, billed yearly.",
+              "displayName" : "Svara Plus — Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.svara.plus.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Svara Plus Yearly",
+          "subscriptionGroupID" : "SVARA_PLUS_GROUP",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

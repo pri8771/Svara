@@ -1,0 +1,216 @@
+import Foundation
+import SwiftUI
+
+/// The single composition root for Svara. Owns every service (behind its
+/// protocol) and the observable session/profile state that views read from.
+/// Injected into the view tree via `.environment(...)`.
+@Observable
+@MainActor
+final class AppEnvironment {
+
+    // MARK: Services (protocol-typed for swappability)
+    let auth: AuthService
+    let content: ContentRepository
+    let progress: ProgressService
+    let notifications: NotificationService
+    let store: StoreService
+
+    private let kvStore: KeyValueStore
+
+    // MARK: Session state
+    var profile: UserProfile
+    var isAuthenticated: Bool = false
+    var hasCompletedOnboarding: Bool
+
+    /// Achievements unlocked since the last time the UI presented them — drives
+    /// the celebratory toast.
+    var pendingAchievements: [Achievement] = []
+
+    /// Effective premium entitlement: an active purchase or a stored flag.
+    var isPremium: Bool { store.isPlus || profile.isPremium }
+
+    init(
+        auth: AuthService,
+        content: ContentRepository,
+        progress: ProgressService,
+        notifications: NotificationService,
+        store: StoreService,
+        kvStore: KeyValueStore
+    ) {
+        self.auth = auth
+        self.content = content
+        self.progress = progress
+        self.notifications = notifications
+        self.store = store
+        self.kvStore = kvStore
+        self.profile = .guest()
+        self.hasCompletedOnboarding = kvStore.load(Bool.self, forKey: StorageKey.onboardingComplete) ?? false
+    }
+
+    // MARK: - Factories
+
+    static func live() -> AppEnvironment {
+        let kv = UserDefaultsStore()
+        return AppEnvironment(
+            auth: MockAuthService(store: kv),
+            content: LocalContentRepository(),
+            progress: LocalProgressService(store: kv),
+            notifications: LocalNotificationService(),
+            store: StoreService(),
+            kvStore: kv
+        )
+    }
+
+    /// An environment pre-populated for SwiftUI previews.
+    static func preview(premium: Bool = false) -> AppEnvironment {
+        let kv = UserDefaultsStore(defaults: UserDefaults(suiteName: "svara.preview") ?? .standard)
+        let env = AppEnvironment(
+            auth: MockAuthService(store: kv),
+            content: LocalContentRepository(),
+            progress: LocalProgressService(store: kv),
+            notifications: LocalNotificationService(),
+            store: StoreService(),
+            kvStore: kv
+        )
+        env.profile = UserProfile(
+            displayName: "Ananya",
+            email: "ananya@example.com",
+            currentStreak: 5,
+            longestStreak: 12,
+            totalPoints: 340,
+            isPremium: premium
+        )
+        env.isAuthenticated = true
+        env.hasCompletedOnboarding = true
+        return env
+    }
+
+    // MARK: - Lifecycle
+
+    /// Restores any saved session and warms up StoreKit products.
+    func bootstrap() async {
+        if let restored = await auth.restoreSession() {
+            profile = restored
+            isAuthenticated = true
+        }
+        await store.loadProducts()
+    }
+
+    func signIn(email: String, password: String) async throws {
+        let user = try await auth.signIn(email: email, password: password)
+        profile = user
+        isAuthenticated = true
+    }
+
+    func register(displayName: String, email: String, password: String) async throws {
+        let user = try await auth.register(displayName: displayName, email: email, password: password)
+        profile = user
+        isAuthenticated = true
+    }
+
+    func continueAsGuest() async {
+        if let user = try? await auth.signInAnonymously() {
+            profile = user
+            isAuthenticated = true
+        }
+    }
+
+    func signOut() async {
+        try? await auth.signOut()
+        notifications.cancelAllReminders()
+        profile = .guest()
+        isAuthenticated = false
+    }
+
+    func completeOnboarding() {
+        hasCompletedOnboarding = true
+        kvStore.save(true, forKey: StorageKey.onboardingComplete)
+    }
+
+    // MARK: - Progress mutations
+
+    func completePractice(_ practice: DailyPractice, durationSeconds: Int) {
+        let session = PracticeSession(
+            practiceID: practice.id,
+            practiceTitle: practice.title,
+            kind: practice.kind,
+            durationSeconds: durationSeconds,
+            pointsEarned: practice.points
+        )
+        let (updated, unlocked) = progress.recordSession(session, for: profile)
+        apply(updated, unlocked: unlocked)
+    }
+
+    func completeLesson(_ lesson: Lesson) {
+        let (updated, unlocked) = progress.completeLesson(lesson, for: profile)
+        apply(updated, unlocked: unlocked)
+    }
+
+    func observeFestival(_ festival: Festival) {
+        let (updated, unlocked) = progress.observeFestival(festival, for: profile)
+        apply(updated, unlocked: unlocked)
+    }
+
+    func hasCompletedPractice(_ practice: DailyPractice) -> Bool {
+        let today = Calendar.current.startOfDay(for: Date())
+        return progress.loadSessions().contains {
+            $0.practiceID == practice.id && Calendar.current.startOfDay(for: $0.date) == today
+        }
+    }
+
+    func isLessonCompleted(_ lesson: Lesson) -> Bool {
+        profile.completedLessonIDs.contains(lesson.id)
+    }
+
+    func isFestivalObserved(_ festival: Festival) -> Bool {
+        profile.observedFestivalIDs.contains(festival.id)
+    }
+
+    func isAchievementUnlocked(_ achievement: Achievement) -> Bool {
+        profile.unlockedAchievementIDs.contains(achievement.id)
+    }
+
+    // MARK: - Preferences
+
+    func updateNotificationPreferences(enabled: Bool, morningHour: Int, eveningHour: Int) async {
+        profile.notificationsEnabled = enabled
+        profile.morningReminderHour = morningHour
+        profile.eveningReminderHour = eveningHour
+        persistProfile()
+
+        if enabled {
+            let granted = await notifications.requestAuthorization()
+            if granted {
+                await notifications.scheduleDailyReminders(morningHour: morningHour, eveningHour: eveningHour)
+            } else {
+                profile.notificationsEnabled = false
+                persistProfile()
+            }
+        } else {
+            notifications.cancelAllReminders()
+        }
+    }
+
+    func setPremium(_ value: Bool) {
+        profile.isPremium = value
+        persistProfile()
+    }
+
+    // MARK: - Helpers
+
+    private func apply(_ updated: UserProfile, unlocked: [Achievement]) {
+        profile = updated
+        persistProfile()
+        if !unlocked.isEmpty {
+            pendingAchievements.append(contentsOf: unlocked)
+        }
+    }
+
+    func persistProfile() {
+        kvStore.save(profile, forKey: StorageKey.userProfile)
+    }
+
+    func clearPendingAchievements() {
+        pendingAchievements.removeAll()
+    }
+}
