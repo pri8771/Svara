@@ -128,13 +128,31 @@ jobs:
       - name: Select Xcode 16.4
         run: sudo xcode-select -s /Applications/Xcode_16.4.app
 
+      - name: Boot simulator
+        run: |
+          set -euo pipefail
+          # Resolve a concrete, available "iPhone 16" UDID (exact name) and boot
+          # it, rather than relying on xcodebuild to resolve a named destination
+          # (which can intermittently fail on hosted runners).
+          UDID=$(xcrun simctl list devices available \
+            | grep -E "^[[:space:]]*${SIM_NAME} \(" \
+            | head -n1 \
+            | grep -oE "[0-9A-Fa-f-]{36}")
+          if [ -z "${UDID}" ]; then
+            echo "❌ No available '${SIM_NAME}' simulator found"; exit 1
+          fi
+          echo "SIM_UDID=${UDID}" >> "$GITHUB_ENV"
+          echo "Booting ${SIM_NAME} (${UDID})"
+          xcrun simctl boot "${UDID}" || true
+          xcrun simctl bootstatus "${UDID}" -b
+
       - name: Run V0 screen-walk UI test
         run: |
           set -o pipefail
           xcodebuild test \
             -project DigitalTemple.xcodeproj \
             -scheme DigitalTempleUITests \
-            -destination "platform=iOS Simulator,name=${SIM_NAME},OS=${SIM_OS}" \
+            -destination "id=${SIM_UDID}" \
             -resultBundlePath V0ScreenWalk.xcresult \
             CODE_SIGNING_ALLOWED=NO
 
