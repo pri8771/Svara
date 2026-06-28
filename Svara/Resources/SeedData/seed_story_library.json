@@ -1,0 +1,310 @@
+[
+  {
+    "id": "story_ganesha_obstacle",
+    "deity": "Ganesha",
+    "title": "The Remover of Obstacles",
+    "theme": "Beginnings",
+    "durationMinutes": 4,
+    "bodyMarkdown": "Long before he became the gentle, elephant-headed guardian of beginnings, Ganesha was simply a child shaped with love. In one widely told account, the goddess Parvati formed him from the earth and warmth of her own hands and asked him to watch the doorway while she bathed. He took the task to be his whole world.\n\nWhen Shiva returned home and found a boy he did not know guarding the threshold, neither would step aside — one out of duty, the other out of pride. In the struggle that followed, the child was gravely hurt. Parvati's grief shook the cosmos, and to set things right, Shiva gave the boy the head of an elephant and welcomed him as his own.\n\nWhat could have ended in sorrow became a beginning. From then on, Ganesha was the one remembered first — before a journey, an exam, a wedding, a new venture. Not because he sweeps away every difficulty, but because he helps us meet the threshold of anything new with a steadier mind.\n\nHis elephant head is often read as a quiet instruction: listen widely, speak carefully — large ears, a small mouth. His big form moves slowly, unhurried, suggesting that beginnings reward patience over panic. And the small mouse often shown near his feet hints that even our most restless, scattered energy can be guided rather than fought.\n\nThere is a tenderness in choosing him to open things. It says the first step need not be grand or flawless — only honest, and taken today.\n\nPeople greet Ganesha in countless ways across regions and homes, and the details of his story shift from telling to telling. What stays constant is the feeling: a soft permission to begin. An obstacle, in this reading, is not a punishment to clear before life can start. It is simply part of the path — and meeting it is already the beginning.",
+    "moralOrMeaning": "One way many traditions understand this: what blocks us and what begins us are often the same threshold. Meeting the difficulty is itself the first step.",
+    "symbolism": [
+      {
+        "id": "sym_elephant_head",
+        "name": "Elephant Head",
+        "sanskritName": "Gaja",
+        "meaning": "Large ears and a small mouth are often read as an invitation to listen more than we speak, and to take in the whole picture before we act.",
+        "associatedDeities": ["Ganesha"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_broken_tusk",
+        "name": "Broken Tusk",
+        "sanskritName": "Ekadanta",
+        "meaning": "Said to have been broken so a great text could be finished, the single tusk is often seen as a symbol of sacrifice in service of completing what we start.",
+        "associatedDeities": ["Ganesha"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_modak",
+        "name": "Modak",
+        "sanskritName": "Modaka",
+        "meaning": "A sweet held in his hand is sometimes read as the quiet reward of patient effort — the sweetness that arrives after the work, not before it.",
+        "associatedDeities": ["Ganesha"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      }
+    ],
+    "reflectionPrompt": "When has something that felt like an obstacle turned out to be the start of something?",
+    "relatedMantraId": "lesson.vakratunda.meet",
+    "relatedFestivalId": "festival.ganeshchaturthi",
+    "traditionNote": "Stories vary by tradition, region, and family lineage.",
+    "sourceName": "Puranic tradition (widely told)",
+    "sourceNote": "A composite of commonly shared tellings; no single regional version is privileged.",
+    "reviewStatus": "reviewed",
+    "region": ["pan-India"],
+    "tags": ["beginnings", "obstacles", "patience", "wisdom"]
+  },
+  {
+    "id": "story_saraswati_knowledge",
+    "deity": "Saraswati",
+    "title": "The River of Knowledge",
+    "theme": "Wisdom",
+    "durationMinutes": 4,
+    "bodyMarkdown": "Saraswati is often pictured seated on a white lotus, dressed in simple white, holding a veena — a stringed instrument — with a book and a string of beads nearby. She carries no gold and no weapons. What she offers cannot be hoarded.\n\nHer name is tied to an ancient river, and that is no accident. Knowledge, in her telling, is not a treasure locked in a vault but a current — always moving, always renewing, shaped by everyone it passes through. A river that stops flowing becomes a stagnant pond. So too with learning that is only collected and never shared or lived.\n\nThe veena in her hands suggests that real knowledge has music in it. Facts can be memorised, but understanding has rhythm and resonance; it should move you, not just fill you. When a student tunes a string, the goal is not a single perfect note but harmony — many notes finding their place together. Wisdom works the same way, drawing scattered facts into something whole.\n\nThe white lotus beneath her is a familiar image across many tellings: a flower that grows out of muddy water yet opens clean and bright. Learning, too, often rises out of confusion. Not knowing is not a flaw to hide; it is the mud the lotus needs.\n\nNear her sits a swan, said to be able to sip milk from a mix of milk and water — a picture of discernment, the quiet skill of knowing what to keep and what to let go.\n\nThere is something gentle in a figure of knowledge who holds an instrument instead of a sceptre. She does not test or rank. She invites. Students greet her before they study, not to win her favour, but to settle the mind and remember why they are learning at all.\n\nAcross regions her image and her songs differ, and families honour her in their own ways. What endures is the feeling she leaves behind: that learning is meant to flow, to sing, and to make us a little more ourselves.",
+    "moralOrMeaning": "One reading of this story: knowledge is a current, not a possession — it stays alive only when it keeps moving through us and onward.",
+    "symbolism": [
+      {
+        "id": "sym_veena",
+        "name": "Veena",
+        "sanskritName": "Vina",
+        "meaning": "The stringed instrument suggests that true understanding has harmony and rhythm — knowledge that resonates, not just information that accumulates.",
+        "associatedDeities": ["Saraswati"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_white_lotus",
+        "name": "White Lotus",
+        "sanskritName": "Padma",
+        "meaning": "A bloom that rises clean from muddy water, often read as clarity emerging out of confusion — not knowing is simply the soil learning grows from.",
+        "associatedDeities": ["Saraswati", "Lakshmi"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_swan",
+        "name": "Swan",
+        "sanskritName": "Hamsa",
+        "meaning": "Said to separate milk from water, the swan is a gentle image of discernment — the skill of knowing what to keep and what to let go.",
+        "associatedDeities": ["Saraswati", "Brahma"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      }
+    ],
+    "reflectionPrompt": "What is something you are learning right now, simply for the joy of it?",
+    "relatedMantraId": "lesson.saraswati.meet",
+    "relatedFestivalId": "festival.navaratri",
+    "traditionNote": "Stories vary by tradition, region, and family lineage.",
+    "sourceName": "Vedic and Puranic tradition",
+    "sourceNote": "A composite of commonly shared tellings.",
+    "reviewStatus": "reviewed",
+    "region": ["pan-India", "South India"],
+    "tags": ["wisdom", "learning", "creativity", "clarity"]
+  },
+  {
+    "id": "story_hanuman_devotion",
+    "deity": "Hanuman",
+    "title": "The Devoted One",
+    "theme": "Devotion",
+    "durationMinutes": 4,
+    "bodyMarkdown": "There is a moment in the Ramayana when everything depends on a single leap. Sita has been carried across the sea to Lanka, and someone must cross the vast water to find her. The one who can is Hanuman — but at the shore, he hesitates.\n\nIt is easy to miss why. Hanuman is immensely strong, born of the wind itself. Yet as a child, the story goes, his power was gently set aside so he would grow up humble, and over the years he simply forgot how much he carried within. He stands at the edge of the ocean unsure he is enough.\n\nThen his companions remind him who he is. They speak of his strength not to flatter him, but to wake it. And as he remembers, he grows — vast and certain — gathers himself, and crosses the sea in a single bound.\n\nWhat makes the leap remarkable is not the distance. It is the reason. Hanuman does not jump to prove himself or to be admired. He jumps because he loves Rama and cannot bear that Sita is suffering. His devotion is not loud or self-regarding; it is the kind that quietly makes the impossible feel simply necessary.\n\nLater, asked to bring a single healing herb from a distant mountain and unsure which one it is, he lifts the entire mountain and carries it. There is something almost tender in that — when we care enough, we stop calculating the minimum and simply bring everything we have.\n\nHanuman is loved across regions precisely because he is not a distant figure. He is the friend who shows up, the helper who asks for nothing, the one who remembers your strength when you have forgotten it yourself.\n\nThe tellings differ from place to place, and families hold their own favourite moments. But the thread running through all of them is the same gentle truth: love has a way of enlarging us. We are often far more capable than our self-doubt has let us believe — and sometimes all it takes is someone to remind us.",
+    "moralOrMeaning": "One way many traditions understand this: devotion is not weakness but a kind of strength — caring deeply can quietly enlarge what we are able to do.",
+    "symbolism": [
+      {
+        "id": "sym_leap",
+        "name": "The Leap",
+        "sanskritName": null,
+        "meaning": "The crossing of the sea is often read as latent potential — the strength we already hold but forget, waiting for a reason or a reminder to wake.",
+        "associatedDeities": ["Hanuman"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_mace",
+        "name": "Mace",
+        "sanskritName": "Gada",
+        "meaning": "Carried not for conquest but for protection, the mace is often seen as strength placed entirely in the service of others.",
+        "associatedDeities": ["Hanuman"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_mountain",
+        "name": "The Mountain",
+        "sanskritName": "Dronagiri",
+        "meaning": "Lifting a whole mountain to find one herb is a tender image of love that stops calculating the minimum and simply brings everything it has.",
+        "associatedDeities": ["Hanuman"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      }
+    ],
+    "reflectionPrompt": "When has caring about someone helped you do more than you thought you could?",
+    "relatedMantraId": null,
+    "relatedFestivalId": null,
+    "traditionNote": "Stories vary by tradition, region, and family lineage.",
+    "sourceName": "Ramayana (widely told)",
+    "sourceNote": "A composite of commonly shared tellings; details differ across regional versions.",
+    "reviewStatus": "reviewed",
+    "region": ["pan-India"],
+    "tags": ["devotion", "courage", "service", "humility"]
+  },
+  {
+    "id": "story_lakshmi_abundance",
+    "deity": "Lakshmi",
+    "title": "Abundance That Flows",
+    "theme": "Abundance",
+    "durationMinutes": 3,
+    "bodyMarkdown": "Lakshmi is usually shown standing or seated on a lotus, with coins streaming gently from one open hand. It is worth pausing on that detail: the hand is open, and the coins are falling — outward, downward, away. She is not clutching anything.\n\nThis is the quiet heart of her story. Lakshmi is often called the figure of wealth, but the word does her a disservice. She represents abundance in its fullest sense — well-being, beauty, ease, enough-ness — and crucially, abundance that moves. Money that only piles up stops being wealth and starts being weight. What she models is prosperity that circulates: received with gratitude, passed on with grace.\n\nIn many tellings she rose from the churning of a vast cosmic ocean, emerging radiant after a long and difficult effort. Abundance, the image suggests, is not luck that lands from nowhere. It often follows patience, shared work, and the willingness to keep going through the murky middle.\n\nThe lotus she stands on grows in muddy water, yet is never stained by it — a familiar reminder that we can move through ordinary mess, even ordinary money, without letting it cloud who we are. The elephants often shown beside her, pouring water, suggest dignity and a kind of unhurried grace; abundance need not be anxious or grasping.\n\nThere is a gentleness to all of this that is easy to overlook. Lakshmi is not a figure of accumulation or status. She is honoured most where there is care — a tidy home, a welcomed guest, a meal shared, a kindness extended without expecting return. Where generosity flows, the old idea goes, she feels at home.\n\nCustoms around her differ widely by region and household, and the details of her story shift from one telling to the next. What stays steady is the invitation: to hold what we have a little more openly, and to let some of the good in our hands flow onward.",
+    "moralOrMeaning": "One reading of this story: true abundance circulates rather than accumulates — it stays alive in the giving, not only the having.",
+    "symbolism": [
+      {
+        "id": "sym_lotus_lakshmi",
+        "name": "Lotus",
+        "sanskritName": "Padma",
+        "meaning": "Rooted in mud yet unstained, the lotus suggests we can move through ordinary mess — even money — without letting it cloud who we are.",
+        "associatedDeities": ["Lakshmi", "Saraswati"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_flowing_coins",
+        "name": "Flowing Coins",
+        "sanskritName": null,
+        "meaning": "Coins falling from an open hand are often read as abundance that is meant to circulate and be shared, not gripped and stored.",
+        "associatedDeities": ["Lakshmi"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_elephants",
+        "name": "Elephants",
+        "sanskritName": "Gaja",
+        "meaning": "The elephants beside her, pouring water, are commonly seen as dignity and unhurried grace — abundance that is calm rather than anxious.",
+        "associatedDeities": ["Lakshmi"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      }
+    ],
+    "reflectionPrompt": "What is one small way you could let something good flow onward this week?",
+    "relatedMantraId": null,
+    "relatedFestivalId": "festival.diwali",
+    "traditionNote": "Stories vary by tradition, region, and family lineage.",
+    "sourceName": "Puranic tradition",
+    "sourceNote": "A composite of commonly shared tellings.",
+    "reviewStatus": "reviewed",
+    "region": ["pan-India"],
+    "tags": ["abundance", "generosity", "gratitude", "ease"]
+  },
+  {
+    "id": "story_shiva_stillness",
+    "deity": "Shiva",
+    "title": "The Still Point",
+    "theme": "Stillness",
+    "durationMinutes": 4,
+    "bodyMarkdown": "Of all the great figures in this tradition, Shiva is the one most often found doing nothing at all — and that is precisely the point. He is pictured high on a snow-quiet mountain, eyes half closed, utterly at rest, while the whole noisy world turns below him. He is the witness: the calm that watches everything without being swept away by it.\n\nAnd yet, in another famous image, the very same Shiva is dancing. As Nataraja, he moves inside a ring of fire, one foot raised, surrounded by motion and rhythm and even destruction. Look closely, though, and his face is serene. The dance is wild; the dancer is still. That is the riddle at the centre of him — perfect stillness and full movement, held in the same body at the same time.\n\nMost of us know only one or the other. We are either frantic or shut down, racing or collapsed. Shiva suggests a third way: to act fully in the world while keeping a quiet, unshaken centre. To be in the storm and also be its eye.\n\nThe crescent moon resting in his hair is often read as a calm holding of time — the cool, changing moon worn lightly, neither grasped nor feared. The small drum he holds, the damaru, keeps a rhythm said to mark beginnings and rests, the natural pulse of starting and pausing that runs through everything.\n\nThere is comfort in a figure who shows that stillness is not the same as doing nothing. His silence is not emptiness; it is fullness that does not need to announce itself. From that quiet centre, when he does move, the movement is clear and unhurried.\n\nHis stories take many forms across regions, and families hold their own understandings. But what he keeps pointing to is the same: a reminder that beneath the day's noise there is a still place in us too — and that we can learn, breath by breath, to return to it.",
+    "moralOrMeaning": "One way many traditions understand this: stillness is not the absence of action but a steady centre within it — we can move through the world without being swept away by it.",
+    "symbolism": [
+      {
+        "id": "sym_crescent_moon",
+        "name": "Crescent Moon",
+        "sanskritName": "Chandra",
+        "meaning": "Worn lightly in his hair, the changing moon is often read as a calm holding of time — neither grasping at it nor fearing it.",
+        "associatedDeities": ["Shiva"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_trishul",
+        "name": "Trishul",
+        "sanskritName": "Trishula",
+        "meaning": "The three-pronged form is commonly seen as three forces — creation, sustaining, and release — held together in balance rather than tension.",
+        "associatedDeities": ["Shiva", "Durga"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_damaru",
+        "name": "Damaru",
+        "sanskritName": "Damaru",
+        "meaning": "The small hand-drum keeps a rhythm often read as the natural pulse of beginnings and rests — starting and pausing as one motion.",
+        "associatedDeities": ["Shiva"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      }
+    ],
+    "reflectionPrompt": "Where in your day could you return to one still breath?",
+    "relatedMantraId": "lesson.om.sound",
+    "relatedFestivalId": null,
+    "traditionNote": "Stories vary by tradition, region, and family lineage.",
+    "sourceName": "Puranic and Shaiva tradition",
+    "sourceNote": "A composite of commonly shared tellings.",
+    "reviewStatus": "reviewed",
+    "region": ["pan-India"],
+    "tags": ["stillness", "calm", "balance", "presence"]
+  },
+  {
+    "id": "story_durga_protector",
+    "deity": "Durga",
+    "title": "The Fierce Protector",
+    "theme": "Strength",
+    "durationMinutes": 4,
+    "bodyMarkdown": "When a threat arose that none could meet alone, the story goes, the cosmos answered not with anger but with concentrated strength. The combined energies of many great figures gathered and took form as Durga — radiant, many-armed, seated on a lion, calm-faced even as she rode into difficulty.\n\nIt matters that she was called forth to protect, not to dominate. The danger she faced could shift its shape and could not be overcome by ordinary force. What was needed was something steadier: strength joined to clarity, power that knew exactly what it was for. Durga is that — fierceness in the service of care.\n\nLook at how she is pictured. She has many arms, each holding a different tool, and they are usually read not as raw power but as capacity: the ability to hold many things at once, to meet a complex moment from several directions without losing composure. A parent steadying a household, a friend holding space for someone in pain, a person carrying several hard responsibilities at once — all of this is in those arms.\n\nHer face is the surprising part. In most images it is serene. She is not contorted with rage. Her strength does not come from losing herself to fury; it comes from a centre that stays clear. The lion she sits on, a creature of obvious power, carries her calmly — strength that serves rather than rampages.\n\nThere is a kind of permission in her. So many of us are taught that to be gentle we must be soft and yielding always, that fierceness is a flaw. Durga suggests otherwise: that protecting what we love can call for real force, and that this force, when guided by care, is not aggression but devotion wearing a stronger face.\n\nHer forms and festivals vary widely across regions, especially in the east, and families understand her in their own ways. What stays constant is the feeling she leaves: that there is a fierce, protective strength available to us too — and that it is gentlest at its very centre.",
+    "moralOrMeaning": "One reading of this story: real strength is protective rather than aggressive — fierceness guided by care is a form of love, calm at its centre.",
+    "symbolism": [
+      {
+        "id": "sym_lion",
+        "name": "Lion",
+        "sanskritName": "Simha",
+        "meaning": "A creature of obvious power carrying her calmly, the lion is often read as strength that serves and steadies rather than rampages.",
+        "associatedDeities": ["Durga"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_many_arms",
+        "name": "Many Arms",
+        "sanskritName": null,
+        "meaning": "Often read not as raw power but as capacity — the ability to hold many things at once and meet a hard moment from several directions without losing composure.",
+        "associatedDeities": ["Durga"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_serene_face",
+        "name": "The Calm Face",
+        "sanskritName": null,
+        "meaning": "Her serene expression amid difficulty suggests that true strength comes from a clear centre, not from being overcome by fury.",
+        "associatedDeities": ["Durga"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      }
+    ],
+    "reflectionPrompt": "What do you find yourself most fiercely protective of?",
+    "relatedMantraId": null,
+    "relatedFestivalId": "festival.navaratri",
+    "traditionNote": "Stories vary by tradition, region, and family lineage.",
+    "sourceName": "Devi Mahatmya tradition",
+    "sourceNote": "A composite of commonly shared tellings; emphasis differs by region.",
+    "reviewStatus": "reviewed",
+    "region": ["pan-India", "East India"],
+    "tags": ["strength", "protection", "courage", "care"]
+  },
+  {
+    "id": "story_arjuna_courage",
+    "deity": "Krishna",
+    "title": "The Courage to Act",
+    "theme": "Courage",
+    "durationMinutes": 5,
+    "bodyMarkdown": "Two armies face each other across a field, and at the very moment the conflict is meant to begin, the warrior Arjuna sets down his bow. He looks across at the other side and sees not enemies but teachers, cousins, friends. The weight of what is being asked of him lands all at once, and he cannot move. He sits down in his chariot, overwhelmed.\n\nIt is one of the most human moments in all of these stories. Not a battle scene, but a standstill — the paralysis we all know when a choice feels too large, when every path seems to cost something dear.\n\nBeside Arjuna is Krishna, who has taken the humble role of his charioteer. He does not shout at Arjuna to pull himself together, nor does he pretend the difficulty away. He simply begins to talk with him, friend to friend, about how to act when acting is hard.\n\nThe heart of what he offers is gentle and surprisingly practical: do what is genuinely yours to do, and loosen your grip on the results. So much of our fear, the conversation suggests, comes from clutching at outcomes we cannot control — from needing a thing to turn out a certain way before we are willing to begin. When we give our sincere effort to the action itself and release the rest, the paralysis often eases. We become able to move again.\n\nThis is not a call to be careless, or to stop caring how things turn out. It is an invitation to act with full sincerity and a lighter hold — to take the next honest step without waiting for a guarantee.\n\nThe text these words come from is vast, and people across regions and generations read it in countless ways. Read gently, though, the scene speaks plainly to anyone who has ever frozen at a threshold. Courage here is not the absence of doubt. It is the willingness, doubt and all, to take one true step — and then the next.",
+    "moralOrMeaning": "One way many traditions understand this: courage is acting with sincerity while loosening our grip on the outcome — taking the next honest step without waiting for a guarantee.",
+    "symbolism": [
+      {
+        "id": "sym_chariot",
+        "name": "The Chariot",
+        "sanskritName": "Ratha",
+        "meaning": "The self in motion, steadied by a wise inner voice at the reins — often read as the mind guided by clarity rather than by panic.",
+        "associatedDeities": ["Krishna", "Arjuna"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_lowered_bow",
+        "name": "The Lowered Bow",
+        "sanskritName": null,
+        "meaning": "Arjuna setting down his bow is a tender image of the honest standstill — the moment of doubt that comes before any real act of courage.",
+        "associatedDeities": ["Arjuna"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      },
+      {
+        "id": "sym_conch",
+        "name": "Conch",
+        "sanskritName": "Shankha",
+        "meaning": "Its sound is often read as a call to begin — a clear note that marks the turn from hesitation toward the next true step.",
+        "associatedDeities": ["Krishna", "Vishnu"],
+        "traditionNote": "Readings vary by tradition, region, and family lineage."
+      }
+    ],
+    "reflectionPrompt": "When you feel frozen by a hard choice, what helps you take the first small step?",
+    "relatedMantraId": "lesson.gayatri.basics",
+    "relatedFestivalId": "festival.janmashtami",
+    "traditionNote": "Stories vary by tradition, region, and family lineage.",
+    "sourceName": "Bhagavad Gita",
+    "sourceNote": "A brief, accessible retelling of the opening moment; many readings exist.",
+    "reviewStatus": "reviewed",
+    "region": ["pan-India"],
+    "tags": ["courage", "action", "clarity", "doubt"]
+  }
+]

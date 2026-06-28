@@ -206,6 +206,41 @@ enum ContentValidation {
         return issues
     }
 
+    // MARK: - Story library (Phase 2D `Story` model)
+
+    static func validateStoryLibrary(_ stories: [Story]) -> [ValidationIssue] {
+        var issues = checkUniqueIDs(stories.map(\.id), context: "stories")
+        for story in stories { issues += validateStory(story) }
+        return issues
+    }
+
+    /// Validates a single `Story`: required text present, tradition note present,
+    /// and no forbidden Primandir-style terms in user-facing prose.
+    static func validateStory(_ story: Story) -> [ValidationIssue] {
+        var issues: [ValidationIssue] = []
+        let ctx = "story '\(story.id)'"
+        if story.title.trimmed.isEmpty { issues.append(.error(ctx, "missing title")) }
+        if story.bodyMarkdown.trimmed.isEmpty { issues.append(.error(ctx, "missing bodyMarkdown")) }
+        if story.moralOrMeaning.trimmed.isEmpty { issues.append(.error(ctx, "missing moralOrMeaning")) }
+        if story.reflectionPrompt.trimmed.isEmpty { issues.append(.error(ctx, "missing reflectionPrompt")) }
+        if story.traditionNote.trimmed.isEmpty { issues.append(.error(ctx, "missing traditionNote")) }
+
+        // Forbidden terms in user-facing prose.
+        for (field, text) in [("title", story.title), ("body", story.bodyMarkdown),
+                              ("meaning", story.moralOrMeaning), ("reflection", story.reflectionPrompt)] {
+            for term in forbiddenTerms(in: text) {
+                issues.append(.error(ctx, "forbidden term '\(term)' in \(field)"))
+            }
+        }
+        for symbol in story.symbolism {
+            if symbol.meaning.trimmed.isEmpty { issues.append(.error(ctx, "symbol '\(symbol.id)' missing meaning")) }
+            for term in forbiddenTerms(in: symbol.meaning) {
+                issues.append(.error(ctx, "forbidden term '\(term)' in symbol '\(symbol.id)'"))
+            }
+        }
+        return issues
+    }
+
     // MARK: - Forbidden term scan (user-facing labels)
 
     static func scanForbiddenTerms(

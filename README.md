@@ -22,7 +22,7 @@ the festivals you grew up with, and the symbols behind the deities.
 | **Today** | Daily 3-minute practices (morning mantra, evening prayer, midday breath, gratitude), a streak banner, and a mantra of the day. Guided, timed practice player that awards Svara Points. |
 | **Learn** | A guided **Aaroh Path**: a 7-day beginner journey (Om → Vakratunda → Saraswati Namastubhyam) of 60–120s lessons. Your next step is obvious on open; each lesson unlocks one piece of meaning and gently unlocks the next. |
 | **Festivals** | Seasonal cultural **moments**, not a calendar: an upcoming hero with a countdown, a "Coming soon" rail, a "This season" section, a gentle regional lens, and per-festival pages with the story, symbols, a tiny 2–5 min activity, and a family conversation prompt. |
-| **Stories** | Stories & Symbols organised by human themes (courage, wisdom, devotion…), each with the tale, its meaning, and a takeaway. |
+| **Stories** | A calm library of deity stories & symbols by human theme (Courage, Wisdom, Abundance, Stillness, Beginnings, Devotion, Strength): a daily featured story, theme chips, search, full readers with a symbolism rail and a humble meaning callout, and **private, local-only reflections**. |
 | **Profile** | Streak, Svara Points, best streak, achievements grid, settings, and the Svara Plus upgrade. |
 
 Gamification: **streaks**, **Svara Points**, and **achievements** that unlock with a
@@ -66,6 +66,45 @@ Svara/
     ├── SeedData/*.json       authoring source of truth (mantras, lessons, …)
     └── Svara.storekit
 ```
+
+---
+
+## Stories & Symbols (Stories)
+
+A calm, unhurried library for exploring deities, myths, and symbols — warm and
+non-preachy, never a quiz app or a temple guide.
+
+**Home (`StoriesHomeView`).** A daily **featured story** (rotates by date), theme
+chips (All + the seven `StoryTheme`s), a **search** bar (title / deity / tags),
+and a grid of `StoryCardView`s. Tapping opens the reader.
+
+**Reader (`StoryDetailView`).** A themed header with deity, theme, read-time and
+a visible tradition note; the story body rendered from light markdown (no
+external packages); a horizontal **symbolism rail** (`SymbolCard`, tap for full
+meaning); a humble **meaning callout** ("One way to understand this…"); a
+**reflection** prompt; and optional related links ("Practice this in Aaroh" →
+opens the lesson; "See the festival" → opens the festival page).
+
+**Reflections (`ReflectionPromptView` + `ReflectionStore`).** Reflections are
+**strictly local-only** — written to `Documents/reflections.json` and **never**
+synced to Firestore, CloudKit, or iCloud. The prompt sheet shows a privacy note
+and a 500-character counter.
+
+**Model & content.** A Phase 2D `Story` model (`bodyMarkdown`, `moralOrMeaning`,
+`symbolism: [SymbolEntry]`, `reflectionPrompt`, region/tags, related ids, and
+provenance) loads from `seed_story_library.json` via `StoriesService`, with an
+in-code fallback (`SeedContent.storyLibrary`). Seven full stories ship: Ganesha,
+Saraswati, Hanuman, Lakshmi, Shiva, Durga, and Arjuna & Krishna — each 300+
+words, humbly framed ("One way many traditions understand this…"), with a
+"Stories vary by tradition, region, and family lineage." note.
+
+> Note: the new `Story` library uses `seed_story_library.json` and lives
+> **alongside** the original `StorySymbol` catalogue (`seed_stories.json`), which
+> is intentionally kept to preserve its existing seed/validation tests.
+
+**What's mocked.** Content is local/bundled (Firestore later, behind a protocol).
+Story illustrations are themed gradient placeholders. There is no sharing of
+reflections, no public feed, and no WidgetKit in this phase.
 
 ---
 
@@ -255,6 +294,8 @@ app bundle, so bundled seed JSON is reachable):
 - `FestivalLogicTests` — countdown, season mapping, and gentle region filtering (no hiding)
 - `FestivalProgressTests` — festival activity completion awards points once (no double-award)
 - `FestivalContentTests` — all 7 festivals richly authored; no forbidden/ritual-simulation copy
+- `StoriesLogicTests` — theme + search filtering, deterministic featured story, forbidden-term-free content
+- `ReflectionStoreTests` — local-only save/retrieve, ordering, and never a Firestore/Firebase path
 
 Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platform=iOS Simulator,name=iPhone 15'`.
 
@@ -271,5 +312,9 @@ Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platfo
   hero/coming-soon/this-season, rich detail pages, a 2–5 min activity flow with
   once-only points, a gentle non-blocking region lens, and tests for countdown,
   region filtering, and activity deduplication
+- Phase 2D ✅ — Stories & Symbols tab: a `Story` library model, `StoriesService`
+  + local-only `ReflectionStore`, home (featured/themes/search), full reader with
+  symbolism rail, meaning callout and reflections, 7 richly authored stories, and
+  tests for filtering, featured rotation, and local-only reflections
 - Phase 2 — Firebase wiring, real audio for mantras, content authoring
 - Phase 3 — personalised daily plan, richer streaks, widgets & Live Activities

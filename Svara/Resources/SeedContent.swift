@@ -837,6 +837,92 @@ enum SeedContent {
         )
     ]
 
+    // MARK: - Story Library (Phase 2D `Story` model)
+    //
+    // In-code fallback for `StoriesService` (mirrors seed_story_library.json).
+    // Three stories are kept here as a safety net; the full set lives in JSON.
+
+    static let storyLibrary: [Story] = [
+        Story(
+            id: "story_ganesha_obstacle",
+            deity: "Ganesha",
+            title: "The Remover of Obstacles",
+            theme: .beginnings,
+            durationMinutes: 4,
+            bodyMarkdown: "Long before he became the gentle, elephant-headed guardian of beginnings, Ganesha was simply a child shaped with love. In one widely told account, Parvati formed him from the earth and warmth of her own hands and asked him to watch the doorway while she bathed.\n\nWhen Shiva returned and found a boy he did not know guarding the threshold, neither would step aside. In the struggle that followed the child was gravely hurt, and to set things right Shiva gave him the head of an elephant and welcomed him as his own.\n\nWhat could have ended in sorrow became a beginning. From then on Ganesha was the one remembered first — before a journey, an exam, a new venture — not because he sweeps away every difficulty, but because he helps us meet the threshold of anything new with a steadier mind. An obstacle, in this reading, is simply part of the path, and meeting it is already the beginning.",
+            moralOrMeaning: "One way many traditions understand this: what blocks us and what begins us are often the same threshold.",
+            symbolism: [
+                SymbolEntry(id: "sym_elephant_head", name: "Elephant Head", sanskritName: "Gaja",
+                            meaning: "Large ears and a small mouth are often read as an invitation to listen more than we speak.",
+                            associatedDeities: ["Ganesha"]),
+                SymbolEntry(id: "sym_broken_tusk", name: "Broken Tusk", sanskritName: "Ekadanta",
+                            meaning: "The single tusk is often seen as sacrifice in service of completing what we start.",
+                            associatedDeities: ["Ganesha"])
+            ],
+            reflectionPrompt: "When has something that felt like an obstacle turned out to be the start of something?",
+            relatedMantraId: "lesson.vakratunda.meet",
+            relatedFestivalId: "festival.ganeshchaturthi",
+            traditionNote: "Stories vary by tradition, region, and family lineage.",
+            sourceName: "Puranic tradition (widely told)",
+            sourceNote: "A composite of commonly shared tellings.",
+            reviewStatus: "reviewed",
+            region: ["pan-India"],
+            tags: ["beginnings", "obstacles", "patience"]
+        ),
+        Story(
+            id: "story_saraswati_knowledge",
+            deity: "Saraswati",
+            title: "The River of Knowledge",
+            theme: .wisdom,
+            durationMinutes: 4,
+            bodyMarkdown: "Saraswati is often pictured on a white lotus, holding a veena, with a book and beads nearby. She carries no gold and no weapons — what she offers cannot be hoarded.\n\nHer name is tied to an ancient river, and that is no accident. Knowledge, in her telling, is not a treasure locked away but a current: always moving, always renewing, shaped by everyone it passes through. The veena suggests that real understanding has music in it — it should move you, not just fill you. The white lotus, rising clean from muddy water, reminds us that learning often grows out of confusion. Not knowing is not a flaw to hide; it is the soil the lotus needs.\n\nStudents greet her not to win favour but to settle the mind and remember why they are learning at all.",
+            moralOrMeaning: "One reading of this story: knowledge is a current, not a possession — it stays alive only when it keeps moving through us and onward.",
+            symbolism: [
+                SymbolEntry(id: "sym_veena", name: "Veena", sanskritName: "Vina",
+                            meaning: "The stringed instrument suggests understanding that has harmony and rhythm, not just accumulated information.",
+                            associatedDeities: ["Saraswati"]),
+                SymbolEntry(id: "sym_white_lotus", name: "White Lotus", sanskritName: "Padma",
+                            meaning: "A bloom that rises clean from muddy water — clarity emerging out of confusion.",
+                            associatedDeities: ["Saraswati"])
+            ],
+            reflectionPrompt: "What is something you are learning right now, simply for the joy of it?",
+            relatedMantraId: "lesson.saraswati.meet",
+            relatedFestivalId: "festival.navaratri",
+            traditionNote: "Stories vary by tradition, region, and family lineage.",
+            sourceName: "Vedic and Puranic tradition",
+            sourceNote: "A composite of commonly shared tellings.",
+            reviewStatus: "reviewed",
+            region: ["pan-India", "South India"],
+            tags: ["wisdom", "learning", "creativity"]
+        ),
+        Story(
+            id: "story_hanuman_devotion",
+            deity: "Hanuman",
+            title: "The Devoted One",
+            theme: .devotion,
+            durationMinutes: 4,
+            bodyMarkdown: "There is a moment in the Ramayana when everything depends on a single leap. Someone must cross the vast sea to find Sita, and the one who can is Hanuman — but at the shore, he hesitates.\n\nAs a child, the story goes, his great power was gently set aside so he would grow up humble, and over the years he simply forgot how much he carried within. Then his companions remind him who he is — not to flatter him, but to wake him. As he remembers, he grows vast and certain, and crosses the sea in a single bound.\n\nWhat makes the leap remarkable is not the distance but the reason. Hanuman does not jump to prove himself; he jumps because he loves Rama and cannot bear that Sita is suffering. Love, his story suggests, has a way of enlarging us — and we are often far more capable than our self-doubt has let us believe.",
+            moralOrMeaning: "One way many traditions understand this: caring deeply is its own kind of strength, and can quietly enlarge what we are able to do.",
+            symbolism: [
+                SymbolEntry(id: "sym_leap", name: "The Leap",
+                            meaning: "The crossing of the sea is often read as latent potential — strength we forget we hold, waiting for a reason to wake.",
+                            associatedDeities: ["Hanuman"]),
+                SymbolEntry(id: "sym_mace", name: "Mace", sanskritName: "Gada",
+                            meaning: "Carried for protection rather than conquest — strength placed entirely in the service of others.",
+                            associatedDeities: ["Hanuman"])
+            ],
+            reflectionPrompt: "When has caring about someone helped you do more than you thought you could?",
+            relatedMantraId: nil,
+            relatedFestivalId: nil,
+            traditionNote: "Stories vary by tradition, region, and family lineage.",
+            sourceName: "Ramayana (widely told)",
+            sourceNote: "A composite of commonly shared tellings.",
+            reviewStatus: "reviewed",
+            region: ["pan-India"],
+            tags: ["devotion", "courage", "service"]
+        )
+    ]
+
     // MARK: - Achievements
 
     static let achievements: [Achievement] = [

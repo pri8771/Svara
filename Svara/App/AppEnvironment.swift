@@ -15,6 +15,10 @@ final class AppEnvironment {
     let notifications: NotificationService
     let store: StoreService
 
+    /// Phase 2D Stories & Symbols library (Story model) and private reflections.
+    let storyLibrary: StoriesService
+    let reflections: ReflectionStore
+
     private let kvStore: KeyValueStore
 
     // MARK: Session state
@@ -42,6 +46,8 @@ final class AppEnvironment {
         self.progress = progress
         self.notifications = notifications
         self.store = store
+        self.storyLibrary = StoriesService()
+        self.reflections = ReflectionStore()
         self.kvStore = kvStore
         self.profile = .guest()
         self.hasCompletedOnboarding = kvStore.load(Bool.self, forKey: StorageKey.onboardingComplete) ?? false
