@@ -1,8 +1,11 @@
 name: iOS CI
 
-# Compile gate only for My Mandir (Digital Temple) v0.
-# Performs a real iOS Simulator build with Xcode 16.4 on a macOS runner.
-# No signing, no TestFlight, no Firebase, no deployment, no third-party tools.
+# Compile + runtime smoke gate for My Mandir (Digital Temple) v0.
+# On a macOS runner with Xcode 16.4: builds for the iOS Simulator, then boots an
+# iPhone 16 (iOS 18.5) simulator, installs and launches the app, verifies it
+# survives launch (no crash), and uploads a launch screenshot as a build
+# artifact. No signing, no TestFlight, no Firebase, no deployment, no third-party
+# packages (only official actions/checkout and actions/upload-artifact).
 
 on:
   push:
@@ -18,9 +21,14 @@ concurrency:
   group: ios-ci-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  BUNDLE_ID: com.mymandir.digitaltemple
+  SIM_NAME: iPhone 16
+  SIM_OS: "18.5"
+
 jobs:
   build:
-    name: Build (iOS Simulator)
+    name: Build + runtime smoke (iOS Simulator)
     runs-on: macos-15
     timeout-minutes: 30
 
@@ -37,12 +45,73 @@ jobs:
           xcrun simctl list devicetypes
           xcrun simctl list runtimes
 
-      - name: Build
+      - name: Build (compile gate)
         run: |
           set -o pipefail
           xcodebuild \
             -project DigitalTemple.xcodeproj \
             -scheme DigitalTemple \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5' \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,name=${SIM_NAME},OS=${SIM_OS}" \
+            -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
             build
+
+      - name: Boot simulator
+        run: |
+          set -euo pipefail
+          # Resolve the UDID of an available "iPhone 16" (exact name, not Pro/Plus).
+          UDID=$(xcrun simctl list devices available \
+            | grep -E "^[[:space:]]*${SIM_NAME} \(" \
+            | head -n1 \
+            | grep -oE "[0-9A-Fa-f-]{36}")
+          if [ -z "${UDID}" ]; then
+            echo "❌ No available '${SIM_NAME}' simulator found"; exit 1
+          fi
+          echo "SIM_UDID=${UDID}" >> "$GITHUB_ENV"
+          echo "Booting ${SIM_NAME} (${UDID})"
+          xcrun simctl boot "${UDID}" || true
+          xcrun simctl bootstatus "${UDID}" -b
+
+      - name: Install and launch app (runtime smoke)
+        run: |
+          set -euo pipefail
+          APP="build/Build/Products/Debug-iphonesimulator/DigitalTemple.app"
+          test -d "${APP}" || { echo "❌ Built app not found at ${APP}"; exit 1; }
+          xcrun simctl install "${SIM_UDID}" "${APP}"
+          echo "Launching ${BUNDLE_ID}"
+          xcrun simctl launch "${SIM_UDID}" "${BUNDLE_ID}"
+          # Give SwiftUI/SwiftData a moment to render and seed.
+          sleep 8
+
+      - name: Capture launch screenshot
+        if: always()
+        run: |
+          mkdir -p artifacts
+          xcrun simctl io "${SIM_UDID}" screenshot artifacts/01-launch.png || true
+          ls -la artifacts || true
+
+      - name: Assert app survived launch (no crash)
+        run: |
+          set -euo pipefail
+          if xcrun simctl spawn "${SIM_UDID}" launchctl list | grep -q "${BUNDLE_ID}"; then
+            echo "✅ App still running after launch — no crash detected"
+          else
+            echo "❌ App is not running — it likely crashed on launch"
+            # Surface any simulator crash reports to help diagnosis.
+            CRASH_DIR="${HOME}/Library/Developer/CoreSimulator/Devices/${SIM_UDID}/data/Library/Logs/DiagnosticReports"
+            if [ -d "${CRASH_DIR}" ]; then
+              echo "--- crash reports ---"; ls -la "${CRASH_DIR}" || true
+              mkdir -p artifacts && cp -R "${CRASH_DIR}" artifacts/crash-reports || true
+            fi
+            exit 1
+          fi
+
+      - name: Upload screenshot + diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v0-runtime-evidence
+          path: artifacts
+          if-no-files-found: warn
+          retention-days: 14
