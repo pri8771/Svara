@@ -82,6 +82,8 @@ struct SettingsView: View {
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: load)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("settings.root")
     }
 
     private var subtitle: String {

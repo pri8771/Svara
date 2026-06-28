@@ -99,6 +99,7 @@ struct OnboardingFooter: View {
                 .buttonStyle(.sacred)
                 .disabled(!primaryEnabled)
                 .opacity(primaryEnabled ? 1 : 0.5)
+                .accessibilityIdentifier("onboarding.continueButton")
         }
         .screenPadding()
         .padding(.vertical, 16)

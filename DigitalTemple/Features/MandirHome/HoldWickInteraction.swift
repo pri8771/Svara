@@ -51,6 +51,7 @@ struct HoldWickInteraction: View {
         .frame(width: 150, height: 150)
         .contentShape(Circle())
         .accessibilityElement()
+        .accessibilityIdentifier("altar.lightButton")
         .accessibilityLabel(isLit ? "The lamp is lit" : "Hold to light the lamp")
         .accessibilityAddTraits(.isButton)
         .accessibilityAction { if !isLit { onLight() } }

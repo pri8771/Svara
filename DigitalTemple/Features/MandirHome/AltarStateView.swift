@@ -40,5 +40,7 @@ struct AltarStateView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("altar.root")
     }
 }

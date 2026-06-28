@@ -33,10 +33,12 @@ struct MandirModeSelector: View {
                     )
                 }
                 .buttonStyle(.plain)
+                .accessibilityIdentifier("mandir.mode.\(mode.rawValue)")
                 .accessibilityLabel(mode.title)
                 .accessibilityAddTraits(.isButton)
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }
+        .accessibilityIdentifier("mandir.modeSelector")
     }
 }

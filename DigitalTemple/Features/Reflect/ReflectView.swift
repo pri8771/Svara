@@ -69,6 +69,8 @@ struct ReflectView: View {
             }
         }
         .onAppear(perform: loadPast)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("reflect.root")
     }
 
     private func heldHeader(_ sankalp: Sankalp) -> some View {

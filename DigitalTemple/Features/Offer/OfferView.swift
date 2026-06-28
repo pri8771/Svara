@@ -52,6 +52,8 @@ struct OfferView: View {
                 .disabled(kind == .vachan && note.trimmingCharacters(in: .whitespaces).isEmpty)
                 .opacity(kind == .vachan && note.trimmingCharacters(in: .whitespaces).isEmpty ? 0.5 : 1)
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("offer.root")
     }
 
     private func place() {

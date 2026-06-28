@@ -115,3 +115,47 @@ jobs:
           path: artifacts
           if-no-files-found: warn
           retention-days: 14
+
+  screen-walk:
+    name: V0 screen-walk UI test (iOS Simulator)
+    runs-on: macos-15
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode 16.4
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app
+
+      - name: Run V0 screen-walk UI test
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project DigitalTemple.xcodeproj \
+            -scheme DigitalTempleUITests \
+            -destination "platform=iOS Simulator,name=${SIM_NAME},OS=${SIM_OS}" \
+            -resultBundlePath V0ScreenWalk.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Collect screenshots
+        if: always()
+        run: |
+          mkdir -p artifacts
+          # The result bundle always contains the attachments.
+          cp -R V0ScreenWalk.xcresult artifacts/ 2>/dev/null || true
+          # Best-effort: also export the named PNG attachments for convenience.
+          xcrun xcresulttool export attachments \
+            --path V0ScreenWalk.xcresult \
+            --output-path artifacts/screenshots 2>/dev/null || \
+            echo "Attachment export not available; xcresult bundle still uploaded."
+          ls -laR artifacts || true
+
+      - name: Upload screen-walk evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v0-screen-walk-evidence
+          path: artifacts
+          if-no-files-found: warn
+          retention-days: 14

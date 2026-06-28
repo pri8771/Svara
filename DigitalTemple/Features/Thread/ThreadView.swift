@@ -68,6 +68,8 @@ struct ThreadView: View {
             }
         }
         .onAppear { analytics.log(.threadViewed) }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("thread.root")
     }
 
     // MARK: Unified timeline

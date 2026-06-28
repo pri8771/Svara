@@ -42,6 +42,7 @@ struct OnboardingFlowView: View {
             }
         }
         .animation(.easeInOut(duration: 0.35), value: viewModel.step)
+        .accessibilityIdentifier("onboarding.root")
     }
 
     private func complete(createSankalp: Bool) {
