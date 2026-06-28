@@ -8,7 +8,11 @@ on:
   push:
     branches:
       - claude/my-mandir-ios-v0-se5f3a
+    paths-ignore:
+      - '**/*.md'
   pull_request:
+    paths-ignore:
+      - '**/*.md'
 
 concurrency:
   group: ios-ci-${{ github.ref }}
