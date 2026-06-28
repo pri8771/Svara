@@ -186,6 +186,20 @@ final class AppEnvironment {
         apply(updated, unlocked: unlocked)
     }
 
+    /// Completes a festival's tiny activity, awarding its points exactly once
+    /// (falls back to 15 when the festival has no explicit activity points).
+    func completeFestivalActivity(_ festival: Festival) {
+        let points = festival.tinyActivity?.points ?? 15
+        let (updated, unlocked) = progress.completeFestivalActivity(festival, points: points, for: profile)
+        apply(updated, unlocked: unlocked)
+    }
+
+    /// Whether the festival's activity has been completed (reuses the observed
+    /// ledger as the completion record).
+    func hasCompletedFestivalActivity(_ festival: Festival) -> Bool {
+        profile.observedFestivalIDs.contains(festival.id)
+    }
+
     func hasCompletedPractice(_ practice: DailyPractice) -> Bool {
         let today = Calendar.current.startOfDay(for: Date())
         return progress.loadSessions().contains {

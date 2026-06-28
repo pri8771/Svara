@@ -233,7 +233,14 @@ enum ContentValidation {
         }
         for f in festivals {
             check(f.name, "festival '\(f.id)'"); check(f.tagline, "festival '\(f.id)'")
+            if let short = f.shortDescription { check(short, "festival '\(f.id)' shortDescription") }
+            if let prompt = f.familyPrompt { check(prompt, "festival '\(f.id)' familyPrompt") }
             for activity in f.activities { check(activity, "festival '\(f.id)' activity") }
+            for symbol in f.symbols { check(symbol.name, "festival '\(f.id)' symbol") }
+            if let tiny = f.tinyActivity {
+                check(tiny.title, "festival '\(f.id)' activity title")
+                for step in tiny.steps { check(step, "festival '\(f.id)' activity step") }
+            }
         }
         for s in stories {
             check(s.title, "story '\(s.id)'"); check(s.summary, "story '\(s.id)'"); check(s.takeaway, "story '\(s.id)'")

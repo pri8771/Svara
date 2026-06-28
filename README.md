@@ -21,7 +21,7 @@ the festivals you grew up with, and the symbols behind the deities.
 | --- | --- |
 | **Today** | Daily 3-minute practices (morning mantra, evening prayer, midday breath, gratitude), a streak banner, and a mantra of the day. Guided, timed practice player that awards Svara Points. |
 | **Learn** | A guided **Aaroh Path**: a 7-day beginner journey (Om → Vakratunda → Saraswati Namastubhyam) of 60–120s lessons. Your next step is obvious on open; each lesson unlocks one piece of meaning and gently unlocks the next. |
-| **Festivals** | Upcoming festival moments with a countdown, the story, why it matters, and small activities to mark the day. |
+| **Festivals** | Seasonal cultural **moments**, not a calendar: an upcoming hero with a countdown, a "Coming soon" rail, a "This season" section, a gentle regional lens, and per-festival pages with the story, symbols, a tiny 2–5 min activity, and a family conversation prompt. |
 | **Stories** | Stories & Symbols organised by human themes (courage, wisdom, devotion…), each with the tale, its meaning, and a takeaway. |
 | **Profile** | Streak, Svara Points, best streak, achievements grid, settings, and the Svara Plus upgrade. |
 
@@ -66,6 +66,55 @@ Svara/
     ├── SeedData/*.json       authoring source of truth (mantras, lessons, …)
     └── Svara.storekit
 ```
+
+---
+
+## Festival Moments (Festivals)
+
+The Festivals tab is built around one idea: **"Know what's coming, understand
+why it matters, and do one tiny meaningful thing."** It's seasonal cultural
+moments for young Indians and the diaspora — not a calendar or a Wikipedia page,
+and explicitly **not** a virtual temple, puja simulator, or booking app.
+
+**Home (`FestivalsView`).** Header "Festival Moments" → a gentle region picker →
+an **Up next** hero card (countdown, name, short context, Explore) → a
+horizontal **Coming soon** rail (`FestivalMomentCard`) → a **This season**
+section → **The year ahead**. A warm empty state shows when nothing is imminent.
+
+**Detail (`FestivalDetailView`).** Illustrated hero, date + region tags ("Dates
+can vary by region and tradition"), Why it matters, The story, Symbols, a tiny
+2–5 min activity, a family conversation prompt ("Ask someone in your family how
+they celebrated this growing up"), a related mantra/practice when available, and
+a personal Save/Share (no public feed).
+
+**Activity flow (`FestivalActivityView`).** Intro → a few gentle steps → an
+optional reflection → completion. Reflection text is **local-only** — never
+stored or sent anywhere. These are reflective, real-world prompts; there is no
+on-screen ritual to perform.
+
+**Region lens (`RegionFilterView` + `FestivalRegionFilter`).** Filters (India,
+Diaspora, North/South/West/East India, Global Hindu) **personalise ordering but
+never hide festivals** — a matching festival floats to the front; the rest
+remain, gently dimmed. Untagged festivals are treated as universally relevant.
+
+**Progress.** Completing a festival's tiny activity awards its points **exactly
+once** via `ProgressService.completeFestivalActivity` (idempotent on the
+`observedFestivalIDs` ledger, which also drives the `festivalsObserved`
+achievement). No streak-freeze gifts are ever tied to a festival.
+
+**Content & provenance.** Seven festivals ship with rich content — Diwali, Holi,
+Navaratri, Ganesh Chaturthi, Janmashtami, Raksha Bandhan, Makar Sankranti /
+Pongal (plus Guru Purnima). Each carries `shortDescription`, `whyItMatters`,
+`story`, `symbols`, `activities`, a `tinyActivity` (steps + reflection),
+`familyPrompt`, `regionTags`, optional `relatedMantraID`/`relatedPracticeID`,
+`isDateApproximate`, and provenance (`sourceName`/`sourceNote`/`traditionNote`/
+`reviewStatus`). Stories use humble framing — "Traditions vary — here's one
+common story." Dates are illustrative 2026/2027 and explicitly marked approximate.
+
+**What's mocked.** Content loads from `seed_festivals.json` via
+`SeedContentProvider` (Firestore later, behind `ContentRepository`). Completion
+persists locally via `KeyValueStore`. The hero illustration is a themed gradient
+placeholder; Save/Share are personal-only; there is no WidgetKit in this phase.
 
 ---
 
@@ -203,6 +252,9 @@ app bundle, so bundled seed JSON is reachable):
 - `DailyRecommenderTests` — daily recommendation priority
 - `ProgressDeduplicationTests` — points-once, streak-once-per-day, best-score tracking
 - `LearnCopyTests` — no punitive/forbidden copy in Learn strings; gentle phrasings present
+- `FestivalLogicTests` — countdown, season mapping, and gentle region filtering (no hiding)
+- `FestivalProgressTests` — festival activity completion awards points once (no double-award)
+- `FestivalContentTests` — all 7 festivals richly authored; no forbidden/ritual-simulation copy
 
 Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platform=iOS Simulator,name=iPhone 15'`.
 
@@ -214,5 +266,10 @@ Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platfo
   player (matchMeaning / fillBlank / syllableOrder) with gentle feedback,
   meaning unlocks, lesson-progress persistence, daily recommendation, Today
   "continue Aaroh" card, and tests for lesson logic + point dedup
+- Phase 2C ✅ — Festivals tab as seasonal moments: enriched festival model
+  (symbols, tiny activities, family prompts, region tags, provenance), home with
+  hero/coming-soon/this-season, rich detail pages, a 2–5 min activity flow with
+  once-only points, a gentle non-blocking region lens, and tests for countdown,
+  region filtering, and activity deduplication
 - Phase 2 — Firebase wiring, real audio for mantras, content authoring
 - Phase 3 — personalised daily plan, richer streaks, widgets & Live Activities

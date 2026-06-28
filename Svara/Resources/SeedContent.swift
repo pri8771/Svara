@@ -439,33 +439,80 @@ enum SeedContent {
             id: "festival.gurupurnima",
             name: "Guru Purnima",
             date: date(2026, 7, 29),
-            deity: nil,
             tagline: "Honouring the teachers who light the way",
             significance: "A day to thank the mentors, guides and teachers — formal or not — who have shaped who you are.",
-            story: "Guru Purnima falls on the full-moon day honouring Sage Vyasa, who compiled the Vedas and authored the Mahabharata. The word 'guru' means 'one who dispels darkness'. The tradition reminds us that knowledge passed with care is itself sacred.",
+            story: "Traditions vary — here's one common story. Guru Purnima falls on the full moon honouring Sage Vyasa, traditionally credited with compiling the Vedas. The word 'guru' is often explained as 'one who dispels darkness'. The day reminds us that knowledge passed on with care is itself precious.",
             activities: [
                 "Message a teacher or mentor to say thank you.",
                 "Write down one lesson someone taught you that you still live by.",
                 "Spend ten minutes learning something with full attention."
             ],
             theme: .knowledge,
-            systemImage: "moon.circle.fill"
+            systemImage: "moon.circle.fill",
+            shortDescription: "A full-moon day to thank the people who taught you something that stuck.",
+            whyItMatters: "Most of who we are was quietly handed to us by someone. This is a moment to notice that, and say thanks.",
+            symbols: [
+                FestivalSymbol(name: "Full moon", meaning: "Often read as completeness and reflected light — wisdom passed from one to another."),
+                FestivalSymbol(name: "Lamp", meaning: "A small light that lights other lamps without losing its own flame.")
+            ],
+            familyPrompt: "Ask someone in your family who their most memorable teacher was, and why.",
+            regionTags: ["india", "global", "diaspora"],
+            relatedPracticeID: "practice.morning.gayatri",
+            relatedMantraID: "mantra.saraswati",
+            tinyActivity: FestivalActivity(
+                id: "festival.gurupurnima.activity",
+                title: "Thank a teacher",
+                durationMinutes: 3,
+                steps: [
+                    "Bring to mind one person who taught you something that stuck — a teacher, a coach, a relative, a friend.",
+                    "Recall one specific thing they gave you.",
+                    "If it feels right, send them a short message of thanks. If not, simply hold the gratitude for a moment."
+                ],
+                reflectionPrompt: "Who shaped you in a way they probably never knew?"
+            ),
+            isDateApproximate: true,
+            sourceNote: "A widely-shared account; emphasis differs across lineages.",
+            traditionNote: "Customs and dates can vary by region, lineage and family.",
+            reviewStatus: .humanReviewed
         ),
         Festival(
             id: "festival.rakshabandhan",
             name: "Raksha Bandhan",
             date: date(2026, 8, 28),
-            deity: nil,
             tagline: "The thread that ties us together",
-            significance: "A celebration of the bond between siblings — and of protection, loyalty and love between people who look out for each other.",
-            story: "Sisters tie a 'rakhi' — a sacred thread — around their brothers' wrists, and brothers vow to protect them. Over time the festival has grown to celebrate every relationship built on care and protection, far beyond blood ties.",
+            significance: "A celebration of the bond between siblings — and of care, loyalty and looking out for one another.",
+            story: "Traditions vary — here's one common story. Sisters tie a 'rakhi', a sacred thread, around their brothers' wrists, and brothers promise to look after them. Over time the festival has grown to celebrate every relationship built on protection and love, well beyond blood ties.",
             activities: [
                 "Reach out to a sibling or a friend who feels like family.",
                 "Tie or send a rakhi — even a digital one counts.",
                 "Recall a time someone had your back, and thank them."
             ],
             theme: .protection,
-            systemImage: "link.circle.fill"
+            systemImage: "link.circle.fill",
+            shortDescription: "A day for the people who have your back — siblings and chosen family alike.",
+            whyItMatters: "Family isn't only who you're related to. This is a moment to honour whoever shows up for you.",
+            symbols: [
+                FestivalSymbol(name: "Rakhi thread", meaning: "A simple thread standing in for a promise to look out for each other."),
+                FestivalSymbol(name: "Tied wrist", meaning: "A visible, wearable reminder of a bond that asks for nothing in return.")
+            ],
+            familyPrompt: "Ask someone in your family how they celebrated Raksha Bandhan growing up.",
+            regionTags: ["india", "northIndia", "westIndia", "global", "diaspora"],
+            relatedPracticeID: "practice.evening.gratitude",
+            relatedMantraID: "mantra.shanti",
+            tinyActivity: FestivalActivity(
+                id: "festival.rakshabandhan.activity",
+                title: "Reach out to someone who has your back",
+                durationMinutes: 3,
+                steps: [
+                    "Think of one person — related or not — who has truly looked out for you.",
+                    "Recall a specific time they showed up for you.",
+                    "Send them a quick message, or simply send them a good wish in your mind."
+                ],
+                reflectionPrompt: "Who feels like family to you, beyond blood ties?"
+            ),
+            isDateApproximate: true,
+            traditionNote: "Observance and dates can vary across regions and families.",
+            reviewStatus: .humanReviewed
         ),
         Festival(
             id: "festival.janmashtami",
@@ -474,14 +521,38 @@ enum SeedContent {
             deity: "Krishna",
             tagline: "The midnight birth of joy and mischief",
             significance: "Celebrating the birth of Krishna — playful, wise, and a reminder to act with love and courage even in difficult times.",
-            story: "Krishna was born at midnight in a prison cell, and his father carried him across a flooding river to safety. His life — from butter-stealing child to the charioteer of the Bhagavad Gita — teaches that joy and duty can live side by side.",
+            story: "Traditions vary — here's one common story. Krishna was born at midnight in a prison cell, and his father is said to have carried him across a flooding river to safety. From butter-stealing child to the charioteer of the Bhagavad Gita, his life suggests that joy and duty can live side by side.",
             activities: [
                 "Read one verse from the Bhagavad Gita.",
                 "Do something playful and unselfconscious today.",
                 "Reflect: where can you act with courage and lightness?"
             ],
             theme: .devotion,
-            systemImage: "flame.circle.fill"
+            systemImage: "flame.circle.fill",
+            shortDescription: "Celebrating Krishna — playful, wise, and a reminder that joy and duty can coexist.",
+            whyItMatters: "Krishna's life suggests you can be lighthearted and serious at once — playful and still principled.",
+            symbols: [
+                FestivalSymbol(name: "Butter pot", meaning: "The playful, mischievous child — a reminder not to take ourselves too seriously."),
+                FestivalSymbol(name: "Flute", meaning: "Often read as presence and charm — being fully where you are."),
+                FestivalSymbol(name: "Peacock feather", meaning: "Colour and lightness worn even alongside great responsibility.")
+            ],
+            familyPrompt: "Ask someone in your family for their favourite Krishna story from childhood.",
+            regionTags: ["india", "northIndia", "westIndia", "global", "diaspora"],
+            relatedPracticeID: "practice.evening.prayer",
+            tinyActivity: FestivalActivity(
+                id: "festival.janmashtami.activity",
+                title: "A moment of playful courage",
+                durationMinutes: 3,
+                steps: [
+                    "Name one situation right now that feels heavy or serious.",
+                    "Imagine meeting it with a little lightness — curiosity instead of dread.",
+                    "Take one slow breath, and let your shoulders drop."
+                ],
+                reflectionPrompt: "Where could a little lightness help you act with courage?"
+            ),
+            isDateApproximate: true,
+            traditionNote: "Dates and customs can vary by region and calendar.",
+            reviewStatus: .humanReviewed
         ),
         Festival(
             id: "festival.ganeshchaturthi",
@@ -489,15 +560,80 @@ enum SeedContent {
             date: date(2026, 9, 14),
             deity: "Ganesha",
             tagline: "Welcoming the remover of obstacles",
-            significance: "A joyful start-of-things festival — perfect for setting intentions and clearing what stands in your way.",
-            story: "For ten days, homes and streets welcome Ganesha, then lovingly send his clay form back to the water — a reminder that beginnings and endings are part of one cycle, and nothing worth doing is permanent or perfect.",
+            significance: "A joyful start-of-things festival — good for setting intentions and clearing what stands in your way.",
+            story: "Traditions vary — here's one common story. For several days, homes and streets welcome Ganesha, then lovingly return his clay form to the water — a reminder that beginnings and endings are part of one cycle, and nothing worth doing needs to be permanent or perfect.",
             activities: [
                 "Name one obstacle you want to move past this month.",
                 "Chant 'Om Gam Ganapataye Namaha' eleven times.",
                 "Begin one small thing you've been putting off."
             ],
             theme: .courage,
-            systemImage: "sparkles"
+            systemImage: "sparkles",
+            shortDescription: "A joyful start-of-things festival — great for setting intentions.",
+            whyItMatters: "Beginnings are hard. This is a warm nudge to start the small thing you've been circling.",
+            symbols: [
+                FestivalSymbol(name: "Curved trunk", meaning: "Adaptability — the strength to bend without breaking."),
+                FestivalSymbol(name: "Clay form returned to water", meaning: "Letting go gracefully; nothing needs to last forever to matter.")
+            ],
+            familyPrompt: "Ask someone in your family how Ganesh Chaturthi was marked where they grew up.",
+            regionTags: ["india", "westIndia", "southIndia", "global", "diaspora"],
+            relatedMantraID: "mantra.ganesha",
+            tinyActivity: FestivalActivity(
+                id: "festival.ganeshchaturthi.activity",
+                title: "Clear one small obstacle",
+                durationMinutes: 4,
+                steps: [
+                    "Name one thing you've been putting off — keep it small.",
+                    "Decide the very first tiny step (just the first one).",
+                    "Do that one step now, or schedule it for today.",
+                    "If you like, say 'Om Gam Ganapataye Namaha' once as you begin."
+                ],
+                reflectionPrompt: "What's the smallest first step you can actually take today?"
+            ),
+            isDateApproximate: true,
+            traditionNote: "The length and form of celebration can vary widely by region.",
+            reviewStatus: .humanReviewed
+        ),
+        Festival(
+            id: "festival.navaratri",
+            name: "Navaratri",
+            date: date(2026, 10, 11),
+            deity: "Durga",
+            tagline: "Nine nights of inner strength",
+            significance: "Nine nights honouring the divine feminine and the strength to face what feels bigger than us.",
+            story: "Traditions vary — here's one common story. Navaratri celebrates Durga's victory over a seemingly invincible foe — often read as the inner strength to meet our own fears. Across India it takes many forms: garba and dandiya in the west, Golu displays in the south, Durga Puja in the east.",
+            activities: [
+                "Name one fear you'd like to meet with courage this week.",
+                "Move your body — dance, walk, stretch — for a few minutes.",
+                "Notice a moment you were stronger than you expected."
+            ],
+            theme: .courage,
+            systemImage: "moon.stars.fill",
+            shortDescription: "Nine nights honouring the divine feminine and the courage to face hard things.",
+            whyItMatters: "Sometimes you need a reminder that you're stronger than the thing in front of you. That's this.",
+            symbols: [
+                FestivalSymbol(name: "Nine nights", meaning: "Strength built gradually, one night at a time, rather than all at once."),
+                FestivalSymbol(name: "Garba circle", meaning: "Community and rhythm — facing things together, in motion.")
+            ],
+            familyPrompt: "Ask someone in your family how Navaratri looks where your family is from.",
+            regionTags: ["india", "westIndia", "eastIndia", "southIndia", "global", "diaspora"],
+            relatedPracticeID: "practice.midday.breath",
+            relatedMantraID: "mantra.mahamrityunjaya",
+            tinyActivity: FestivalActivity(
+                id: "festival.navaratri.activity",
+                title: "Meet one fear, gently",
+                durationMinutes: 4,
+                steps: [
+                    "Name one thing that feels bigger than you right now.",
+                    "Recall a past moment you were stronger than you expected to be.",
+                    "Take three slow breaths, standing tall.",
+                    "Name one small, brave thing you could do this week."
+                ],
+                reflectionPrompt: "When have you surprised yourself with your own strength?"
+            ),
+            isDateApproximate: true,
+            traditionNote: "Navaratri is observed very differently across regions and communities; dates can vary.",
+            reviewStatus: .humanReviewed
         ),
         Festival(
             id: "festival.diwali",
@@ -506,14 +642,120 @@ enum SeedContent {
             deity: "Lakshmi",
             tagline: "The festival of lights",
             significance: "The triumph of light over darkness and knowledge over ignorance — a time for renewal, gratitude and fresh starts.",
-            story: "Diwali marks Rama's return to Ayodhya after fourteen years of exile, his path lit by rows of lamps. Across India it also honours Lakshmi, goddess of abundance. Lighting a lamp is a quiet vow to keep an inner light burning.",
+            story: "Traditions vary — here's one common story. Diwali is associated with Rama's return to Ayodhya after fourteen years, his path lit by rows of lamps. In many regions it also honours Lakshmi. Lighting a lamp is a quiet vow to keep an inner light burning.",
             activities: [
                 "Light a diya or candle and set an intention.",
                 "Clear and tidy one small space for a fresh start.",
-                "Share something — food, a gift, your time — with someone."
+                "Share food or time with someone you care about."
             ],
             theme: .prosperity,
-            systemImage: "lightbulb.circle.fill"
+            systemImage: "lightbulb.circle.fill",
+            shortDescription: "Light over darkness — a warm reset for renewal, gratitude and fresh starts.",
+            whyItMatters: "It's a yearly permission slip to clear out the old and begin again, gently.",
+            symbols: [
+                FestivalSymbol(name: "Diya (lamp)", meaning: "A small light kept burning — often read as hope and inner awareness."),
+                FestivalSymbol(name: "Rangoli", meaning: "Patterns of welcome at the threshold; care taken to receive others."),
+                FestivalSymbol(name: "Lakshmi", meaning: "Associated with well-being and grace, in every form — not money alone.")
+            ],
+            familyPrompt: "Ask someone in your family about a Diwali they remember most vividly, and why.",
+            regionTags: ["india", "northIndia", "westIndia", "southIndia", "eastIndia", "global", "diaspora"],
+            relatedPracticeID: "practice.evening.gratitude",
+            relatedMantraID: "mantra.lakshmi",
+            tinyActivity: FestivalActivity(
+                id: "festival.diwali.activity",
+                title: "Light and intention",
+                durationMinutes: 4,
+                steps: [
+                    "Tidy one small space — a desk corner, a shelf, your phone's home screen.",
+                    "If you have a candle or diya, light it. If not, picture a small steady flame.",
+                    "Name one intention for the season ahead.",
+                    "Sit with the light, or the image of it, for a few quiet breaths."
+                ],
+                reflectionPrompt: "What's one small light you want to keep burning this season?"
+            ),
+            isDateApproximate: true,
+            traditionNote: "The legends, dates and rituals of Diwali can vary by region and family.",
+            reviewStatus: .humanReviewed
+        ),
+        Festival(
+            id: "festival.makarsankranti",
+            name: "Makar Sankranti & Pongal",
+            date: date(2027, 1, 14),
+            tagline: "A harvest of gratitude",
+            significance: "Marking the sun's turn toward longer days — a harvest festival of thanks and new energy.",
+            story: "Traditions vary — here's one common story. Celebrated as Makar Sankranti, Pongal, Lohri, Bihu and more, this is one of the few festivals tied to the solar calendar. Kites, sesame sweets, and the first harvest all mark a turn toward warmth and light.",
+            activities: [
+                "Name three things from the past season you're grateful for.",
+                "Eat something seasonal and local today.",
+                "Step outside and notice the sun a little longer than usual."
+            ],
+            theme: .prosperity,
+            systemImage: "sun.max.fill",
+            shortDescription: "The sun turns toward longer days — a harvest festival of thanks and new energy.",
+            whyItMatters: "A natural moment to look back with gratitude and feel the days, quite literally, getting brighter.",
+            symbols: [
+                FestivalSymbol(name: "Kite", meaning: "Rising spirits and open skies as the days lengthen."),
+                FestivalSymbol(name: "Sesame and jaggery", meaning: "Sweetness shared; warmth offered to others in the cold months."),
+                FestivalSymbol(name: "First harvest", meaning: "Gratitude for what the season provided.")
+            ],
+            familyPrompt: "Ask someone in your family what this harvest festival is called where they're from.",
+            regionTags: ["india", "southIndia", "westIndia", "northIndia", "eastIndia"],
+            relatedPracticeID: "practice.evening.gratitude",
+            relatedMantraID: "mantra.gayatri",
+            tinyActivity: FestivalActivity(
+                id: "festival.makarsankranti.activity",
+                title: "A harvest of gratitude",
+                durationMinutes: 3,
+                steps: [
+                    "Think back over the past season — the last few months.",
+                    "Name three things, however small, that you're grateful for.",
+                    "Step outside if you can, and notice the light for a moment."
+                ],
+                reflectionPrompt: "What did this past season quietly give you?"
+            ),
+            isDateApproximate: true,
+            traditionNote: "Known by many names and customs across regions; Pongal spans several days in the south. Dates can vary.",
+            reviewStatus: .humanReviewed
+        ),
+        Festival(
+            id: "festival.holi",
+            name: "Holi",
+            date: date(2027, 3, 3),
+            tagline: "Colour, renewal and letting go",
+            significance: "The festival of colours: a joyful reset, a chance to repair bonds and start fresh.",
+            story: "Traditions vary — here's one common story. Holi welcomes spring and is linked to the story of Prahlada and the burning away of arrogance. Playing with colour dissolves the usual distances between people — for a day, everyone meets as equals.",
+            activities: [
+                "Make peace with someone over a small grudge.",
+                "Add a splash of colour to your day, however small.",
+                "Let go of one thing that's been weighing on you."
+            ],
+            theme: .compassion,
+            systemImage: "paintpalette.fill",
+            shortDescription: "The festival of colours — a joyful reset and a chance to repair bonds.",
+            whyItMatters: "A bright invitation to put down a grudge, mend a bond, and let yourself have fun.",
+            symbols: [
+                FestivalSymbol(name: "Colours", meaning: "Joy that levels differences — for a day, everyone meets as equals."),
+                FestivalSymbol(name: "Bonfire (Holika)", meaning: "Often read as burning away what no longer serves us.")
+            ],
+            familyPrompt: "Ask someone in your family for a funny or messy Holi memory from their youth.",
+            regionTags: ["india", "northIndia", "eastIndia", "global", "diaspora"],
+            relatedPracticeID: "practice.evening.gratitude",
+            relatedMantraID: "mantra.shanti",
+            tinyActivity: FestivalActivity(
+                id: "festival.holi.activity",
+                title: "Let one thing go",
+                durationMinutes: 3,
+                steps: [
+                    "Name one small grudge or worry you've been carrying.",
+                    "Ask yourself: is this worth holding onto?",
+                    "Picture setting it down, the way colour washes off after Holi.",
+                    "If a bond needs mending, consider one small step toward it."
+                ],
+                reflectionPrompt: "What would feel lighter to let go of this spring?"
+            ),
+            isDateApproximate: true,
+            traditionNote: "Holi's stories, dates and play can vary considerably by region.",
+            reviewStatus: .humanReviewed
         )
     ]
 

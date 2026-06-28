@@ -34,6 +34,9 @@ protocol ProgressService {
     func completeLesson(_ lesson: Lesson, for profile: UserProfile) -> (UserProfile, [Achievement])
     /// Marks a festival as observed and returns the updated profile.
     func observeFestival(_ festival: Festival, for profile: UserProfile) -> (UserProfile, [Achievement])
+    /// Completes a festival's tiny activity, awarding `points` exactly once.
+    /// Idempotent: a festival already marked observed/completed awards nothing.
+    func completeFestivalActivity(_ festival: Festival, points: Int, for profile: UserProfile) -> (UserProfile, [Achievement])
     /// Newly-unlocked achievements relative to what's already unlocked.
     func evaluateAchievements(for profile: UserProfile, catalogue: [Achievement]) -> [Achievement]
     /// Progress (0...1) toward an achievement for display.
@@ -167,12 +170,16 @@ final class LocalProgressService: ProgressService {
     }
 
     func observeFestival(_ festival: Festival, for profile: UserProfile) -> (UserProfile, [Achievement]) {
+        completeFestivalActivity(festival, points: 15, for: profile)
+    }
+
+    func completeFestivalActivity(_ festival: Festival, points: Int, for profile: UserProfile) -> (UserProfile, [Achievement]) {
         var updated = profile
         guard !updated.observedFestivalIDs.contains(festival.id) else {
-            return (updated, [])
+            return (updated, []) // already completed — never double-award
         }
         updated.observedFestivalIDs.append(festival.id)
-        updated.totalPoints += 15
+        updated.totalPoints += max(0, points)
         return applyAchievements(to: updated)
     }
 
