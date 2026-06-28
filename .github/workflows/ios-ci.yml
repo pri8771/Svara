@@ -149,7 +149,8 @@ jobs:
             --path V0ScreenWalk.xcresult \
             --output-path artifacts/screenshots 2>/dev/null || \
             echo "Attachment export not available; xcresult bundle still uploaded."
-          ls -laR artifacts || true
+          echo "--- artifacts/ ---"; ls -la artifacts || true
+          echo "--- artifacts/screenshots/ ---"; ls -la artifacts/screenshots || true
 
       - name: Upload screen-walk evidence
         if: always()
