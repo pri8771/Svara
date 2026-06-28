@@ -20,7 +20,7 @@ the festivals you grew up with, and the symbols behind the deities.
 | Tab | What it does |
 | --- | --- |
 | **Today** | Daily 3-minute practices (morning mantra, evening prayer, midday breath, gratitude), a streak banner, and a mantra of the day. Guided, timed practice player that awards Svara Points. |
-| **Learn** | Duolingo-style lessons that teach mantras/slokas step by step — intro, listen, meaning, and interactive quizzes — with XP and progress. |
+| **Learn** | A guided **Aaroh Path**: a 7-day beginner journey (Om → Vakratunda → Saraswati Namastubhyam) of 60–120s lessons. Your next step is obvious on open; each lesson unlocks one piece of meaning and gently unlocks the next. |
 | **Festivals** | Upcoming festival moments with a countdown, the story, why it matters, and small activities to mark the day. |
 | **Stories** | Stories & Symbols organised by human themes (courage, wisdom, devotion…), each with the tale, its meaning, and a takeaway. |
 | **Profile** | Streak, Svara Points, best streak, achievements grid, settings, and the Svara Plus upgrade. |
@@ -56,13 +56,70 @@ Svara/
 ├── Features/                One folder per surface, MVVM
 │   ├── Onboarding / Auth
 │   ├── Today  (TodayViewModel, TodayView, PracticePlayerView)
-│   ├── Learn  (LearnViewModel, LearnView, LessonPlayerView)
+│   ├── Learn  (LearnViewModel, LearnView, LessonPlayerView, LessonResultView,
+│   │          MantraCourseView, + pure logic: LessonEvaluator, AarohPath,
+│   │          DailyRecommender, LearnCopy)
 │   ├── Festivals / Stories / Profile
 │   └── Shared (MantraDetailView)
 └── Resources/               Assets, seed content, StoreKit config
-    ├── SeedContent.swift     6 mantras, 4 practices, 4 lessons, 5 festivals, 6 stories, 10 achievements
+    ├── SeedContent.swift     in-code fallback mirroring the JSON seed
+    ├── SeedData/*.json       authoring source of truth (mantras, lessons, …)
     └── Svara.storekit
 ```
+
+---
+
+## The Aaroh Path (Learn)
+
+The Learn tab is a **guided path**, not a static content library. "Aaroh" (the
+ascent of notes) names the idea: one gentle step at a time.
+
+**Concept.** A first **7-day beginner path** teaches three mantras in sequence —
+**Om** (Days 1–2) → **Vakratunda** (Days 3–5) → **Saraswati Namastubhyam**
+(Days 6–7). Each day is a 60–120-second lesson. The path is grouped into
+per-mantra *chapters* (`MantraCourseView`). Lessons beyond the path
+(Gayatri, Shanti) sit under "Beyond the path".
+
+**Lesson flow.** A lesson is a few cards: `intro` → `listen` → a quiz step →
+`reflection`, ending on a result screen that **unlocks one piece of meaning**
+("You unlocked: What Vakratunda means") and previews the next step.
+
+**Supported step types** (`LessonStep.Kind`):
+
+| Kind | Interaction |
+| --- | --- |
+| `intro` / `listen` / `meaning` / `reflection` | Reading / chanting cards — never "wrong" |
+| `multipleChoice` / `matchMeaning` | Pick the option that matches |
+| `fillBlank` | Pick the option *or* a free-text accepted answer (case/space-insensitive) |
+| `syllableOrder` | Tap syllables into the correct order |
+
+Answer checking is pure and forgiving (`LessonEvaluator`): a non-match is never
+"wrong" — the correct answer is shown kindly with an encouraging line, and the
+learner always continues. **No lives, hearts, or failure states** (ProductGuardrails §8.2).
+
+**Progress rules** (unified in `ProgressService`):
+- **Points/Light awarded once** per lesson (idempotent on `completedLessonIDs`).
+- **Streak increments at most once per local day** (`StreakCalculator`).
+- **Step-level progress** (`LessonProgress`) tracks resume state, best score, and
+  hints used — points are never awarded by step or hint.
+- **Unlock** is linear: the first lesson is always open; each next lesson opens
+  when the one before it is completed (`AarohPath`).
+- **Daily recommendation** priority (`DailyRecommender`): continue in-progress →
+  next unlocked → first beginner → review completed → shloka of the day. Surfaced
+  on both the Today "continue Aaroh" card and the Learn hero.
+
+**Content provenance.** Every path lesson carries `meaningOverview`,
+`pronunciationTip`, an `insightTitle`/`insightBody`, and optional
+`sourceName`/`sourceNote`/`traditionNote`/`reviewStatus`. Interpretive meaning
+uses humble, plural framing — "One common translation…", "One way to understand
+this…", "Traditions vary by family and region." (ProductGuardrails §7).
+
+**What's mocked / local.** Content loads from bundled JSON via
+`SeedContentProvider` (Firestore later, behind `ContentRepository`). Lesson and
+streak progress persist locally via `KeyValueStore` over `UserDefaults` (behind
+the protocol; Firestore subcollections later). There is **no audio** for mantras
+yet and **no WidgetKit** in this phase. SwiftUI previews run entirely on
+mock/local data — Firebase stays behind protocols and is optional for local dev.
 
 ### Patterns
 
@@ -141,6 +198,11 @@ app bundle, so bundled seed JSON is reachable):
 - `LessonOrderingTests` — valid, unique lesson ordering
 - `ShlokaSelectorTests` — deterministic shloka-of-day selection + deep-link parsing
 - `ForbiddenTermsTests` — forbidden-term detection and a bell-free symbol system
+- `LessonEvaluatorTests` — answer validation for matchMeaning / fillBlank / syllableOrder
+- `AarohPathTests` — unlock logic, node states, and the 7-day seed path shape
+- `DailyRecommenderTests` — daily recommendation priority
+- `ProgressDeduplicationTests` — points-once, streak-once-per-day, best-score tracking
+- `LearnCopyTests` — no punitive/forbidden copy in Learn strings; gentle phrasings present
 
 Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platform=iOS Simulator,name=iPhone 15'`.
 
@@ -148,5 +210,9 @@ Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platfo
 
 - Phase 1 ✅ — foundation: navigation, models, design system, services, seed content
 - Phase 2A ✅ — product guardrails, JSON seed content, validation, shared models, tests
+- Phase 2B ✅ — Aaroh Path retention engine: 7-day beginner path, expanded lesson
+  player (matchMeaning / fillBlank / syllableOrder) with gentle feedback,
+  meaning unlocks, lesson-progress persistence, daily recommendation, Today
+  "continue Aaroh" card, and tests for lesson logic + point dedup
 - Phase 2 — Firebase wiring, real audio for mantras, content authoring
 - Phase 3 — personalised daily plan, richer streaks, widgets & Live Activities

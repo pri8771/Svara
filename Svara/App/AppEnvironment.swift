@@ -141,9 +141,44 @@ final class AppEnvironment {
         apply(updated, unlocked: unlocked)
     }
 
-    func completeLesson(_ lesson: Lesson) {
+    /// Records a single lesson step as the learner moves through it (resume +
+    /// hint tracking). Never awards points.
+    func recordLessonStep(_ step: LessonStep, in lesson: Lesson, wasCorrect: Bool?, hintUsed: Bool) {
+        progress.recordStep(
+            lessonID: lesson.id,
+            stepID: step.id,
+            wasCorrect: wasCorrect,
+            hintUsed: hintUsed,
+            totalQuizCount: lesson.quizCount
+        )
+    }
+
+    /// Completes a lesson: finalises step-level progress (best score) and awards
+    /// points/streak exactly once via the unified progress rules.
+    func completeLesson(_ lesson: Lesson, correctCount: Int = 0) {
+        progress.finalizeLessonProgress(
+            lessonID: lesson.id,
+            correctCount: correctCount,
+            totalQuizCount: lesson.quizCount
+        )
         let (updated, unlocked) = progress.completeLesson(lesson, for: profile)
         apply(updated, unlocked: unlocked)
+    }
+
+    // MARK: - Lesson progress reads
+
+    func lessonProgress(for lesson: Lesson) -> LessonProgress? {
+        progress.lessonProgress(for: lesson.id)
+    }
+
+    /// Lesson ids that are started but not finished.
+    var inProgressLessonIDs: Set<String> {
+        Set(progress.loadLessonProgress().filter(\.isInProgress).map(\.lessonID))
+    }
+
+    /// Lesson ids the learner has completed (authoritative on the profile).
+    var completedLessonIDs: Set<String> {
+        Set(profile.completedLessonIDs)
     }
 
     func observeFestival(_ festival: Festival) {

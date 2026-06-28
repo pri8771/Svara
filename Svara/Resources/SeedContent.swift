@@ -159,47 +159,221 @@ enum SeedContent {
         )
     ]
 
-    // MARK: - Lessons (Duolingo-style)
+    // MARK: - Lessons (the beginner Aaroh Path + beyond)
+    //
+    // Days 1–7 form the first guided path: Om → Vakratunda → Saraswati
+    // Namastubhyam. Levels 8–9 continue beyond the path. Mirrors
+    // seed_lessons.json (the authoring source of truth).
 
     static let lessons: [Lesson] = [
         Lesson(
-            id: "lesson.ganesha.intro",
-            title: "Om Gam Ganapataye",
-            subtitle: "Your very first mantra",
-            theme: .courage,
+            id: "lesson.om.sound",
+            title: "The Sound of Om",
+            subtitle: "Where every practice begins",
+            theme: .devotion,
             level: 1,
             xp: 20,
-            mantraID: "mantra.ganesha",
+            mantraID: "mantra.om",
+            pathDay: 1,
+            meaningOverview: "Om is a single syllable used to gather attention and settle the breath before anything else.",
+            pronunciationTip: "Say it slowly as three soft sounds that melt together: a-u-m. Let the 'mmm' fade out gently.",
+            insightTitle: "What Om means",
+            insightBody: "One way to understand this: Om isn't a word with a fixed translation — it's a sound that marks a beginning, a way of arriving and settling before you practice. Traditions vary by family and region.",
+            traditionNote: "Interpretations of Om are many; traditions vary by region and family.",
+            reviewStatus: .humanReviewed,
             steps: [
-                LessonStep(
-                    id: "l1.s1", kind: .intro,
-                    prompt: "Meet Ganesha",
-                    detail: "Ganesha, the elephant-headed deity, is the remover of obstacles. His mantra is chanted before anything new."
-                ),
-                LessonStep(
-                    id: "l1.s2", kind: .listen,
-                    prompt: "Om Gam Ganapataye Namaha",
-                    detail: "Chant it slowly three times. Feel the 'Gam' resonate."
-                ),
-                LessonStep(
-                    id: "l1.s3", kind: .meaning,
-                    prompt: "What it means",
-                    detail: "“Salutations to Ganesha, remover of obstacles.” It clears the path before you begin."
-                ),
-                LessonStep(
-                    id: "l1.s4", kind: .multipleChoice,
-                    prompt: "Ganesha is known as the remover of…",
-                    detail: nil,
-                    options: ["Obstacles", "Rivers", "Mountains", "Stars"],
-                    correctIndex: 0
-                ),
-                LessonStep(
-                    id: "l1.s5", kind: .fillBlank,
-                    prompt: "Om Gam Ganapataye ______",
-                    detail: "Complete the mantra.",
-                    options: ["Namaha", "Svaha", "Shanti", "Aim"],
-                    correctIndex: 0
-                )
+                LessonStep(id: "om1.s1", kind: .intro, prompt: "Meet Om",
+                           detail: "Om is often the very first sound in a practice. You don't need to know anything yet — just arrive."),
+                LessonStep(id: "om1.s2", kind: .listen, prompt: "Om",
+                           detail: "Take a slow breath and say it softly three times. There's no perfect way — just let the sound settle you."),
+                LessonStep(id: "om1.s3", kind: .matchMeaning, prompt: "Om is best described as…",
+                           detail: "Choose the description that fits.",
+                           options: ["A sound to gather attention", "A festival", "A type of food", "A river"],
+                           correctIndex: 0,
+                           hint: "Think about why it comes at the very start of a practice."),
+                LessonStep(id: "om1.s4", kind: .reflection, prompt: "A small pause",
+                           detail: "Notice your breath for one moment. That settling feeling is the whole point — nothing to get right.")
+            ]
+        ),
+        Lesson(
+            id: "lesson.om.breath",
+            title: "Om & the Breath",
+            subtitle: "Letting the sound carry the breath",
+            theme: .devotion,
+            level: 2,
+            xp: 20,
+            mantraID: "mantra.om",
+            pathDay: 2,
+            meaningOverview: "Om works best paired with a slow out-breath — the sound and the exhale steady each other.",
+            pronunciationTip: "Begin the sound as you breathe out, and let the 'mmm' last as long as the breath does.",
+            insightTitle: "Why Om and breath go together",
+            insightBody: "One way to understand this: the long fading 'mmm' naturally slows your exhale, and a slower exhale calms the body. The sound is a gentle handle for the breath.",
+            reviewStatus: .humanReviewed,
+            steps: [
+                LessonStep(id: "om2.s1", kind: .intro, prompt: "Sound and breath",
+                           detail: "Yesterday you met Om. Today, let it ride your out-breath."),
+                LessonStep(id: "om2.s2", kind: .listen, prompt: "Breathe out on Om",
+                           detail: "Breathe in quietly, then say Om as you breathe out. Repeat three unhurried times."),
+                LessonStep(id: "om2.s3", kind: .fillBlank, prompt: "Om is easiest to say on the ______.",
+                           detail: "Complete the line.",
+                           options: ["out-breath", "in-breath", "tip-toes", "weekend"],
+                           correctIndex: 0,
+                           acceptedAnswers: ["out-breath", "out breath", "exhale"],
+                           hint: "It pairs with letting air go, not taking it in."),
+                LessonStep(id: "om2.s4", kind: .reflection, prompt: "Notice the after-quiet",
+                           detail: "After the sound fades, there's a small stillness. You're building familiarity, not chasing perfection.")
+            ]
+        ),
+        Lesson(
+            id: "lesson.vakratunda.meet",
+            title: "Meet Vakratunda",
+            subtitle: "A prayer before beginnings",
+            theme: .courage,
+            level: 3,
+            xp: 25,
+            mantraID: "mantra.vakratunda",
+            pathDay: 3,
+            meaningOverview: "Vakratunda Mahakaya is a much-loved invocation to Ganesha, said before starting something new.",
+            pronunciationTip: "Break it into gentle pieces: vak-ra-tun-da. No rush — one sound at a time.",
+            insightTitle: "Who Vakratunda is",
+            insightBody: "One way to understand this: 'Vakratunda' means the one with the curved trunk — an affectionate way of naming Ganesha. People often say this line before an exam, a journey, or any fresh start.",
+            traditionNote: "Traditions vary by family and region.",
+            reviewStatus: .humanReviewed,
+            steps: [
+                LessonStep(id: "vk1.s1", kind: .intro, prompt: "A line for fresh starts",
+                           detail: "Vakratunda Mahakaya is often said before beginning anything new — to steady the mind and clear the path."),
+                LessonStep(id: "vk1.s2", kind: .listen, prompt: "Vakratunda Mahakaya",
+                           detail: "Say it slowly, in four soft pieces: vak-ra-tun-da. Don't worry about speed."),
+                LessonStep(id: "vk1.s3", kind: .matchMeaning, prompt: "People often say this line before…",
+                           detail: "Choose what fits best.",
+                           options: ["Starting something new", "Going to sleep", "A competition", "A meal"],
+                           correctIndex: 0,
+                           hint: "Think about exams, journeys, and beginnings."),
+                LessonStep(id: "vk1.s4", kind: .reflection, prompt: "Your own beginning",
+                           detail: "Bring to mind one thing you're about to start. Let this line keep it gentle company.")
+            ]
+        ),
+        Lesson(
+            id: "lesson.vakratunda.meaning",
+            title: "What Vakratunda Means",
+            subtitle: "Curved trunk, mighty form",
+            theme: .courage,
+            level: 4,
+            xp: 25,
+            mantraID: "mantra.vakratunda",
+            pathDay: 4,
+            meaningOverview: "The opening words describe Ganesha and ask for a path free of obstacles.",
+            pronunciationTip: "'Mahakaya' is ma-ha-ka-ya — even and unhurried.",
+            insightTitle: "What the words point to",
+            insightBody: "One common translation: 'O Lord with the curved trunk and mighty form, make my endeavours free of obstacles.' One way to understand this: it isn't asking for an easy life, but for a clear, steady mind to meet what comes. Traditions vary by family and region.",
+            sourceNote: "Translations vary; this is one widely-shared rendering.",
+            reviewStatus: .humanReviewed,
+            steps: [
+                LessonStep(id: "vk2.s1", kind: .meaning, prompt: "Curved trunk, mighty form",
+                           detail: "'Vakratunda' is the curved trunk; 'Mahakaya' is the mighty form. Together they affectionately picture Ganesha."),
+                LessonStep(id: "vk2.s2", kind: .matchMeaning, prompt: "'Vakratunda' refers to the…",
+                           detail: "Choose the meaning.",
+                           options: ["Curved trunk", "Bright sun", "Still lake", "Open road"],
+                           correctIndex: 0,
+                           hint: "It's the feature Ganesha is most known for."),
+                LessonStep(id: "vk2.s3", kind: .fillBlank, prompt: "The line asks for a path free of ______.",
+                           detail: "Complete the meaning.",
+                           options: ["obstacles", "colour", "sound", "rain"],
+                           correctIndex: 0,
+                           acceptedAnswers: ["obstacles", "obstacle"],
+                           hint: "Ganesha is fondly called the remover of these."),
+                LessonStep(id: "vk2.s4", kind: .reflection, prompt: "Not an easy road, a clear mind",
+                           detail: "Read the meaning once more, slowly. It's a wish for steadiness — not for everything to be simple.")
+            ]
+        ),
+        Lesson(
+            id: "lesson.vakratunda.smooth",
+            title: "Saying It Smoothly",
+            subtitle: "One sound at a time",
+            theme: .courage,
+            level: 5,
+            xp: 30,
+            mantraID: "mantra.vakratunda",
+            pathDay: 5,
+            meaningOverview: "Practising the syllables in order makes the line feel natural to say.",
+            pronunciationTip: "Tap each piece in turn and say it aloud: vak · ra · tun · da.",
+            insightTitle: "You can say it now",
+            insightBody: "One way to understand this: fluency isn't about speed or a perfect accent — it's familiarity. Saying the syllables in order, a few times, is all it takes to make the line your own.",
+            reviewStatus: .humanReviewed,
+            steps: [
+                LessonStep(id: "vk3.s1", kind: .intro, prompt: "Build it up",
+                           detail: "Let's put the sounds in order. There's no clock here — one sound at a time."),
+                LessonStep(id: "vk3.s2", kind: .syllableOrder, prompt: "Arrange: Vakratunda",
+                           detail: "Tap the syllables in order.",
+                           syllables: ["vak", "ra", "tun", "da"],
+                           hint: "It starts the same way the word looks: 'vak'."),
+                LessonStep(id: "vk3.s3", kind: .syllableOrder, prompt: "Arrange: Mahakaya",
+                           detail: "Tap the syllables in order.",
+                           syllables: ["ma", "ha", "ka", "ya"],
+                           hint: "Begin with 'ma'."),
+                LessonStep(id: "vk3.s4", kind: .reflection, prompt: "Say the whole line",
+                           detail: "Now say 'Vakratunda Mahakaya' once, softly, start to finish. That's it — you've got it.")
+            ]
+        ),
+        Lesson(
+            id: "lesson.saraswati.meet",
+            title: "Meet Saraswati",
+            subtitle: "The student's prayer",
+            theme: .knowledge,
+            level: 6,
+            xp: 25,
+            mantraID: "mantra.saraswatiNamastubhyam",
+            pathDay: 6,
+            meaningOverview: "Saraswati Namastubhyam is a short prayer said before study, inviting focus.",
+            pronunciationTip: "Namastubhyam is na-mas-tu-bhyam — let the 'bhyam' stay soft.",
+            insightTitle: "Who Saraswati is",
+            insightBody: "One way to understand this: Saraswati is pictured with a veena and a book — music and learning flowing together. Students often greet her before opening their books.",
+            traditionNote: "Traditions vary by family and region.",
+            reviewStatus: .humanReviewed,
+            steps: [
+                LessonStep(id: "sr1.s1", kind: .intro, prompt: "A greeting before study",
+                           detail: "Saraswati Namastubhyam is a gentle hello to the spirit of learning, said before you begin to study."),
+                LessonStep(id: "sr1.s2", kind: .listen, prompt: "Saraswati Namastubhyam",
+                           detail: "Say it slowly: sa-ras-wa-ti na-mas-tu-bhyam. Soft and even."),
+                LessonStep(id: "sr1.s3", kind: .matchMeaning, prompt: "Saraswati is associated with…",
+                           detail: "Choose what fits.",
+                           options: ["Knowledge and the arts", "The ocean", "Harvest", "Thunder"],
+                           correctIndex: 0,
+                           hint: "Think of a veena and a book."),
+                LessonStep(id: "sr1.s4", kind: .reflection, prompt: "Your own learning",
+                           detail: "Think of one thing you're trying to learn right now. This line is a kind way to begin.")
+            ]
+        ),
+        Lesson(
+            id: "lesson.saraswati.meaning",
+            title: "What Saraswati Namastubhyam Means",
+            subtitle: "Salutations, and a wish",
+            theme: .knowledge,
+            level: 7,
+            xp: 30,
+            mantraID: "mantra.saraswatiNamastubhyam",
+            pathDay: 7,
+            meaningOverview: "The line offers salutations to Saraswati and asks for focus and the free flow of learning.",
+            pronunciationTip: "'Namastubhyam' simply means 'salutations to you' — say it warmly.",
+            insightTitle: "What the words mean",
+            insightBody: "One common translation: 'Salutations to you, Saraswati, granter of wishes.' One way to understand this: it's less a request for results and more a settling-in — a way to meet study with calm attention. Traditions vary by family and region.",
+            sourceNote: "Translations vary; this is one widely-shared rendering.",
+            reviewStatus: .humanReviewed,
+            steps: [
+                LessonStep(id: "sr2.s1", kind: .meaning, prompt: "Namastubhyam — salutations to you",
+                           detail: "'Namastubhyam' means 'salutations to you'. The line greets Saraswati and invites focus before study."),
+                LessonStep(id: "sr2.s2", kind: .fillBlank, prompt: "'Namastubhyam' means salutations to ______.",
+                           detail: "Complete the meaning.",
+                           options: ["you", "the sky", "the past", "no one"],
+                           correctIndex: 0,
+                           acceptedAnswers: ["you"],
+                           hint: "It's a warm, direct greeting."),
+                LessonStep(id: "sr2.s3", kind: .syllableOrder, prompt: "Arrange: Namastubhyam",
+                           detail: "Tap the syllables in order.",
+                           syllables: ["na", "mas", "tu", "bhyam"],
+                           hint: "It opens with 'na'."),
+                LessonStep(id: "sr2.s4", kind: .reflection, prompt: "A calm way to begin",
+                           detail: "You've reached the end of the first path. Say the whole line once, then notice how it feels to begin calmly.")
             ]
         ),
         Lesson(
@@ -207,60 +381,26 @@ enum SeedContent {
             title: "The Gayatri Mantra",
             subtitle: "A prayer for a clear mind",
             theme: .wisdom,
-            level: 2,
+            level: 8,
             xp: 25,
             mantraID: "mantra.gayatri",
+            meaningOverview: "An ancient dawn prayer asking not for things, but for a brighter, clearer mind.",
+            pronunciationTip: "Take it phrase by phrase; the rhythm matters more than speed.",
+            insightTitle: "What the Gayatri asks for",
+            insightBody: "One way to understand this: it's a prayer for wisdom itself — for a mind clear enough to see well. Traditions vary by family and region.",
+            sourceName: "Rig Veda 3.62.10",
+            reviewStatus: .sourced,
             steps: [
-                LessonStep(
-                    id: "l2.s1", kind: .intro,
-                    prompt: "The dawn prayer",
-                    detail: "The Gayatri Mantra is among the oldest, traditionally chanted at sunrise."
-                ),
-                LessonStep(
-                    id: "l2.s2", kind: .listen,
-                    prompt: "Om bhur bhuvah svah…",
-                    detail: "Listen to the rhythm. Don't worry about perfect pronunciation."
-                ),
-                LessonStep(
-                    id: "l2.s3", kind: .meaning,
-                    prompt: "What we ask for",
-                    detail: "Not wealth or success — but a brighter, clearer mind. It is a prayer for wisdom itself."
-                ),
-                LessonStep(
-                    id: "l2.s4", kind: .multipleChoice,
-                    prompt: "The Gayatri Mantra is a prayer for…",
-                    detail: nil,
-                    options: ["A clear mind", "Rain", "Victory in battle", "Long hair"],
-                    correctIndex: 0
-                )
-            ]
-        ),
-        Lesson(
-            id: "lesson.saraswati.focus",
-            title: "Saraswati & Focus",
-            subtitle: "The student's mantra",
-            theme: .knowledge,
-            level: 3,
-            xp: 25,
-            mantraID: "mantra.saraswati",
-            steps: [
-                LessonStep(
-                    id: "l3.s1", kind: .intro,
-                    prompt: "Goddess of learning",
-                    detail: "Saraswati holds a veena and a book — music and knowledge flowing together."
-                ),
-                LessonStep(
-                    id: "l3.s2", kind: .listen,
-                    prompt: "Om Aim Saraswatyai Namaha",
-                    detail: "The seed sound 'Aim' is associated with speech and learning."
-                ),
-                LessonStep(
-                    id: "l3.s3", kind: .multipleChoice,
-                    prompt: "Saraswati is the goddess of…",
-                    detail: nil,
-                    options: ["Knowledge & arts", "War", "The sea", "Fire"],
-                    correctIndex: 0
-                )
+                LessonStep(id: "l2.s1", kind: .intro, prompt: "The dawn prayer",
+                           detail: "The Gayatri Mantra is among the oldest, traditionally said at sunrise."),
+                LessonStep(id: "l2.s2", kind: .listen, prompt: "Om bhur bhuvah svah…",
+                           detail: "Listen to the rhythm. Don't worry about perfect pronunciation."),
+                LessonStep(id: "l2.s3", kind: .meaning, prompt: "What we ask for",
+                           detail: "Not wealth or success — but a brighter, clearer mind. It is a prayer for wisdom itself."),
+                LessonStep(id: "l2.s4", kind: .multipleChoice, prompt: "The Gayatri Mantra is a prayer for…",
+                           options: ["A clear mind", "Rain", "Victory in battle", "Long hair"],
+                           correctIndex: 0,
+                           hint: "It asks for something within, not without.")
             ]
         ),
         Lesson(
@@ -268,28 +408,26 @@ enum SeedContent {
             title: "A Prayer for All",
             subtitle: "The Shanti Mantra",
             theme: .compassion,
-            level: 4,
+            level: 9,
             xp: 30,
             mantraID: "mantra.shanti",
             isPremium: true,
+            meaningOverview: "A wish of happiness and freedom from suffering — for everyone, not just oneself.",
+            pronunciationTip: "Let the repeated 'shanti' soften each time you say it.",
+            insightTitle: "Widening the circle",
+            insightBody: "One way to understand this: the prayer deliberately turns attention outward, wishing ease for all beings. Traditions vary by family and region.",
+            reviewStatus: .humanReviewed,
             steps: [
-                LessonStep(
-                    id: "l4.s1", kind: .intro,
-                    prompt: "Goodwill for everyone",
-                    detail: "The Shanti Mantra wishes happiness and freedom from suffering for all beings."
-                ),
-                LessonStep(
-                    id: "l4.s2", kind: .listen,
-                    prompt: "Sarve bhavantu sukhinah…",
-                    detail: "Chant it slowly, picturing the circle of care widening outward."
-                ),
-                LessonStep(
-                    id: "l4.s3", kind: .fillBlank,
-                    prompt: "Sarve bhavantu ______ (happy)",
-                    detail: "Complete the line.",
-                    options: ["Sukhinah", "Niramayah", "Bhadrani", "Shanti"],
-                    correctIndex: 0
-                )
+                LessonStep(id: "l4.s1", kind: .intro, prompt: "Goodwill for everyone",
+                           detail: "The Shanti Mantra wishes happiness and freedom from suffering for all beings."),
+                LessonStep(id: "l4.s2", kind: .listen, prompt: "Sarve bhavantu sukhinah…",
+                           detail: "Say it slowly, picturing the circle of care widening outward."),
+                LessonStep(id: "l4.s3", kind: .fillBlank, prompt: "Sarve bhavantu ______ (happy)",
+                           detail: "Complete the line.",
+                           options: ["Sukhinah", "Niramayah", "Bhadrani", "Shanti"],
+                           correctIndex: 0,
+                           acceptedAnswers: ["sukhinah"],
+                           hint: "It's the word glossed as 'happy'.")
             ]
         )
     ]
@@ -558,7 +696,7 @@ enum SeedContent {
             meaning: "A student's invocation before study, inviting focus and the free flow of learning.",
             theme: .knowledge,
             reviewStatus: .humanReviewed,
-            deepLinkTarget: "lesson:lesson.saraswati.focus"
+            deepLinkTarget: "lesson:lesson.saraswati.meaning"
         ),
         ShlokaOfDay(
             id: "shloka.tat.tvam.asi",

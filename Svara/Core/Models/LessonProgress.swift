@@ -50,4 +50,8 @@ struct LessonProgress: Identifiable, Codable, Hashable {
         guard totalQuizCount > 0 else { return isCompleted ? 1 : 0 }
         return min(1, Double(bestCorrectCount) / Double(totalQuizCount))
     }
+
+    /// Started but not yet finished — drives the "continue where you left off"
+    /// recommendation on Today and Learn.
+    var isInProgress: Bool { !isCompleted && !completedStepIDs.isEmpty }
 }

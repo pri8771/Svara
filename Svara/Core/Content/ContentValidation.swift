@@ -100,16 +100,40 @@ enum ContentValidation {
             if lesson.title.trimmed.isEmpty { issues.append(.error(ctx, "missing title")) }
             if lesson.steps.isEmpty { issues.append(.error(ctx, "has no steps")) }
             for step in lesson.steps where step.isInteractive {
-                guard let idx = step.correctIndex else {
-                    issues.append(.error(ctx, "quiz step '\(step.id)' missing correctIndex"))
-                    continue
-                }
-                if step.options.isEmpty {
-                    issues.append(.error(ctx, "quiz step '\(step.id)' has no options"))
-                } else if idx < 0 || idx >= step.options.count {
-                    issues.append(.error(ctx, "quiz step '\(step.id)' correctIndex out of range"))
-                }
+                issues += validateInteractiveStep(step, context: ctx)
             }
+        }
+        return issues
+    }
+
+    /// Per-kind validation for an interactive step.
+    private static func validateInteractiveStep(_ step: LessonStep, context ctx: String) -> [ValidationIssue] {
+        var issues: [ValidationIssue] = []
+        switch step.kind {
+        case .multipleChoice, .matchMeaning:
+            guard let idx = step.correctIndex else {
+                issues.append(.error(ctx, "quiz step '\(step.id)' missing correctIndex"))
+                break
+            }
+            if step.options.isEmpty {
+                issues.append(.error(ctx, "quiz step '\(step.id)' has no options"))
+            } else if idx < 0 || idx >= step.options.count {
+                issues.append(.error(ctx, "quiz step '\(step.id)' correctIndex out of range"))
+            }
+        case .fillBlank:
+            // Valid if it has a correct option OR at least one accepted answer.
+            let hasOption = step.correctIndex.map { $0 >= 0 && $0 < step.options.count } ?? false
+            if !hasOption && step.acceptedAnswers.isEmpty {
+                issues.append(.error(ctx, "fillBlank step '\(step.id)' needs a valid correctIndex or acceptedAnswers"))
+            } else if let idx = step.correctIndex, !step.options.isEmpty, idx < 0 || idx >= step.options.count {
+                issues.append(.error(ctx, "fillBlank step '\(step.id)' correctIndex out of range"))
+            }
+        case .syllableOrder:
+            if step.syllables.count < 2 {
+                issues.append(.error(ctx, "syllableOrder step '\(step.id)' needs at least 2 syllables"))
+            }
+        case .intro, .listen, .meaning, .reflection:
+            break // not interactive; handled by isInteractive guard
         }
         return issues
     }

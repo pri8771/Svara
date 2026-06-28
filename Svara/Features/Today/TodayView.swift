@@ -6,6 +6,7 @@ struct TodayView: View {
     @Environment(AppEnvironment.self) private var env
     @State private var viewModel = TodayViewModel()
     @State private var activePractice: DailyPractice?
+    @State private var activeLesson: Lesson?
 
     var body: some View {
         NavigationStack {
@@ -16,6 +17,8 @@ struct TodayView: View {
                         title: "\(viewModel.greeting),\n\(env.profile.displayName)"
                     )
                     streakBanner
+
+                    continueAarohCard
 
                     SectionHeader(title: "Today's practices", subtitle: "A few mindful minutes")
                     practiceList
@@ -40,6 +43,62 @@ struct TodayView: View {
         .task { await viewModel.load(content: env.content) }
         .fullScreenCover(item: $activePractice) { practice in
             PracticePlayerView(practice: practice, mantra: viewModel.mantra(id: practice.mantraID))
+        }
+        .fullScreenCover(item: $activeLesson) { LessonPlayerView(lesson: $0) }
+    }
+
+    /// Surfaces the learner's next Aaroh step right on the home screen so it's
+    /// obvious within a few seconds of opening the app.
+    @ViewBuilder
+    private var continueAarohCard: some View {
+        let rec = viewModel.aarohRecommendation(
+            completedIDs: env.completedLessonIDs,
+            inProgressIDs: env.inProgressLessonIDs
+        )
+        if let lesson = rec.lesson {
+            Button { activeLesson = lesson } label: {
+                SvaraCard {
+                    HStack(spacing: SvaraTheme.Spacing.lg) {
+                        ZStack {
+                            Circle().fill(lesson.theme.color.opacity(0.15)).frame(width: 48, height: 48)
+                            Image(systemName: aarohIcon(rec.reason)).foregroundStyle(lesson.theme.color)
+                        }
+                        .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(rec.eyebrow).svaraEyebrow()
+                            Text(lesson.title)
+                                .font(.svaraHeadline)
+                                .foregroundStyle(SvaraTheme.Colors.textPrimary)
+                            Text(aarohSubtitle(rec.reason))
+                                .font(.svaraCallout)
+                                .foregroundStyle(SvaraTheme.Colors.textSecondary)
+                                .lineLimit(1)
+                        }
+                        Spacer(minLength: 0)
+                        Image(systemName: "chevron.right").foregroundStyle(SvaraTheme.Colors.textSecondary)
+                    }
+                }
+            }
+            .buttonStyle(.plain)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("\(rec.eyebrow). \(lesson.title). \(aarohSubtitle(rec.reason)).")
+        }
+    }
+
+    private func aarohIcon(_ reason: LessonRecommendation.Reason) -> String {
+        switch reason {
+        case .continueInProgress: return "arrow.right.circle.fill"
+        case .reviewCompleted: return "arrow.clockwise"
+        default: return "play.fill"
+        }
+    }
+
+    private func aarohSubtitle(_ reason: LessonRecommendation.Reason) -> String {
+        switch reason {
+        case .continueInProgress: return "Pick up where you left off — about a minute."
+        case .reviewCompleted: return "You've finished the path — revisit a step."
+        case .firstBeginner: return "Start your path — about a minute."
+        default: return "Your next step — about a minute."
         }
     }
 

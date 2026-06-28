@@ -40,6 +40,19 @@ protocol ProgressService {
     func progress(for achievement: Achievement, profile: UserProfile) -> Double
 
     func loadSessions() -> [PracticeSession]
+
+    // MARK: Lesson step-level progress (resume + best score)
+
+    /// All persisted per-lesson progress records.
+    func loadLessonProgress() -> [LessonProgress]
+    /// The progress record for a single lesson, if any.
+    func lessonProgress(for lessonID: String) -> LessonProgress?
+    /// Records that a step was reached/answered. `wasCorrect` is `nil` for
+    /// non-scored steps. Tracks resume state and hint usage; never awards points.
+    func recordStep(lessonID: String, stepID: String, wasCorrect: Bool?, hintUsed: Bool, totalQuizCount: Int)
+    /// Marks a lesson's progress record complete and updates its best score.
+    /// Idempotent with respect to best score (only improves it).
+    func finalizeLessonProgress(lessonID: String, correctCount: Int, totalQuizCount: Int)
 }
 
 final class LocalProgressService: ProgressService {
@@ -63,6 +76,56 @@ final class LocalProgressService: ProgressService {
         var sessions = loadSessions()
         sessions.append(session)
         store.save(sessions, forKey: StorageKey.sessions)
+    }
+
+    // MARK: Lesson step-level progress
+
+    func loadLessonProgress() -> [LessonProgress] {
+        store.load([LessonProgress].self, forKey: StorageKey.lessonProgress) ?? []
+    }
+
+    func lessonProgress(for lessonID: String) -> LessonProgress? {
+        loadLessonProgress().first { $0.lessonID == lessonID }
+    }
+
+    private func saveLessonProgress(_ records: [LessonProgress]) {
+        store.save(records, forKey: StorageKey.lessonProgress)
+    }
+
+    /// Upserts the record for `lessonID`, applying `transform`.
+    private func upsertLessonProgress(_ lessonID: String, _ transform: (inout LessonProgress) -> Void) {
+        var records = loadLessonProgress()
+        if let index = records.firstIndex(where: { $0.lessonID == lessonID }) {
+            transform(&records[index])
+        } else {
+            var fresh = LessonProgress(lessonID: lessonID)
+            transform(&fresh)
+            records.append(fresh)
+        }
+        saveLessonProgress(records)
+    }
+
+    func recordStep(lessonID: String, stepID: String, wasCorrect: Bool?, hintUsed: Bool, totalQuizCount: Int) {
+        upsertLessonProgress(lessonID) { record in
+            if !record.completedStepIDs.contains(stepID) {
+                record.completedStepIDs.append(stepID)
+            }
+            if totalQuizCount > record.totalQuizCount {
+                record.totalQuizCount = totalQuizCount
+            }
+            if hintUsed { record.hintsUsed += 1 }
+            record.lastAccessed = now()
+        }
+    }
+
+    func finalizeLessonProgress(lessonID: String, correctCount: Int, totalQuizCount: Int) {
+        upsertLessonProgress(lessonID) { record in
+            record.isCompleted = true
+            record.totalQuizCount = max(record.totalQuizCount, totalQuizCount)
+            record.bestCorrectCount = max(record.bestCorrectCount, correctCount)
+            record.attempts += 1
+            record.lastAccessed = now()
+        }
     }
 
     // MARK: Recording
