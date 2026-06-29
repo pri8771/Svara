@@ -271,7 +271,6 @@ enum SeedContent {
             level: 4,
             xp: 30,
             mantraID: "mantra.shanti",
-            isPremium: true,
             steps: [
                 LessonStep(
                     id: "l4.s1", kind: .intro,
@@ -290,7 +289,8 @@ enum SeedContent {
                     options: ["Sukhinah", "Niramayah", "Bhadrani", "Shanti"],
                     correctIndex: 0
                 )
-            ]
+            ],
+            isPremium: true
         )
     ]
 
