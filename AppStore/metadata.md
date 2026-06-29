@@ -33,7 +33,7 @@ No account required to start. No ads. No social feed. Just a quiet daily practic
 hindu,mantra,prayer,spiritual,meditation,yoga,gayatri,vedic,devotion,festival,sloka,Sanskrit,mindfulness,wellness,streaks
 
 ## Support URL
-https://github.com/pri8771/claude_app_dt
+https://github.com/pri8771/Svara
 
 ## Privacy Policy URL
 (create before submission)
