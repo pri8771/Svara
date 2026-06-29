@@ -1,0 +1,53 @@
+# Svara — App Store Metadata
+
+## Name
+Svara
+
+## Subtitle
+Daily Hindu spiritual practice
+
+## Category
+Primary: Health & Fitness
+Secondary: Education
+
+## Description
+Svara is your daily spiritual companion, rooted in Hindu culture.
+
+Three minutes a day. A morning mantra, a midday breath, an evening prayer. Svara guides you through tiny daily practices — the kind that compound quietly into a steadier life.
+
+**Practice**
+Start each day with a guided mantra practice. Choose your pace, follow the breathing ring, and earn your streak. Morning, midday, and evening practices adapt to your schedule.
+
+**Learn**
+Bite-sized lessons teach you slokas and their meaning — like a language app for your spiritual side. Understand *why* the Gayatri Mantra is recited at dawn, or what the Shanti Mantra is really wishing for.
+
+**Festivals**
+Never miss the story behind a celebration again. Guru Purnima, Janmashtami, Diwali — Svara explains the meaning, the rituals, and why they matter, right when the moment arrives.
+
+**Stories**
+The tales behind the deities, organised by the human themes they speak to — courage, devotion, wisdom, protection. Read the story. Understand the symbol. Carry the lesson.
+
+No account required to start. No ads. No social feed. Just a quiet daily practice, yours.
+
+## Keywords
+hindu,mantra,prayer,spiritual,meditation,yoga,gayatri,vedic,devotion,festival,sloka,Sanskrit,mindfulness,wellness,streaks
+
+## Support URL
+https://github.com/pri8771/claude_app_dt
+
+## Privacy Policy URL
+(create before submission)
+
+## Age Rating
+4+
+
+## Pricing
+Free with in-app purchase (Svara Plus)
+
+## In-App Purchases
+- Svara Plus Monthly — $0.99/month
+- Svara Plus Yearly — $7.99/year
+- Svara Plus Lifetime — $19.99
+
+## What's New (v1.0)
+First release. Daily practices, guided lesson path, festival calendar, and stories library — all in three minutes a day.
