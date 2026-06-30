@@ -40,6 +40,45 @@ enum ContentValidation {
         return forbiddenTermList.filter { lower.contains($0) }
     }
 
+    /// Doctrinal-authority / absolutist phrasings that Svara must never present
+    /// as fact (ProductGuardrails §5: "avoid absolutist religious claims";
+    /// strategy lock: "no authoritative ruling/doctrine content"). Word-boundary
+    /// matched so they never trip on innocent substrings (e.g. "is a sin" must
+    /// not match "single"). Content should use humble, plural framing instead
+    /// ("One way to understand…", "traditions vary…").
+    static let doctrinalAuthorityPatterns: [String] = [
+        "the only true",
+        "you must believe",
+        "you must worship",
+        "one true god",
+        "the correct belief",
+        "the right way to pray",
+        "thou shalt",
+        "is a sin",
+        "will be punished",
+        "must convert",
+        "you are forbidden",
+        "the true faith",
+        "infidel",
+        "heretic",
+        "eternal damnation",
+        "commanded by god",
+        "you will go to hell"
+    ]
+
+    /// Returns any doctrinal-authority phrasings found in `text`, matched on word
+    /// boundaries (case-insensitive).
+    static func doctrinalAuthorityPhrases(in text: String) -> [String] {
+        let lower = text.lowercased()
+        return doctrinalAuthorityPatterns.filter { pattern in
+            guard let regex = try? NSRegularExpression(
+                pattern: "\\b" + NSRegularExpression.escapedPattern(for: pattern) + "\\b"
+            ) else { return false }
+            let range = NSRange(lower.startIndex..<lower.endIndex, in: lower)
+            return regex.firstMatch(in: lower, range: range) != nil
+        }
+    }
+
     // MARK: - Top-level
 
     static func validate(
@@ -69,6 +108,45 @@ enum ContentValidation {
         issues += validateReviewed(festivals, type: "festival")
         issues += validateReviewed(stories, type: "story")
         issues += validateReviewed(shlokas, type: "shloka")
+        // Guardrail: no doctrinal-authority/absolutist phrasing in body prose.
+        issues += scanDoctrinalAuthority(
+            mantras: mantras, lessons: lessons, festivals: festivals,
+            stories: stories, shlokas: shlokas
+        )
+        return issues
+    }
+
+    /// Scans substantive prose (meanings, stories, insights — not just short
+    /// labels) for doctrinal-authority phrasing. Unlike the forbidden-term scan,
+    /// this looks at body content, where an authoritative claim would live.
+    static func scanDoctrinalAuthority(
+        mantras: [Mantra],
+        lessons: [Lesson],
+        festivals: [Festival],
+        stories: [StorySymbol],
+        shlokas: [ShlokaOfDay]
+    ) -> [ValidationIssue] {
+        var issues: [ValidationIssue] = []
+
+        func check(_ text: String?, _ context: String) {
+            guard let text, !text.isEmpty else { return }
+            for phrase in doctrinalAuthorityPhrases(in: text) {
+                issues.append(.error(context, "doctrinal-authority phrasing '\(phrase)' — use humble, plural framing"))
+            }
+        }
+
+        for m in mantras { check(m.meaning, "mantra '\(m.id)'") }
+        for l in lessons {
+            check(l.meaningOverview, "lesson '\(l.id)'"); check(l.insightBody, "lesson '\(l.id)'")
+            for step in l.steps { check(step.detail, "lesson '\(l.id)' step '\(step.id)'") }
+        }
+        for f in festivals {
+            check(f.significance, "festival '\(f.id)'"); check(f.story, "festival '\(f.id)'")
+        }
+        for s in stories {
+            check(s.story, "story '\(s.id)'"); check(s.symbolMeaning, "story '\(s.id)'")
+        }
+        for s in shlokas { check(s.meaning, "shloka '\(s.id)'") }
         return issues
     }
 
@@ -258,11 +336,14 @@ enum ContentValidation {
             issues.append(.error(ctx, "not cleared for shipping — reviewStatus must be 'reviewed' (got '\(story.reviewStatus)')"))
         }
 
-        // Forbidden terms in user-facing prose.
+        // Forbidden terms + doctrinal-authority phrasing in user-facing prose.
         for (field, text) in [("title", story.title), ("body", story.bodyMarkdown),
                               ("meaning", story.moralOrMeaning), ("reflection", story.reflectionPrompt)] {
             for term in forbiddenTerms(in: text) {
                 issues.append(.error(ctx, "forbidden term '\(term)' in \(field)"))
+            }
+            for phrase in doctrinalAuthorityPhrases(in: text) {
+                issues.append(.error(ctx, "doctrinal-authority phrasing '\(phrase)' in \(field) — use humble, plural framing"))
             }
         }
         for symbol in story.symbolism {

@@ -180,6 +180,34 @@ cultural moments, not loot drops.
   streak), but they are never framed as festival rewards or treated as
   collectible items earned from sacred occasions.
 
+### 8.4 No doctrinal-authority content (binding)
+Svara explains living culture; it never rules on belief. Content must **not**
+instruct people in "correct belief", make absolutist religious claims, or use
+sin/punishment framing. Prefer humble, plural framing — "One way to understand
+this…", "Traditions vary by region and family…".
+
+- Enforced by `ContentValidation.scanDoctrinalAuthority` (word-boundary matched
+  doctrinal-authority phrases) and `DoctrinalAuthorityTests`. A flagged phrase in
+  shipped content is a blocking validation error.
+
+### 8.5 No user-to-user / social surface (binding)
+Svara is **private, not a feed**. There is no community feed, public profile,
+followers, comments, groups, chat, or public leaderboard — and no user-to-user
+religious interaction. The only "profile" is the user's own local, private screen.
+
+- Enforced structurally: the `MainTab` navigation registry has no social case,
+  and `TabConfigurationTests.testNoSocialSurfaceInNavigationRegistry` fails if a
+  social surface ever appears. Outbound OS share (handing a festival's text to
+  the system share sheet) is permitted and flag-gated (`FeatureFlags.contentSharing`);
+  it is not an in-app social graph.
+
+### 8.6 Beta scope is configurable and tested
+The focused beta is **Today + Learn primary**, with Festivals/Stories staged out
+of primary navigation (`FeatureFlags.betaScope`). Today and Learn are the
+irreducible core and can never be staged out; `TabConfigurationTests` fails if a
+staged tab reappears as a primary beta surface. The shipping default
+(`FeatureFlags.full`) is the complete product with all surfaces on.
+
 ## 9. How this is enforced in code
 
 - `ContentValidation` (in `Core/Content/`) checks seed content for required

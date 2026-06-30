@@ -319,18 +319,20 @@ struct FestivalDetailView: View {
             .buttonStyle(.plain)
             .accessibilityLabel(isSaved ? "Saved for yourself" : "Save for yourself")
 
-            ShareLink(item: shareText) {
-                Label("Share", systemImage: "square.and.arrow.up")
-                    .font(.svaraHeadline)
-                    .foregroundStyle(SvaraTheme.Colors.accent)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, SvaraTheme.Spacing.md)
-                    .background(SvaraTheme.Colors.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: SvaraTheme.Radius.md, style: .continuous))
-                    .overlay(RoundedRectangle(cornerRadius: SvaraTheme.Radius.md, style: .continuous)
-                        .strokeBorder(SvaraTheme.Colors.accent.opacity(0.25), lineWidth: 1.5))
+            if env.featureFlags.contentSharing {
+                ShareLink(item: shareText) {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                        .font(.svaraHeadline)
+                        .foregroundStyle(SvaraTheme.Colors.accent)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, SvaraTheme.Spacing.md)
+                        .background(SvaraTheme.Colors.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: SvaraTheme.Radius.md, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: SvaraTheme.Radius.md, style: .continuous)
+                            .strokeBorder(SvaraTheme.Colors.accent.opacity(0.25), lineWidth: 1.5))
+                }
+                .accessibilityLabel("Share this festival")
             }
-            .accessibilityLabel("Share this festival")
         }
         .padding(.top, SvaraTheme.Spacing.sm)
     }

@@ -19,6 +19,9 @@ final class AppEnvironment {
     let storyLibrary: StoriesService
     let reflections: ReflectionStore
 
+    /// Which primary surfaces are active (full product vs. staged beta scope).
+    let featureFlags: FeatureFlags
+
     private let kvStore: KeyValueStore
 
     // MARK: Session state
@@ -39,7 +42,8 @@ final class AppEnvironment {
         progress: ProgressService,
         notifications: NotificationService,
         store: StoreService,
-        kvStore: KeyValueStore
+        kvStore: KeyValueStore,
+        featureFlags: FeatureFlags = .current
     ) {
         self.auth = auth
         self.content = content
@@ -48,6 +52,7 @@ final class AppEnvironment {
         self.store = store
         self.storyLibrary = StoriesService()
         self.reflections = ReflectionStore()
+        self.featureFlags = featureFlags
         self.kvStore = kvStore
         self.profile = .guest()
         self.hasCompletedOnboarding = kvStore.load(Bool.self, forKey: StorageKey.onboardingComplete) ?? false

@@ -1,36 +1,20 @@
 import SwiftUI
 
-/// The five-tab spine of Svara: Today, Learn, Festivals, Stories, Profile.
+/// Svara's primary spine. Tabs are driven by `FeatureFlags.primaryTabs` so the
+/// focused beta (Today + Learn) and the full product share one code path; Today
+/// and Learn are always present and first (see `FeatureFlags`).
 struct MainTabView: View {
     @Environment(AppEnvironment.self) private var env
-    @State private var selection: Tab = .today
+    @State private var selection: MainTab = .today
     @State private var showAchievement: Achievement?
-
-    enum Tab: Hashable {
-        case today, learn, festivals, stories, profile
-    }
 
     var body: some View {
         TabView(selection: $selection) {
-            TodayView()
-                .tabItem { Label("Today", systemImage: "sun.and.horizon.fill") }
-                .tag(Tab.today)
-
-            LearnView()
-                .tabItem { Label("Learn", systemImage: "graduationcap.fill") }
-                .tag(Tab.learn)
-
-            FestivalsView()
-                .tabItem { Label("Festivals", systemImage: "sparkles") }
-                .tag(Tab.festivals)
-
-            StoriesHomeView()
-                .tabItem { Label("Stories", systemImage: "text.book.closed.fill") }
-                .tag(Tab.stories)
-
-            ProfileView()
-                .tabItem { Label("Profile", systemImage: "person.fill") }
-                .tag(Tab.profile)
+            ForEach(env.featureFlags.primaryTabs) { tab in
+                view(for: tab)
+                    .tabItem { Label(tab.title, systemImage: tab.systemImage) }
+                    .tag(tab)
+            }
         }
         .overlay(alignment: .top) {
             if let achievement = showAchievement {
@@ -45,6 +29,17 @@ struct MainTabView: View {
             presentAchievement(first)
         }
         .animation(.spring(duration: 0.4), value: showAchievement)
+    }
+
+    @ViewBuilder
+    private func view(for tab: MainTab) -> some View {
+        switch tab {
+        case .today: TodayView()
+        case .learn: LearnView()
+        case .festivals: FestivalsView()
+        case .stories: StoriesHomeView()
+        case .profile: ProfileView()
+        }
     }
 
     private func presentAchievement(_ achievement: Achievement) {
