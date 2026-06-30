@@ -1,0 +1,105 @@
+import XCTest
+@testable import Svara
+
+/// Covers the unified progress rules: points awarded once per lesson, streaks
+/// capped at once per local day, and lesson-progress best-score tracking.
+final class ProgressDeduplicationTests: XCTestCase {
+
+    private func date(_ y: Int, _ m: Int, _ d: Int) -> Date {
+        var c = DateComponents(); c.year = y; c.month = m; c.day = d; c.hour = 9
+        return Calendar.current.date(from: c)!
+    }
+
+    private func makeService(now: @escaping () -> Date) -> LocalProgressService {
+        LocalProgressService(store: InMemoryStore(), achievements: [], now: now)
+    }
+
+    // MARK: Points dedup
+
+    func testLessonPointsAwardedOnlyOnce() {
+        let svc = makeService(now: { self.date(2026, 6, 28) })
+        let lesson = LessonFactory.lesson("x", level: 1) // default xp 20
+        let profile = UserProfile.guest()
+
+        let (p1, _) = svc.completeLesson(lesson, for: profile)
+        XCTAssertEqual(p1.totalPoints, lesson.xp)
+        XCTAssertEqual(p1.completedLessonIDs, ["x"])
+
+        let (p2, _) = svc.completeLesson(lesson, for: p1)
+        XCTAssertEqual(p2.totalPoints, lesson.xp, "second completion must not re-award points")
+        XCTAssertEqual(p2.completedLessonIDs.count, 1)
+    }
+
+    func testDistinctLessonsEachAwardOnce() {
+        let svc = makeService(now: { self.date(2026, 6, 28) })
+        let l1 = LessonFactory.lesson("l1", level: 1)
+        let l2 = LessonFactory.lesson("l2", level: 2)
+
+        let (p1, _) = svc.completeLesson(l1, for: .guest())
+        let (p2, _) = svc.completeLesson(l2, for: p1)
+        XCTAssertEqual(p2.totalPoints, l1.xp + l2.xp)
+        XCTAssertEqual(Set(p2.completedLessonIDs), ["l1", "l2"])
+    }
+
+    // MARK: Streak once per local day
+
+    func testStreakIncrementsOncePerLocalDay_ViaLessons() {
+        let svc = makeService(now: { self.date(2026, 6, 28) })
+        let l1 = LessonFactory.lesson("l1", level: 1)
+        let l2 = LessonFactory.lesson("l2", level: 2)
+
+        let (p1, _) = svc.completeLesson(l1, for: .guest())
+        XCTAssertEqual(p1.currentStreak, 1)
+        let (p2, _) = svc.completeLesson(l2, for: p1)
+        XCTAssertEqual(p2.currentStreak, 1, "two lessons same day keep the streak at 1")
+    }
+
+    func testStreakIncrementsOnConsecutiveDays() {
+        var current = date(2026, 6, 28)
+        let svc = makeService(now: { current })
+        let session = PracticeSession(practiceID: "p", practiceTitle: "P", kind: .mantra,
+                                      durationSeconds: 60, pointsEarned: 10)
+
+        let (p1, _) = svc.recordSession(session, for: .guest())
+        XCTAssertEqual(p1.currentStreak, 1)
+
+        // Same day again: still 1.
+        let (p1b, _) = svc.recordSession(session, for: p1)
+        XCTAssertEqual(p1b.currentStreak, 1)
+
+        // Next day: 2.
+        current = date(2026, 6, 29)
+        let (p2, _) = svc.recordSession(session, for: p1b)
+        XCTAssertEqual(p2.currentStreak, 2)
+
+        // Skip a day: resets to 1.
+        current = date(2026, 7, 1)
+        let (p3, _) = svc.recordSession(session, for: p2)
+        XCTAssertEqual(p3.currentStreak, 1)
+    }
+
+    // MARK: Lesson-progress best score + resume
+
+    func testFinalizeTracksBestScoreAndOnlyImproves() {
+        let svc = makeService(now: { self.date(2026, 6, 28) })
+        svc.finalizeLessonProgress(lessonID: "x", correctCount: 2, totalQuizCount: 3)
+        XCTAssertEqual(svc.lessonProgress(for: "x")?.isCompleted, true)
+        XCTAssertEqual(svc.lessonProgress(for: "x")?.bestCorrectCount, 2)
+
+        svc.finalizeLessonProgress(lessonID: "x", correctCount: 1, totalQuizCount: 3)
+        XCTAssertEqual(svc.lessonProgress(for: "x")?.bestCorrectCount, 2, "best score never lowers")
+
+        svc.finalizeLessonProgress(lessonID: "x", correctCount: 3, totalQuizCount: 3)
+        XCTAssertEqual(svc.lessonProgress(for: "x")?.bestCorrectCount, 3)
+    }
+
+    func testRecordStepMarksInProgressAndDedupesSteps() {
+        let svc = makeService(now: { self.date(2026, 6, 28) })
+        svc.recordStep(lessonID: "y", stepID: "s1", wasCorrect: nil, hintUsed: false, totalQuizCount: 2)
+        XCTAssertEqual(svc.lessonProgress(for: "y")?.isInProgress, true)
+
+        svc.recordStep(lessonID: "y", stepID: "s1", wasCorrect: true, hintUsed: true, totalQuizCount: 2)
+        XCTAssertEqual(svc.lessonProgress(for: "y")?.completedStepIDs.count, 1, "same step not duplicated")
+        XCTAssertEqual(svc.lessonProgress(for: "y")?.hintsUsed, 1)
+    }
+}

@@ -24,8 +24,8 @@ struct MainTabView: View {
                 .tabItem { Label("Festivals", systemImage: "sparkles") }
                 .tag(Tab.festivals)
 
-            StoriesView()
-                .tabItem { Label("Stories", systemImage: "book.fill") }
+            StoriesHomeView()
+                .tabItem { Label("Stories", systemImage: "text.book.closed.fill") }
                 .tag(Tab.stories)
 
             ProfileView()

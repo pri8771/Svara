@@ -15,6 +15,10 @@ final class AppEnvironment {
     let notifications: NotificationService
     let store: StoreService
 
+    /// Phase 2D Stories & Symbols library (Story model) and private reflections.
+    let storyLibrary: StoriesService
+    let reflections: ReflectionStore
+
     private let kvStore: KeyValueStore
 
     // MARK: Session state
@@ -42,6 +46,8 @@ final class AppEnvironment {
         self.progress = progress
         self.notifications = notifications
         self.store = store
+        self.storyLibrary = StoriesService()
+        self.reflections = ReflectionStore()
         self.kvStore = kvStore
         self.profile = .guest()
         self.hasCompletedOnboarding = kvStore.load(Bool.self, forKey: StorageKey.onboardingComplete) ?? false
@@ -141,14 +147,63 @@ final class AppEnvironment {
         apply(updated, unlocked: unlocked)
     }
 
-    func completeLesson(_ lesson: Lesson) {
+    /// Records a single lesson step as the learner moves through it (resume +
+    /// hint tracking). Never awards points.
+    func recordLessonStep(_ step: LessonStep, in lesson: Lesson, wasCorrect: Bool?, hintUsed: Bool) {
+        progress.recordStep(
+            lessonID: lesson.id,
+            stepID: step.id,
+            wasCorrect: wasCorrect,
+            hintUsed: hintUsed,
+            totalQuizCount: lesson.quizCount
+        )
+    }
+
+    /// Completes a lesson: finalises step-level progress (best score) and awards
+    /// points/streak exactly once via the unified progress rules.
+    func completeLesson(_ lesson: Lesson, correctCount: Int = 0) {
+        progress.finalizeLessonProgress(
+            lessonID: lesson.id,
+            correctCount: correctCount,
+            totalQuizCount: lesson.quizCount
+        )
         let (updated, unlocked) = progress.completeLesson(lesson, for: profile)
         apply(updated, unlocked: unlocked)
+    }
+
+    // MARK: - Lesson progress reads
+
+    func lessonProgress(for lesson: Lesson) -> LessonProgress? {
+        progress.lessonProgress(for: lesson.id)
+    }
+
+    /// Lesson ids that are started but not finished.
+    var inProgressLessonIDs: Set<String> {
+        Set(progress.loadLessonProgress().filter(\.isInProgress).map(\.lessonID))
+    }
+
+    /// Lesson ids the learner has completed (authoritative on the profile).
+    var completedLessonIDs: Set<String> {
+        Set(profile.completedLessonIDs)
     }
 
     func observeFestival(_ festival: Festival) {
         let (updated, unlocked) = progress.observeFestival(festival, for: profile)
         apply(updated, unlocked: unlocked)
+    }
+
+    /// Completes a festival's tiny activity, awarding its points exactly once
+    /// (falls back to 15 when the festival has no explicit activity points).
+    func completeFestivalActivity(_ festival: Festival) {
+        let points = festival.tinyActivity?.points ?? 15
+        let (updated, unlocked) = progress.completeFestivalActivity(festival, points: points, for: profile)
+        apply(updated, unlocked: unlocked)
+    }
+
+    /// Whether the festival's activity has been completed (reuses the observed
+    /// ledger as the completion record).
+    func hasCompletedFestivalActivity(_ festival: Festival) -> Bool {
+        profile.observedFestivalIDs.contains(festival.id)
     }
 
     func hasCompletedPractice(_ practice: DailyPractice) -> Bool {

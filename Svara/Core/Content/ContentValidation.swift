@@ -100,16 +100,40 @@ enum ContentValidation {
             if lesson.title.trimmed.isEmpty { issues.append(.error(ctx, "missing title")) }
             if lesson.steps.isEmpty { issues.append(.error(ctx, "has no steps")) }
             for step in lesson.steps where step.isInteractive {
-                guard let idx = step.correctIndex else {
-                    issues.append(.error(ctx, "quiz step '\(step.id)' missing correctIndex"))
-                    continue
-                }
-                if step.options.isEmpty {
-                    issues.append(.error(ctx, "quiz step '\(step.id)' has no options"))
-                } else if idx < 0 || idx >= step.options.count {
-                    issues.append(.error(ctx, "quiz step '\(step.id)' correctIndex out of range"))
-                }
+                issues += validateInteractiveStep(step, context: ctx)
             }
+        }
+        return issues
+    }
+
+    /// Per-kind validation for an interactive step.
+    private static func validateInteractiveStep(_ step: LessonStep, context ctx: String) -> [ValidationIssue] {
+        var issues: [ValidationIssue] = []
+        switch step.kind {
+        case .multipleChoice, .matchMeaning:
+            guard let idx = step.correctIndex else {
+                issues.append(.error(ctx, "quiz step '\(step.id)' missing correctIndex"))
+                break
+            }
+            if step.options.isEmpty {
+                issues.append(.error(ctx, "quiz step '\(step.id)' has no options"))
+            } else if idx < 0 || idx >= step.options.count {
+                issues.append(.error(ctx, "quiz step '\(step.id)' correctIndex out of range"))
+            }
+        case .fillBlank:
+            // Valid if it has a correct option OR at least one accepted answer.
+            let hasOption = step.correctIndex.map { $0 >= 0 && $0 < step.options.count } ?? false
+            if !hasOption && step.acceptedAnswers.isEmpty {
+                issues.append(.error(ctx, "fillBlank step '\(step.id)' needs a valid correctIndex or acceptedAnswers"))
+            } else if let idx = step.correctIndex, !step.options.isEmpty, idx < 0 || idx >= step.options.count {
+                issues.append(.error(ctx, "fillBlank step '\(step.id)' correctIndex out of range"))
+            }
+        case .syllableOrder:
+            if step.syllables.count < 2 {
+                issues.append(.error(ctx, "syllableOrder step '\(step.id)' needs at least 2 syllables"))
+            }
+        case .intro, .listen, .meaning, .reflection:
+            break // not interactive; handled by isInteractive guard
         }
         return issues
     }
@@ -182,6 +206,41 @@ enum ContentValidation {
         return issues
     }
 
+    // MARK: - Story library (Phase 2D `Story` model)
+
+    static func validateStoryLibrary(_ stories: [Story]) -> [ValidationIssue] {
+        var issues = checkUniqueIDs(stories.map(\.id), context: "stories")
+        for story in stories { issues += validateStory(story) }
+        return issues
+    }
+
+    /// Validates a single `Story`: required text present, tradition note present,
+    /// and no forbidden Primandir-style terms in user-facing prose.
+    static func validateStory(_ story: Story) -> [ValidationIssue] {
+        var issues: [ValidationIssue] = []
+        let ctx = "story '\(story.id)'"
+        if story.title.trimmed.isEmpty { issues.append(.error(ctx, "missing title")) }
+        if story.bodyMarkdown.trimmed.isEmpty { issues.append(.error(ctx, "missing bodyMarkdown")) }
+        if story.moralOrMeaning.trimmed.isEmpty { issues.append(.error(ctx, "missing moralOrMeaning")) }
+        if story.reflectionPrompt.trimmed.isEmpty { issues.append(.error(ctx, "missing reflectionPrompt")) }
+        if story.traditionNote.trimmed.isEmpty { issues.append(.error(ctx, "missing traditionNote")) }
+
+        // Forbidden terms in user-facing prose.
+        for (field, text) in [("title", story.title), ("body", story.bodyMarkdown),
+                              ("meaning", story.moralOrMeaning), ("reflection", story.reflectionPrompt)] {
+            for term in forbiddenTerms(in: text) {
+                issues.append(.error(ctx, "forbidden term '\(term)' in \(field)"))
+            }
+        }
+        for symbol in story.symbolism {
+            if symbol.meaning.trimmed.isEmpty { issues.append(.error(ctx, "symbol '\(symbol.id)' missing meaning")) }
+            for term in forbiddenTerms(in: symbol.meaning) {
+                issues.append(.error(ctx, "forbidden term '\(term)' in symbol '\(symbol.id)'"))
+            }
+        }
+        return issues
+    }
+
     // MARK: - Forbidden term scan (user-facing labels)
 
     static func scanForbiddenTerms(
@@ -209,7 +268,14 @@ enum ContentValidation {
         }
         for f in festivals {
             check(f.name, "festival '\(f.id)'"); check(f.tagline, "festival '\(f.id)'")
+            if let short = f.shortDescription { check(short, "festival '\(f.id)' shortDescription") }
+            if let prompt = f.familyPrompt { check(prompt, "festival '\(f.id)' familyPrompt") }
             for activity in f.activities { check(activity, "festival '\(f.id)' activity") }
+            for symbol in f.symbols { check(symbol.name, "festival '\(f.id)' symbol") }
+            if let tiny = f.tinyActivity {
+                check(tiny.title, "festival '\(f.id)' activity title")
+                for step in tiny.steps { check(step, "festival '\(f.id)' activity step") }
+            }
         }
         for s in stories {
             check(s.title, "story '\(s.id)'"); check(s.summary, "story '\(s.id)'"); check(s.takeaway, "story '\(s.id)'")

@@ -26,9 +26,9 @@ the festivals you grew up with, and the symbols behind the deities.
 | Tab | What it does |
 | --- | --- |
 | **Today** | Daily 3-minute practices (morning mantra, evening prayer, midday breath, gratitude), a streak banner, and a mantra of the day. Guided, timed practice player that awards Svara Points. |
-| **Learn** | Duolingo-style lessons that teach mantras/slokas step by step — intro, listen, meaning, and interactive quizzes — with XP and progress. |
-| **Festivals** | Upcoming festival moments with a countdown, the story, why it matters, and small activities to mark the day. |
-| **Stories** | Stories & Symbols organised by human themes (courage, wisdom, devotion…), each with the tale, its meaning, and a takeaway. |
+| **Learn** | A guided **Aaroh Path**: a 7-day beginner journey (Om → Vakratunda → Saraswati Namastubhyam) of 60–120s lessons. Your next step is obvious on open; each lesson unlocks one piece of meaning and gently unlocks the next. |
+| **Festivals** | Seasonal cultural **moments**, not a calendar: an upcoming hero with a countdown, a "Coming soon" rail, a "This season" section, a gentle regional lens, and per-festival pages with the story, symbols, a tiny 2–5 min activity, and a family conversation prompt. |
+| **Stories** | A calm library of deity stories & symbols by human theme (Courage, Wisdom, Abundance, Stillness, Beginnings, Devotion, Strength): a daily featured story, theme chips, search, full readers with a symbolism rail and a humble meaning callout, and **private, local-only reflections**. |
 | **Profile** | Streak, Svara Points, best streak, achievements grid, settings, and the Svara Plus upgrade. |
 
 Gamification: **streaks**, **Svara Points**, and **achievements** that unlock with a
@@ -62,13 +62,158 @@ Svara/
 ├── Features/                One folder per surface, MVVM
 │   ├── Onboarding / Auth
 │   ├── Today  (TodayViewModel, TodayView, PracticePlayerView)
-│   ├── Learn  (LearnViewModel, LearnView, LessonPlayerView)
+│   ├── Learn  (LearnViewModel, LearnView, LessonPlayerView, LessonResultView,
+│   │          MantraCourseView, + pure logic: LessonEvaluator, AarohPath,
+│   │          DailyRecommender, LearnCopy)
 │   ├── Festivals / Stories / Profile
 │   └── Shared (MantraDetailView)
 └── Resources/               Assets, seed content, StoreKit config
-    ├── SeedContent.swift     6 mantras, 4 practices, 4 lessons, 5 festivals, 6 stories, 10 achievements
+    ├── SeedContent.swift     in-code fallback mirroring the JSON seed
+    ├── SeedData/*.json       authoring source of truth (mantras, lessons, …)
     └── Svara.storekit
 ```
+
+---
+
+## Stories & Symbols (Stories)
+
+A calm, unhurried library for exploring deities, myths, and symbols — warm and
+non-preachy, never a quiz app or a temple guide.
+
+**Home (`StoriesHomeView`).** A daily **featured story** (rotates by date), theme
+chips (All + the seven `StoryTheme`s), a **search** bar (title / deity / tags),
+and a grid of `StoryCardView`s. Tapping opens the reader.
+
+**Reader (`StoryDetailView`).** A themed header with deity, theme, read-time and
+a visible tradition note; the story body rendered from light markdown (no
+external packages); a horizontal **symbolism rail** (`SymbolCard`, tap for full
+meaning); a humble **meaning callout** ("One way to understand this…"); a
+**reflection** prompt; and optional related links ("Practice this in Aaroh" →
+opens the lesson; "See the festival" → opens the festival page).
+
+**Reflections (`ReflectionPromptView` + `ReflectionStore`).** Reflections are
+**strictly local-only** — written to `Documents/reflections.json` and **never**
+synced to Firestore, CloudKit, or iCloud. The prompt sheet shows a privacy note
+and a 500-character counter.
+
+**Model & content.** A Phase 2D `Story` model (`bodyMarkdown`, `moralOrMeaning`,
+`symbolism: [SymbolEntry]`, `reflectionPrompt`, region/tags, related ids, and
+provenance) loads from `seed_story_library.json` via `StoriesService`, with an
+in-code fallback (`SeedContent.storyLibrary`). Seven full stories ship: Ganesha,
+Saraswati, Hanuman, Lakshmi, Shiva, Durga, and Arjuna & Krishna — each 300+
+words, humbly framed ("One way many traditions understand this…"), with a
+"Stories vary by tradition, region, and family lineage." note.
+
+> Note: the new `Story` library uses `seed_story_library.json` and lives
+> **alongside** the original `StorySymbol` catalogue (`seed_stories.json`), which
+> is intentionally kept to preserve its existing seed/validation tests.
+
+**What's mocked.** Content is local/bundled (Firestore later, behind a protocol).
+Story illustrations are themed gradient placeholders. There is no sharing of
+reflections, no public feed, and no WidgetKit in this phase.
+
+---
+
+## Festival Moments (Festivals)
+
+The Festivals tab is built around one idea: **"Know what's coming, understand
+why it matters, and do one tiny meaningful thing."** It's seasonal cultural
+moments for young Indians and the diaspora — not a calendar or a Wikipedia page,
+and explicitly **not** a virtual temple, puja simulator, or booking app.
+
+**Home (`FestivalsView`).** Header "Festival Moments" → a gentle region picker →
+an **Up next** hero card (countdown, name, short context, Explore) → a
+horizontal **Coming soon** rail (`FestivalMomentCard`) → a **This season**
+section → **The year ahead**. A warm empty state shows when nothing is imminent.
+
+**Detail (`FestivalDetailView`).** Illustrated hero, date + region tags ("Dates
+can vary by region and tradition"), Why it matters, The story, Symbols, a tiny
+2–5 min activity, a family conversation prompt ("Ask someone in your family how
+they celebrated this growing up"), a related mantra/practice when available, and
+a personal Save/Share (no public feed).
+
+**Activity flow (`FestivalActivityView`).** Intro → a few gentle steps → an
+optional reflection → completion. Reflection text is **local-only** — never
+stored or sent anywhere. These are reflective, real-world prompts; there is no
+on-screen ritual to perform.
+
+**Region lens (`RegionFilterView` + `FestivalRegionFilter`).** Filters (India,
+Diaspora, North/South/West/East India, Global Hindu) **personalise ordering but
+never hide festivals** — a matching festival floats to the front; the rest
+remain, gently dimmed. Untagged festivals are treated as universally relevant.
+
+**Progress.** Completing a festival's tiny activity awards its points **exactly
+once** via `ProgressService.completeFestivalActivity` (idempotent on the
+`observedFestivalIDs` ledger, which also drives the `festivalsObserved`
+achievement). No streak-freeze gifts are ever tied to a festival.
+
+**Content & provenance.** Seven festivals ship with rich content — Diwali, Holi,
+Navaratri, Ganesh Chaturthi, Janmashtami, Raksha Bandhan, Makar Sankranti /
+Pongal (plus Guru Purnima). Each carries `shortDescription`, `whyItMatters`,
+`story`, `symbols`, `activities`, a `tinyActivity` (steps + reflection),
+`familyPrompt`, `regionTags`, optional `relatedMantraID`/`relatedPracticeID`,
+`isDateApproximate`, and provenance (`sourceName`/`sourceNote`/`traditionNote`/
+`reviewStatus`). Stories use humble framing — "Traditions vary — here's one
+common story." Dates are illustrative 2026/2027 and explicitly marked approximate.
+
+**What's mocked.** Content loads from `seed_festivals.json` via
+`SeedContentProvider` (Firestore later, behind `ContentRepository`). Completion
+persists locally via `KeyValueStore`. The hero illustration is a themed gradient
+placeholder; Save/Share are personal-only; there is no WidgetKit in this phase.
+
+---
+
+## The Aaroh Path (Learn)
+
+The Learn tab is a **guided path**, not a static content library. "Aaroh" (the
+ascent of notes) names the idea: one gentle step at a time.
+
+**Concept.** A first **7-day beginner path** teaches three mantras in sequence —
+**Om** (Days 1–2) → **Vakratunda** (Days 3–5) → **Saraswati Namastubhyam**
+(Days 6–7). Each day is a 60–120-second lesson. The path is grouped into
+per-mantra *chapters* (`MantraCourseView`). Lessons beyond the path
+(Gayatri, Shanti) sit under "Beyond the path".
+
+**Lesson flow.** A lesson is a few cards: `intro` → `listen` → a quiz step →
+`reflection`, ending on a result screen that **unlocks one piece of meaning**
+("You unlocked: What Vakratunda means") and previews the next step.
+
+**Supported step types** (`LessonStep.Kind`):
+
+| Kind | Interaction |
+| --- | --- |
+| `intro` / `listen` / `meaning` / `reflection` | Reading / chanting cards — never "wrong" |
+| `multipleChoice` / `matchMeaning` | Pick the option that matches |
+| `fillBlank` | Pick the option *or* a free-text accepted answer (case/space-insensitive) |
+| `syllableOrder` | Tap syllables into the correct order |
+
+Answer checking is pure and forgiving (`LessonEvaluator`): a non-match is never
+"wrong" — the correct answer is shown kindly with an encouraging line, and the
+learner always continues. **No lives, hearts, or failure states** (ProductGuardrails §8.2).
+
+**Progress rules** (unified in `ProgressService`):
+- **Points/Light awarded once** per lesson (idempotent on `completedLessonIDs`).
+- **Streak increments at most once per local day** (`StreakCalculator`).
+- **Step-level progress** (`LessonProgress`) tracks resume state, best score, and
+  hints used — points are never awarded by step or hint.
+- **Unlock** is linear: the first lesson is always open; each next lesson opens
+  when the one before it is completed (`AarohPath`).
+- **Daily recommendation** priority (`DailyRecommender`): continue in-progress →
+  next unlocked → first beginner → review completed → shloka of the day. Surfaced
+  on both the Today "continue Aaroh" card and the Learn hero.
+
+**Content provenance.** Every path lesson carries `meaningOverview`,
+`pronunciationTip`, an `insightTitle`/`insightBody`, and optional
+`sourceName`/`sourceNote`/`traditionNote`/`reviewStatus`. Interpretive meaning
+uses humble, plural framing — "One common translation…", "One way to understand
+this…", "Traditions vary by family and region." (ProductGuardrails §7).
+
+**What's mocked / local.** Content loads from bundled JSON via
+`SeedContentProvider` (Firestore later, behind `ContentRepository`). Lesson and
+streak progress persist locally via `KeyValueStore` over `UserDefaults` (behind
+the protocol; Firestore subcollections later). There is **no audio** for mantras
+yet and **no WidgetKit** in this phase. SwiftUI previews run entirely on
+mock/local data — Firebase stays behind protocols and is optional for local dev.
 
 ### Patterns
 
@@ -147,6 +292,16 @@ app bundle, so bundled seed JSON is reachable):
 - `LessonOrderingTests` — valid, unique lesson ordering
 - `ShlokaSelectorTests` — deterministic shloka-of-day selection + deep-link parsing
 - `ForbiddenTermsTests` — forbidden-term detection and a bell-free symbol system
+- `LessonEvaluatorTests` — answer validation for matchMeaning / fillBlank / syllableOrder
+- `AarohPathTests` — unlock logic, node states, and the 7-day seed path shape
+- `DailyRecommenderTests` — daily recommendation priority
+- `ProgressDeduplicationTests` — points-once, streak-once-per-day, best-score tracking
+- `LearnCopyTests` — no punitive/forbidden copy in Learn strings; gentle phrasings present
+- `FestivalLogicTests` — countdown, season mapping, and gentle region filtering (no hiding)
+- `FestivalProgressTests` — festival activity completion awards points once (no double-award)
+- `FestivalContentTests` — all 7 festivals richly authored; no forbidden/ritual-simulation copy
+- `StoriesLogicTests` — theme + search filtering, deterministic featured story, forbidden-term-free content
+- `ReflectionStoreTests` — local-only save/retrieve, ordering, and never a Firestore/Firebase path
 
 Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platform=iOS Simulator,name=iPhone 15'`.
 
@@ -154,5 +309,18 @@ Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platfo
 
 - Phase 1 ✅ — foundation: navigation, models, design system, services, seed content
 - Phase 2A ✅ — product guardrails, JSON seed content, validation, shared models, tests
+- Phase 2B ✅ — Aaroh Path retention engine: 7-day beginner path, expanded lesson
+  player (matchMeaning / fillBlank / syllableOrder) with gentle feedback,
+  meaning unlocks, lesson-progress persistence, daily recommendation, Today
+  "continue Aaroh" card, and tests for lesson logic + point dedup
+- Phase 2C ✅ — Festivals tab as seasonal moments: enriched festival model
+  (symbols, tiny activities, family prompts, region tags, provenance), home with
+  hero/coming-soon/this-season, rich detail pages, a 2–5 min activity flow with
+  once-only points, a gentle non-blocking region lens, and tests for countdown,
+  region filtering, and activity deduplication
+- Phase 2D ✅ — Stories & Symbols tab: a `Story` library model, `StoriesService`
+  + local-only `ReflectionStore`, home (featured/themes/search), full reader with
+  symbolism rail, meaning callout and reflections, 7 richly authored stories, and
+  tests for filtering, featured rotation, and local-only reflections
 - Phase 2 — Firebase wiring, real audio for mantras, content authoring
 - Phase 3 — personalised daily plan, richer streaks, widgets & Live Activities
