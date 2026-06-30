@@ -51,7 +51,7 @@ enum LessonFactory {
         steps: [LessonStep] = []
     ) -> Lesson {
         Lesson(id: id, title: id, subtitle: "", theme: .wisdom, level: level,
-               mantraID: mantraID, steps: steps.isEmpty ? [step("\(id).s1", kind: .intro)] : steps,
-               isPremium: isPremium, pathDay: pathDay)
+               mantraID: mantraID, isPremium: isPremium, pathDay: pathDay,
+               steps: steps.isEmpty ? [step("\(id).s1", kind: .intro)] : steps)
     }
 }

@@ -46,6 +46,10 @@ struct Lesson: Identifiable, Codable, Hashable {
     /// Whether this lesson sits on the guided beginner path.
     var isOnPath: Bool { pathDay != nil }
 
+    /// Authoring-friendly initialiser: optional metadata is declared before
+    /// `steps` so seed content can read top-down (overview → insight → steps),
+    /// with the long `steps` array last. Codable is synthesised from stored
+    /// property order and is unaffected by this parameter ordering.
     init(
         id: String,
         title: String,
@@ -54,7 +58,6 @@ struct Lesson: Identifiable, Codable, Hashable {
         level: Int,
         xp: Int = 20,
         mantraID: String? = nil,
-        steps: [LessonStep],
         isPremium: Bool = false,
         pathDay: Int? = nil,
         meaningOverview: String? = nil,
@@ -64,7 +67,8 @@ struct Lesson: Identifiable, Codable, Hashable {
         sourceName: String? = nil,
         sourceNote: String? = nil,
         traditionNote: String? = nil,
-        reviewStatus: ContentReviewStatus? = nil
+        reviewStatus: ContentReviewStatus? = nil,
+        steps: [LessonStep]
     ) {
         self.id = id
         self.title = title

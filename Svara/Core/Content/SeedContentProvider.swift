@@ -35,7 +35,15 @@ final class SeedContentProvider {
         decoder.dateDecodingStrategy = .custom { dec in
             let container = try dec.singleValueContainer()
             let raw = try container.decode(String.self)
-            if let date = dayFormatter.date(from: raw) { return date }
+            if let date = dayFormatter.date(from: raw) {
+                // Anchor date-only ("yyyy-MM-dd") values at 12:00 UTC, not
+                // midnight. Midnight UTC falls on the *previous* calendar day
+                // for any user west of UTC (e.g. all of the Americas), which
+                // would shift every festival a day earlier and break the
+                // countdown. Noon UTC keeps the intended calendar day stable
+                // across every real-world time zone (UTC-11 … UTC+12).
+                return date.addingTimeInterval(12 * 60 * 60)
+            }
             if let date = iso.date(from: raw) { return date }
             throw DecodingError.dataCorruptedError(
                 in: container,
