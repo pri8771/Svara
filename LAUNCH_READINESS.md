@@ -21,8 +21,10 @@ worked the §8 checklist. **Readiness moved ~60% → ~85%.** Resolved:
 - **Strategy lock** ✅ `FeatureFlags` (full vs `betaScope`) drives the tab spine — Today + Learn are the irreducible core; `TabConfigurationTests` fail if a staged tab reappears as a primary beta surface or a social surface ever enters the nav registry. Executable no-doctrinal-authority scan + tests added. Guardrails §8.4–8.6 codified.
 - **Design** ✅ Bespoke App Store icon + in-app logomark (sunrise + lotus, no bell) generated via CoreGraphics (`design/`).
 - **Polish** ✅ Festival date timezone off-by-one fixed; `StreakCalculator` now tested; paywall "smart reminders" oversell replaced with honest copy. (KL-2 hints / KL-5 per-lesson progress arrived with the Phase 2B merge.)
+- **F12/KL-11** ✅ Shloka-of-the-day is now surfaced on Today, and `AppDeepLink` is **routable** (not parse-only) via a `NavigationCoordinator`: a shloka link resolves to a mantra/lesson/story/tab destination. `NavigationCoordinatorTests` assert every shipped shloka link resolves.
+- **Accessibility** ✅ Dynamic Type is supported throughout (semantic text styles); VoiceOver labels added to the high-traffic cards (practice/mantra/shloka/streak/profile tiles).
 
-**Still open before submission:** create the IAP products in App Store Connect; enable GitHub Pages for `docs/`; record human cultural/theological sign-off off-repo; real audio for "listen" steps and Firebase sync remain deferred (not blocking). Bug/risk items below are annotated **[resolved]** where addressed.
+**Still open before submission:** create the IAP products in App Store Connect; enable GitHub Pages for `docs/`; record human cultural/theological sign-off off-repo. Real audio for "listen" steps, a Home-Screen widget (display text is widget-ready), and Firebase sync remain deferred (not blocking). Test count: **133**.
 
 ---
 
