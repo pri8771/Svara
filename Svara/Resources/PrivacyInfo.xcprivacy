@@ -2,13 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPrivacyAccessedAPITypes</key>
-	<array/>
-	<key>NSPrivacyCollectedDataTypes</key>
-	<array/>
+	<!--
+	  Svara stores the user's profile, progress and preferences in UserDefaults.
+	  This is on-device only and accessed solely by the app itself, so:
+	    • NSPrivacyTracking is false (no cross-app/site tracking).
+	    • NSPrivacyCollectedDataTypes is empty — per Apple's definition, data that
+	      never leaves the device is not "collected". Nothing is transmitted off
+	      device in this release (no analytics, no ads, no backend).
+	    • The one required-reason API in use is UserDefaults (reason CA92.1:
+	      accessed only to read/write data accessible solely to this app).
+	-->
 	<key>NSPrivacyTracking</key>
 	<false/>
 	<key>NSPrivacyTrackingDomains</key>
 	<array/>
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

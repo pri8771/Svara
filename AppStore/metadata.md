@@ -60,5 +60,18 @@ Free with in-app purchase (Svara Plus)
 - Svara Plus Yearly — $7.99/year
 - Svara Plus Lifetime — $19.99
 
+## App Privacy (App Store Connect "nutrition label")
+This release stores data **on-device only** — no analytics, no ads, no backend,
+no tracking. Answer the App Privacy questionnaire as:
+
+- **Data used to track you:** None.
+- **Data linked to you:** None. (Name/optional email are stored on the device and
+  are not transmitted to us, so they are not "collected" per Apple's definition.)
+- **Data not linked to you:** None collected.
+- **Does this app collect data?** No.
+
+Required-reason API declared in `PrivacyInfo.xcprivacy`: UserDefaults (reason
+`CA92.1` — accessed only for data accessible solely to this app).
+
 ## What's New (v1.0)
 First release. Daily practices, guided lesson path, festival calendar, and stories library — all in three minutes a day.
