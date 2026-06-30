@@ -5,6 +5,12 @@ import UIKit
 /// Firebase Auth later requires no changes here.
 struct AuthView: View {
     @Environment(AppEnvironment.self) private var env
+    @Environment(\.dismiss) private var dismiss
+
+    /// When presented as an optional sheet (e.g. from Settings), the screen
+    /// dismisses itself on success and offers "Not now" instead of the
+    /// first-run "Continue as Guest".
+    var asSheet: Bool = false
 
     @State private var mode: Mode = .signIn
     @State private var name = ""
@@ -84,8 +90,14 @@ struct AuthView: View {
 
             Divider().padding(.vertical, SvaraTheme.Spacing.sm)
 
-            SecondaryButton(title: "Continue as Guest", systemImage: "sparkles") {
-                Task { await env.continueAsGuest() }
+            if asSheet {
+                SecondaryButton(title: "Not now", systemImage: "xmark") {
+                    dismiss()
+                }
+            } else {
+                SecondaryButton(title: "Continue as Guest", systemImage: "sparkles") {
+                    Task { await env.continueAsGuest() }
+                }
             }
         }
     }
@@ -130,6 +142,7 @@ struct AuthView: View {
             case .register:
                 try await env.register(displayName: name, email: email, password: password)
             }
+            if asSheet { dismiss() }
         } catch {
             errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         }

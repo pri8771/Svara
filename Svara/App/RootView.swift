@@ -1,6 +1,10 @@
 import SwiftUI
 
-/// Decides what to show at launch: onboarding → auth → main app.
+/// Decides what to show at launch: onboarding → main app.
+///
+/// There is intentionally **no auth wall** — Svara is usable immediately as a
+/// local guest ("no account required to start"). Sign-in is optional and lives
+/// in Settings. A guest profile is established by `AppEnvironment.bootstrap()`.
 struct RootView: View {
     @Environment(AppEnvironment.self) private var env
 
@@ -9,16 +13,12 @@ struct RootView: View {
             if !env.hasCompletedOnboarding {
                 OnboardingView()
                     .transition(.opacity)
-            } else if !env.isAuthenticated {
-                AuthView()
-                    .transition(.opacity)
             } else {
                 MainTabView()
                     .transition(.opacity)
             }
         }
         .animation(.easeInOut, value: env.hasCompletedOnboarding)
-        .animation(.easeInOut, value: env.isAuthenticated)
     }
 }
 

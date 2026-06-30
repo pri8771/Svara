@@ -8,6 +8,7 @@ struct SettingsView: View {
     @State private var eveningHour = 20
     @State private var isSavingReminders = false
     @State private var showSignOutConfirm = false
+    @State private var showSignIn = false
 
     private let hours = Array(0...23)
 
@@ -27,12 +28,27 @@ struct SettingsView: View {
                 }
             }
 
-            Section("Account") {
+            Section {
                 LabeledContent("Name", value: env.profile.displayName)
                 if let email = env.profile.email {
                     LabeledContent("Email", value: email)
                 }
                 LabeledContent("Membership", value: env.isPremium ? "Svara Plus" : "Free")
+
+                if env.profile.isGuest {
+                    Button {
+                        showSignIn = true
+                    } label: {
+                        Label("Sign in or create an account", systemImage: "person.crop.circle.badge.plus")
+                    }
+                    .tint(SvaraTheme.Colors.accent)
+                }
+            } header: {
+                Text("Account")
+            } footer: {
+                if env.profile.isGuest {
+                    Text("Optional. Your practice already works without an account — signing in just saves your name.")
+                }
             }
 
             Section("About") {
@@ -45,12 +61,14 @@ struct SettingsView: View {
                 }
             }
 
-            Section {
-                Button(role: .destructive) {
-                    showSignOutConfirm = true
-                } label: {
-                    Text("Sign Out")
-                        .frame(maxWidth: .infinity)
+            if !env.profile.isGuest {
+                Section {
+                    Button(role: .destructive) {
+                        showSignOutConfirm = true
+                    } label: {
+                        Text("Sign Out")
+                            .frame(maxWidth: .infinity)
+                    }
                 }
             }
         }
@@ -58,6 +76,13 @@ struct SettingsView: View {
         .svaraScreenBackground()
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showSignIn) {
+            NavigationStack {
+                AuthView(asSheet: true)
+                    .navigationTitle("Sign In")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+        }
         .onAppear(perform: loadPreferences)
         .onChange(of: notificationsEnabled) { _, _ in saveReminders() }
         .onChange(of: morningHour) { _, _ in saveReminders() }

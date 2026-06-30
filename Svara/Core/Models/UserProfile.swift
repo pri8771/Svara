@@ -68,6 +68,10 @@ struct UserProfile: Identifiable, Codable, Hashable {
         self.eveningReminderHour = eveningReminderHour
     }
 
+    /// True when this is an anonymous, local-only profile (no account). The app
+    /// is fully usable as a guest — sign-in is optional and only adds an email.
+    var isGuest: Bool { email == nil }
+
     /// A fresh guest profile used before sign-in / for previews.
     static func guest() -> UserProfile {
         UserProfile(

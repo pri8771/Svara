@@ -93,11 +93,15 @@ final class AppEnvironment {
 
     // MARK: - Lifecycle
 
-    /// Restores any saved session and warms up StoreKit products.
+    /// Restores any saved session and warms up StoreKit products. If there is no
+    /// saved session, establishes a local **guest** so the app opens straight
+    /// into content with no account required (LB-2 / "no account to start").
     func bootstrap() async {
         if let restored = await auth.restoreSession() {
             profile = restored
             isAuthenticated = true
+        } else {
+            await continueAsGuest()
         }
         await store.loadProducts()
     }
@@ -121,11 +125,12 @@ final class AppEnvironment {
         }
     }
 
+    /// Signs out of an account and drops back to a fresh local guest — never to
+    /// an auth wall. The app stays open and usable.
     func signOut() async {
         try? await auth.signOut()
         notifications.cancelAllReminders()
-        profile = .guest()
-        isAuthenticated = false
+        await continueAsGuest()
     }
 
     func completeOnboarding() {
