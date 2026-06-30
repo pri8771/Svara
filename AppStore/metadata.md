@@ -35,8 +35,19 @@ hindu,mantra,prayer,spiritual,meditation,yoga,gayatri,vedic,devotion,festival,sl
 ## Support URL
 https://github.com/pri8771/Svara
 
+## Marketing URL
+https://pri8771.github.io/Svara/
+
 ## Privacy Policy URL
-(create before submission)
+https://pri8771.github.io/Svara/privacy.html
+
+## Terms of Service (EULA) URL
+https://pri8771.github.io/Svara/terms.html
+
+> Hosting: the legal/support pages live in this repo under `docs/`. Enable
+> GitHub Pages once (repo Settings → Pages → Deploy from a branch → branch =
+> default, folder = `/docs`). A `.nojekyll` file is included so the static HTML
+> serves as-is.
 
 ## Age Rating
 4+

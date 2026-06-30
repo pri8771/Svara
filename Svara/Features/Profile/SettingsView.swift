@@ -53,12 +53,9 @@ struct SettingsView: View {
 
             Section("About") {
                 LabeledContent("Version", value: appVersion)
-                Link(destination: URL(string: "https://svara.app/privacy")!) {
-                    Text("Privacy Policy")
-                }
-                Link(destination: URL(string: "https://svara.app/terms")!) {
-                    Text("Terms of Service")
-                }
+                Link("Privacy Policy", destination: SvaraLinks.privacyPolicy)
+                Link("Terms of Service", destination: SvaraLinks.termsOfService)
+                Link("Support", destination: SvaraLinks.support)
             }
 
             if !env.profile.isGuest {
