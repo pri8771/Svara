@@ -13,7 +13,7 @@ struct PaywallView: View {
     private let benefits = [
         ("infinity", "Every lesson", "The full learning path, including premium tracks."),
         ("book.fill", "All stories", "Unlock the complete library of stories & symbols."),
-        ("calendar.badge.clock", "Smart reminders", "Personalised nudges to keep your streak alive."),
+        ("sparkles", "Everything new", "New lessons, stories and festival guides as they're added — included."),
         ("heart.fill", "Support Svara", "Help a small team build mindful, ad-free tools.")
     ]
 
