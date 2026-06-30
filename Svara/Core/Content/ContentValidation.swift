@@ -61,7 +61,35 @@ enum ContentValidation {
             mantras: mantras, lessons: lessons, festivals: festivals,
             stories: stories, shlokas: shlokas, achievements: achievements
         )
+        // LB-3 content-review gate: every shipped devotional item must be
+        // human-reviewed or sourced. (Achievements are app chrome, not cultural
+        // claims, and are intentionally exempt.)
+        issues += validateReviewed(mantras, type: "mantra")
+        issues += validateReviewed(lessons, type: "lesson")
+        issues += validateReviewed(festivals, type: "festival")
+        issues += validateReviewed(stories, type: "story")
+        issues += validateReviewed(shlokas, type: "shloka")
         return issues
+    }
+
+    // MARK: - Content-review gate (LB-3)
+
+    /// Every user-facing devotional item must carry a reviewed status
+    /// (`humanReviewed` or `sourced`) before it ships. A `nil`/`draft`/`aiDrafted`
+    /// status is a blocking error: a single unreviewed mistranslation or
+    /// doctrinal overstep is a serious harm in this category
+    /// (see ProductGuardrails §7 and LAUNCH_READINESS LB-3).
+    static func validateReviewed<T: ContentProvenanceCarrying & Identifiable>(
+        _ items: [T], type: String
+    ) -> [ValidationIssue] where T.ID == String {
+        items.compactMap { item in
+            guard item.reviewStatus?.isReviewed == true else {
+                let status = item.reviewStatus?.rawValue ?? "none"
+                return .error("\(type) '\(item.id)'",
+                              "not cleared for shipping — reviewStatus must be humanReviewed or sourced (got \(status))")
+            }
+            return nil
+        }
     }
 
     /// Convenience that pulls content from a provider and validates it.
@@ -224,6 +252,11 @@ enum ContentValidation {
         if story.moralOrMeaning.trimmed.isEmpty { issues.append(.error(ctx, "missing moralOrMeaning")) }
         if story.reflectionPrompt.trimmed.isEmpty { issues.append(.error(ctx, "missing reflectionPrompt")) }
         if story.traditionNote.trimmed.isEmpty { issues.append(.error(ctx, "missing traditionNote")) }
+        // LB-3 content-review gate: the Story model stores reviewStatus as a
+        // string ("reviewed" | "draft"). Only "reviewed" may ship.
+        if story.reviewStatus.trimmed.lowercased() != "reviewed" {
+            issues.append(.error(ctx, "not cleared for shipping — reviewStatus must be 'reviewed' (got '\(story.reviewStatus)')"))
+        }
 
         // Forbidden terms in user-facing prose.
         for (field, text) in [("title", story.title), ("body", story.bodyMarkdown),
