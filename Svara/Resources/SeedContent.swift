@@ -17,6 +17,59 @@ enum SeedContent {
 
     static let mantras: [Mantra] = [
         Mantra(
+            id: "mantra.om",
+            title: "Om",
+            sanskrit: "ॐ",
+            transliteration: "om",
+            translation: "The primordial sound.",
+            meaning: "Often described as the sound from which all begins. A single syllable to gather attention and settle the breath before practice.",
+            deity: "Universal",
+            theme: .devotion,
+            repetitions: 9,
+            durationMinutes: 2,
+            traditionNote: "Interpretations of Om are many; traditions vary by region and family.",
+            reviewStatus: .humanReviewed
+        ),
+        Mantra(
+            id: "mantra.vakratunda",
+            title: "Vakratunda Mahakaya",
+            sanskrit: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ । निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥",
+            transliteration: "vakratunda mahakaya suryakoti samaprabha, nirvighnam kuru me deva sarva-karyeshu sarvada",
+            translation: "O Lord with the curved trunk and mighty form, bright as a million suns, make all my endeavours free of obstacles, always.",
+            meaning: "A much-loved invocation to Ganesha said before starting something new — an exam, a journey, a venture — to steady the mind and clear the path.",
+            deity: "Ganesha",
+            theme: .courage,
+            repetitions: 3,
+            durationMinutes: 2,
+            reviewStatus: .humanReviewed
+        ),
+        Mantra(
+            id: "mantra.saraswatiNamastubhyam",
+            title: "Saraswati Namastubhyam",
+            sanskrit: "सरस्वति नमस्तुभ्यं वरदे कामरूपिणि ।",
+            transliteration: "saraswati namastubhyam varade kama-rupini",
+            translation: "Salutations to you, Saraswati, granter of boons and fulfiller of wishes.",
+            meaning: "A student's prayer before study, inviting focus, learning, and the free flow of ideas.",
+            deity: "Saraswati",
+            theme: .knowledge,
+            repetitions: 3,
+            durationMinutes: 2,
+            reviewStatus: .humanReviewed
+        ),
+        Mantra(
+            id: "mantra.shiva",
+            title: "Om Namah Shivaya",
+            sanskrit: "ॐ नमः शिवाय",
+            transliteration: "om namah shivaya",
+            translation: "I bow to Shiva.",
+            meaning: "The five-syllable mantra of Shiva, often chanted for stillness and inner quiet. A simple anchor for the breath.",
+            deity: "Shiva",
+            theme: .discipline,
+            repetitions: 11,
+            durationMinutes: 3,
+            reviewStatus: .humanReviewed
+        ),
+        Mantra(
             id: "mantra.gayatri",
             title: "Gayatri Mantra",
             sanskrit: "ॐ भूर्भुवः स्वः । तत्सवितुर्वरेण्यं । भर्गो देवस्य धीमहि । धियो यो नः प्रचोदयात् ॥",
@@ -761,30 +814,89 @@ enum SeedContent {
 
     // MARK: - Stories & Symbols
 
+    // Exact in-code mirror of seed_stories.json (10 items). Kept in lock-step
+    // with the JSON by SeedParityTests; the JSON is the authoring source.
     static let stories: [StorySymbol] = [
         StorySymbol(
-            id: "story.hanuman.leap",
+            id: "story.ganesha.beginnings",
+            title: "Ganesha & the Art of Beginning",
+            deity: "Ganesha",
+            theme: .courage,
+            summary: "Why so many things begin with Ganesha.",
+            story: "Before a wedding, a journey, an exam, or even the first page of a book, many people pause to remember Ganesha. As the remover of obstacles, he is the one invoked at the threshold of anything new. There is a quiet wisdom in this: every beginning carries a little fear, and naming that fear is the first step through it.",
+            symbolMeaning: "One way to understand this symbol: the hardest part of most things is starting. Invoking Ganesha is a ritual of permission — a way of saying 'I am allowed to begin, imperfectly, today.'",
+            takeaway: "Beginning is a skill. Start small, start scared, just start.",
+            readMinutes: 3,
+            systemImage: "flag.checkered",
+            traditionNote: "Interpretations of Ganesha are many; traditions vary by region and family.",
+            reviewStatus: .humanReviewed
+        ),
+        StorySymbol(
+            id: "story.saraswati.learning",
+            title: "Saraswati's Veena",
+            deity: "Saraswati",
+            theme: .knowledge,
+            summary: "Why the goddess of knowledge holds a musical instrument.",
+            story: "Saraswati is pictured seated on a white lotus, holding a veena, a book and prayer beads. She carries no weapons and no gold. Her swan is said to be able to separate milk from water — to take in what nourishes and leave the rest.",
+            symbolMeaning: "One way to understand this symbol: real learning is not dry memorisation; it should flow and resonate like music. The swan suggests that wisdom is the art of discernment — knowing what to keep and what to let go.",
+            takeaway: "Real learning sings — and knows what to leave behind.",
+            readMinutes: 3,
+            systemImage: "music.note",
+            reviewStatus: .humanReviewed
+        ),
+        StorySymbol(
+            id: "story.hanuman.courage",
             title: "Hanuman's Leap",
             deity: "Hanuman",
             theme: .courage,
             summary: "He forgot his own strength — until someone reminded him.",
-            story: "Tasked with crossing the ocean to find Sita, Hanuman hesitated at the shore. He had grown up being told to be humble and had forgotten the immense power within him. Only when his friends reminded him of who he truly was did he grow vast, gather himself, and leap the entire ocean in a single bound.",
-            symbolMeaning: "Hanuman's leap is the classic image of latent potential. The obstacle was never the ocean — it was forgetting his own capacity. We often wait for permission to be as strong as we already are.",
+            story: "Tasked with crossing the ocean to find Sita, Hanuman hesitated at the shore. He had grown up being humble and had forgotten the immense power within him. Only when his friends reminded him of who he truly was did he gather himself and leap the entire ocean in a single bound.",
+            symbolMeaning: "One way to understand this symbol: the obstacle was never the ocean — it was forgetting his own capacity. We often wait for permission to be as strong as we already are.",
             takeaway: "You are likely more capable than your self-doubt has told you.",
             readMinutes: 4,
-            systemImage: "figure.gymnastics"
+            systemImage: "figure.gymnastics",
+            reviewStatus: .humanReviewed
         ),
         StorySymbol(
-            id: "story.ganesha.tusk",
-            title: "The Broken Tusk",
-            deity: "Ganesha",
-            theme: .wisdom,
-            summary: "When the pen broke, he used a piece of himself.",
-            story: "As the sage Vyasa dictated the vast Mahabharata, Ganesha agreed to write it down — on one condition: that Vyasa never pause. Mid-epic, Ganesha's pen snapped. Rather than break the flow, he broke off his own tusk and kept writing.",
-            symbolMeaning: "Ganesha's single tusk is a symbol of sacrifice in service of something larger, and of finishing what you start. Sometimes commitment asks you to improvise with what you have rather than wait for perfect conditions.",
-            takeaway: "Done with devotion beats waiting for the perfect tools.",
+            id: "story.lakshmi.gratitude",
+            title: "Lakshmi & the Open Hand",
+            deity: "Lakshmi",
+            theme: .prosperity,
+            summary: "Abundance is something you notice, not only something you get.",
+            story: "Lakshmi is shown with coins flowing from one hand — but the other hand is open, palm out, in a gesture of giving and reassurance. She is rarely shown clutching. The image suggests that what flows in is meant, in part, to flow out again.",
+            symbolMeaning: "One way to understand this symbol: gratitude is the practice that turns what we have into 'enough'. Abundance grows when we notice it and share it, not when we grip it tightly.",
+            takeaway: "Name what you already have. Gratitude is its own wealth.",
             readMinutes: 3,
-            systemImage: "pencil.and.outline"
+            systemImage: "hands.sparkles.fill",
+            traditionNote: "Depictions and meanings of Lakshmi vary across regions and families.",
+            reviewStatus: .humanReviewed
+        ),
+        StorySymbol(
+            id: "story.shiva.stillness",
+            title: "Shiva, the Stillness Within",
+            deity: "Shiva",
+            theme: .discipline,
+            summary: "The dancer who is also perfectly still.",
+            story: "Shiva is pictured deep in meditation on a mountain, utterly still — and also as Nataraja, dancing the universe into being. Both images are true at once. At the centre of all that motion is a point of stillness that never moves.",
+            symbolMeaning: "One way to understand this symbol: stillness is not the absence of activity but a steadiness underneath it. We can be busy and calm at the same time if we keep a quiet centre.",
+            takeaway: "Find one still point in a busy day. Return to it often.",
+            readMinutes: 4,
+            systemImage: "figure.mind.and.body",
+            reviewStatus: .humanReviewed
+        ),
+        StorySymbol(
+            id: "story.durga.innerstrength",
+            title: "Durga & the Strength to Stand",
+            deity: "Durga",
+            theme: .protection,
+            summary: "When no one else could, she stood.",
+            story: "When a force arose that the gods could not defeat, they combined their energies and Durga emerged — riding a lion, calm and unafraid, to meet what seemed unbeatable. She is fierce, but her face is serene.",
+            symbolMeaning: "One way to understand this symbol: inner strength is not the same as aggression. Durga's calm in the face of something overwhelming is the model — steady, protective, unshaken.",
+            takeaway: "Strength can be calm. You can be soft and unshakeable.",
+            readMinutes: 4,
+            systemImage: "shield.fill",
+            traditionNote: "Durga is understood and worshipped in many forms across India.",
+            reviewStatus: .humanReviewed
         ),
         StorySymbol(
             id: "story.krishna.govardhan",
@@ -792,11 +904,12 @@ enum SeedContent {
             deity: "Krishna",
             theme: .protection,
             summary: "A whole village sheltered under one raised finger.",
-            story: "When torrential rains threatened his village, the young Krishna lifted the entire Govardhan Hill on his little finger, holding it as an umbrella for seven days while everyone sheltered beneath. The villagers, too, lent their staffs to help hold it up.",
-            symbolMeaning: "The story is often read as divine protection, but notice the detail: the people raised their sticks too. Shelter is real, and it is also shared. Protecting others can be both a gift you give and a thing you do together.",
+            story: "When torrential rains threatened his village, the young Krishna is said to have lifted the entire Govardhan Hill on his little finger, holding it as an umbrella for days while everyone sheltered beneath. The villagers, too, lent their staffs to help hold it up.",
+            symbolMeaning: "One way to understand this symbol: notice the detail that the people raised their sticks too. Shelter is real, and it is also shared — protecting others can be a gift you give and a thing you do together.",
             takeaway: "Lend your strength to shelter others — and let them help.",
             readMinutes: 4,
-            systemImage: "mountain.2.fill"
+            systemImage: "mountain.2.fill",
+            reviewStatus: .humanReviewed
         ),
         StorySymbol(
             id: "story.prahlada.devotion",
@@ -805,22 +918,24 @@ enum SeedContent {
             theme: .devotion,
             summary: "A child whose faith could not be frightened away.",
             story: "Prahlada, son of a tyrant king, loved the divine no matter how his father threatened him. When the king demanded to know where God was, Prahlada answered: everywhere, even in this pillar. The pillar split, and Narasimha emerged to protect him.",
-            symbolMeaning: "Prahlada represents devotion that doesn't flinch under pressure. His faith wasn't loud or rebellious — it was simply unwavering. The lesson is the quiet power of staying true to what you love when it would be easier to abandon it.",
+            symbolMeaning: "One way to understand this symbol: Prahlada's faith wasn't loud or rebellious — it was simply unwavering. The story points to the quiet power of staying true to what you love when it would be easier to give it up.",
             takeaway: "Quiet steadiness is its own kind of strength.",
             readMinutes: 4,
-            systemImage: "heart.circle.fill"
+            systemImage: "heart.circle.fill",
+            reviewStatus: .humanReviewed
         ),
         StorySymbol(
-            id: "story.saraswati.veena",
-            title: "Saraswati's Veena",
-            deity: "Saraswati",
-            theme: .knowledge,
-            summary: "Why the goddess of knowledge holds a musical instrument.",
-            story: "Saraswati is pictured seated on a white lotus, holding a veena, a book and prayer beads. She does not hold weapons or gold. Her swan can, it is said, separate milk from water — discerning the essential from the rest.",
-            symbolMeaning: "The veena tells us knowledge is not dry memorisation; it should flow and resonate like music. The swan reminds us that wisdom is the art of discernment — knowing what to keep and what to let go.",
-            takeaway: "Real learning sings, and it knows what to leave behind.",
+            id: "story.ganesha.tusk",
+            title: "The Broken Tusk",
+            deity: "Ganesha",
+            theme: .wisdom,
+            summary: "When the pen broke, he used a piece of himself.",
+            story: "As the sage Vyasa dictated the vast Mahabharata, Ganesha agreed to write it down — on one condition: that Vyasa never pause. Mid-epic, Ganesha's pen snapped. Rather than break the flow, he is said to have broken off his own tusk and kept writing.",
+            symbolMeaning: "One way to understand this symbol: the single tusk speaks of sacrifice in service of something larger, and of finishing what you start. Sometimes commitment means improvising with what you have rather than waiting for perfect conditions.",
+            takeaway: "Done with devotion beats waiting for the perfect tools.",
             readMinutes: 3,
-            systemImage: "music.note"
+            systemImage: "pencil.and.outline",
+            reviewStatus: .humanReviewed
         ),
         StorySymbol(
             id: "story.samudra.manthan",
@@ -828,19 +943,20 @@ enum SeedContent {
             deity: "Vishnu",
             theme: .discipline,
             summary: "Treasure rose only after the poison was faced.",
-            story: "To win the nectar of immortality, gods and demons churned the cosmic ocean together for ages. Before any treasure surfaced, a deadly poison arose — which Shiva drank to save creation, holding it in his throat. Only after that did the nectar finally appear.",
-            symbolMeaning: "The churning is a symbol of sustained effort, and of the truth that hard processes often surface the worst before the best. Patience and the willingness to sit with discomfort are what let the nectar rise.",
+            story: "To win the nectar of immortality, gods and demons churned the cosmic ocean together for ages. Before any treasure surfaced, a deadly poison arose — which Shiva is said to have drunk to save creation, holding it in his throat. Only after that did the nectar finally appear.",
+            symbolMeaning: "One way to understand this symbol: hard processes often surface the worst before the best. Patience, and the willingness to sit with discomfort, are what let the nectar rise.",
             takeaway: "The hardest part often comes right before the reward.",
             readMinutes: 5,
             systemImage: "tornado",
-            isPremium: true
+            isPremium: true,
+            reviewStatus: .humanReviewed
         )
     ]
 
     // MARK: - Story Library (Phase 2D `Story` model)
     //
-    // In-code fallback for `StoriesService` (mirrors seed_story_library.json).
-    // Three stories are kept here as a safety net; the full set lives in JSON.
+    // Exact in-code fallback for `StoriesService` (mirrors seed_story_library.json,
+    // 7 stories). Kept in lock-step with the JSON by SeedParityTests.
 
     static let storyLibrary: [Story] = [
         Story(
@@ -920,6 +1036,98 @@ enum SeedContent {
             reviewStatus: "reviewed",
             region: ["pan-India"],
             tags: ["devotion", "courage", "service"]
+        ),
+        Story(
+            id: "story_lakshmi_abundance",
+            deity: "Lakshmi",
+            title: "Abundance That Flows",
+            theme: .abundance,
+            durationMinutes: 3,
+            bodyMarkdown: "Lakshmi is usually shown standing or seated on a lotus, with coins streaming gently from one open hand. It is worth pausing on that detail: the hand is open, and the coins are falling — outward, downward, away. She is not clutching anything.\n\nThis is the quiet heart of her story. Lakshmi is often called the figure of wealth, but the word does her a disservice. She represents abundance in its fullest sense — well-being, beauty, ease, enough-ness — and crucially, abundance that moves. Money that only piles up stops being wealth and starts being weight. What she models is prosperity that circulates: received with gratitude, passed on with grace.\n\nIn many tellings she rose from the churning of a vast cosmic ocean, emerging radiant after a long and difficult effort. Abundance, the image suggests, is not luck that lands from nowhere. It often follows patience, shared work, and the willingness to keep going through the murky middle.\n\nThe lotus she stands on grows in muddy water, yet is never stained by it — a familiar reminder that we can move through ordinary mess, even ordinary money, without letting it cloud who we are. The elephants often shown beside her, pouring water, suggest dignity and a kind of unhurried grace; abundance need not be anxious or grasping.\n\nThere is a gentleness to all of this that is easy to overlook. Lakshmi is not a figure of accumulation or status. She is honoured most where there is care — a tidy home, a welcomed guest, a meal shared, a kindness extended without expecting return. Where generosity flows, the old idea goes, she feels at home.\n\nCustoms around her differ widely by region and household, and the details of her story shift from one telling to the next. What stays steady is the invitation: to hold what we have a little more openly, and to let some of the good in our hands flow onward.",
+            moralOrMeaning: "One reading of this story: true abundance circulates rather than accumulates — it stays alive in the giving, not only the having.",
+            symbolism: [
+                SymbolEntry(id: "sym_lotus_lakshmi", name: "Lotus", sanskritName: "Padma", meaning: "Rooted in mud yet unstained, the lotus suggests we can move through ordinary mess — even money — without letting it cloud who we are.", associatedDeities: ["Lakshmi", "Saraswati"]),
+                SymbolEntry(id: "sym_flowing_coins", name: "Flowing Coins", meaning: "Coins falling from an open hand are often read as abundance that is meant to circulate and be shared, not gripped and stored.", associatedDeities: ["Lakshmi"]),
+                SymbolEntry(id: "sym_elephants", name: "Elephants", sanskritName: "Gaja", meaning: "The elephants beside her, pouring water, are commonly seen as dignity and unhurried grace — abundance that is calm rather than anxious.", associatedDeities: ["Lakshmi"])
+            ],
+            reflectionPrompt: "What is one small way you could let something good flow onward this week?",
+            relatedMantraId: nil,
+            relatedFestivalId: "festival.diwali",
+            traditionNote: "Stories vary by tradition, region, and family lineage.",
+            sourceName: "Puranic tradition",
+            sourceNote: "A composite of commonly shared tellings.",
+            reviewStatus: "reviewed",
+            region: ["pan-India"],
+            tags: ["abundance", "generosity", "gratitude", "ease"]
+        ),
+        Story(
+            id: "story_shiva_stillness",
+            deity: "Shiva",
+            title: "The Still Point",
+            theme: .stillness,
+            durationMinutes: 4,
+            bodyMarkdown: "Of all the great figures in this tradition, Shiva is the one most often found doing nothing at all — and that is precisely the point. He is pictured high on a snow-quiet mountain, eyes half closed, utterly at rest, while the whole noisy world turns below him. He is the witness: the calm that watches everything without being swept away by it.\n\nAnd yet, in another famous image, the very same Shiva is dancing. As Nataraja, he moves inside a ring of fire, one foot raised, surrounded by motion and rhythm and even destruction. Look closely, though, and his face is serene. The dance is wild; the dancer is still. That is the riddle at the centre of him — perfect stillness and full movement, held in the same body at the same time.\n\nMost of us know only one or the other. We are either frantic or shut down, racing or collapsed. Shiva suggests a third way: to act fully in the world while keeping a quiet, unshaken centre. To be in the storm and also be its eye.\n\nThe crescent moon resting in his hair is often read as a calm holding of time — the cool, changing moon worn lightly, neither grasped nor feared. The small drum he holds, the damaru, keeps a rhythm said to mark beginnings and rests, the natural pulse of starting and pausing that runs through everything.\n\nThere is comfort in a figure who shows that stillness is not the same as doing nothing. His silence is not emptiness; it is fullness that does not need to announce itself. From that quiet centre, when he does move, the movement is clear and unhurried.\n\nHis stories take many forms across regions, and families hold their own understandings. But what he keeps pointing to is the same: a reminder that beneath the day's noise there is a still place in us too — and that we can learn, breath by breath, to return to it.",
+            moralOrMeaning: "One way many traditions understand this: stillness is not the absence of action but a steady centre within it — we can move through the world without being swept away by it.",
+            symbolism: [
+                SymbolEntry(id: "sym_crescent_moon", name: "Crescent Moon", sanskritName: "Chandra", meaning: "Worn lightly in his hair, the changing moon is often read as a calm holding of time — neither grasping at it nor fearing it.", associatedDeities: ["Shiva"]),
+                SymbolEntry(id: "sym_trishul", name: "Trishul", sanskritName: "Trishula", meaning: "The three-pronged form is commonly seen as three forces — creation, sustaining, and release — held together in balance rather than tension.", associatedDeities: ["Shiva", "Durga"]),
+                SymbolEntry(id: "sym_damaru", name: "Damaru", sanskritName: "Damaru", meaning: "The small hand-drum keeps a rhythm often read as the natural pulse of beginnings and rests — starting and pausing as one motion.", associatedDeities: ["Shiva"])
+            ],
+            reflectionPrompt: "Where in your day could you return to one still breath?",
+            relatedMantraId: "lesson.om.sound",
+            relatedFestivalId: nil,
+            traditionNote: "Stories vary by tradition, region, and family lineage.",
+            sourceName: "Puranic and Shaiva tradition",
+            sourceNote: "A composite of commonly shared tellings.",
+            reviewStatus: "reviewed",
+            region: ["pan-India"],
+            tags: ["stillness", "calm", "balance", "presence"]
+        ),
+        Story(
+            id: "story_durga_protector",
+            deity: "Durga",
+            title: "The Fierce Protector",
+            theme: .strength,
+            durationMinutes: 4,
+            bodyMarkdown: "When a threat arose that none could meet alone, the story goes, the cosmos answered not with anger but with concentrated strength. The combined energies of many great figures gathered and took form as Durga — radiant, many-armed, seated on a lion, calm-faced even as she rode into difficulty.\n\nIt matters that she was called forth to protect, not to dominate. The danger she faced could shift its shape and could not be overcome by ordinary force. What was needed was something steadier: strength joined to clarity, power that knew exactly what it was for. Durga is that — fierceness in the service of care.\n\nLook at how she is pictured. She has many arms, each holding a different tool, and they are usually read not as raw power but as capacity: the ability to hold many things at once, to meet a complex moment from several directions without losing composure. A parent steadying a household, a friend holding space for someone in pain, a person carrying several hard responsibilities at once — all of this is in those arms.\n\nHer face is the surprising part. In most images it is serene. She is not contorted with rage. Her strength does not come from losing herself to fury; it comes from a centre that stays clear. The lion she sits on, a creature of obvious power, carries her calmly — strength that serves rather than rampages.\n\nThere is a kind of permission in her. So many of us are taught that to be gentle we must be soft and yielding always, that fierceness is a flaw. Durga suggests otherwise: that protecting what we love can call for real force, and that this force, when guided by care, is not aggression but devotion wearing a stronger face.\n\nHer forms and festivals vary widely across regions, especially in the east, and families understand her in their own ways. What stays constant is the feeling she leaves: that there is a fierce, protective strength available to us too — and that it is gentlest at its very centre.",
+            moralOrMeaning: "One reading of this story: real strength is protective rather than aggressive — fierceness guided by care is a form of love, calm at its centre.",
+            symbolism: [
+                SymbolEntry(id: "sym_lion", name: "Lion", sanskritName: "Simha", meaning: "A creature of obvious power carrying her calmly, the lion is often read as strength that serves and steadies rather than rampages.", associatedDeities: ["Durga"]),
+                SymbolEntry(id: "sym_many_arms", name: "Many Arms", meaning: "Often read not as raw power but as capacity — the ability to hold many things at once and meet a hard moment from several directions without losing composure.", associatedDeities: ["Durga"]),
+                SymbolEntry(id: "sym_serene_face", name: "The Calm Face", meaning: "Her serene expression amid difficulty suggests that true strength comes from a clear centre, not from being overcome by fury.", associatedDeities: ["Durga"])
+            ],
+            reflectionPrompt: "What do you find yourself most fiercely protective of?",
+            relatedMantraId: nil,
+            relatedFestivalId: "festival.navaratri",
+            traditionNote: "Stories vary by tradition, region, and family lineage.",
+            sourceName: "Devi Mahatmya tradition",
+            sourceNote: "A composite of commonly shared tellings; emphasis differs by region.",
+            reviewStatus: "reviewed",
+            region: ["pan-India", "East India"],
+            tags: ["strength", "protection", "courage", "care"]
+        ),
+        Story(
+            id: "story_arjuna_courage",
+            deity: "Krishna",
+            title: "The Courage to Act",
+            theme: .courage,
+            durationMinutes: 5,
+            bodyMarkdown: "Two armies face each other across a field, and at the very moment the conflict is meant to begin, the warrior Arjuna sets down his bow. He looks across at the other side and sees not enemies but teachers, cousins, friends. The weight of what is being asked of him lands all at once, and he cannot move. He sits down in his chariot, overwhelmed.\n\nIt is one of the most human moments in all of these stories. Not a battle scene, but a standstill — the paralysis we all know when a choice feels too large, when every path seems to cost something dear.\n\nBeside Arjuna is Krishna, who has taken the humble role of his charioteer. He does not shout at Arjuna to pull himself together, nor does he pretend the difficulty away. He simply begins to talk with him, friend to friend, about how to act when acting is hard.\n\nThe heart of what he offers is gentle and surprisingly practical: do what is genuinely yours to do, and loosen your grip on the results. So much of our fear, the conversation suggests, comes from clutching at outcomes we cannot control — from needing a thing to turn out a certain way before we are willing to begin. When we give our sincere effort to the action itself and release the rest, the paralysis often eases. We become able to move again.\n\nThis is not a call to be careless, or to stop caring how things turn out. It is an invitation to act with full sincerity and a lighter hold — to take the next honest step without waiting for a guarantee.\n\nThe text these words come from is vast, and people across regions and generations read it in countless ways. Read gently, though, the scene speaks plainly to anyone who has ever frozen at a threshold. Courage here is not the absence of doubt. It is the willingness, doubt and all, to take one true step — and then the next.",
+            moralOrMeaning: "One way many traditions understand this: courage is acting with sincerity while loosening our grip on the outcome — taking the next honest step without waiting for a guarantee.",
+            symbolism: [
+                SymbolEntry(id: "sym_chariot", name: "The Chariot", sanskritName: "Ratha", meaning: "The self in motion, steadied by a wise inner voice at the reins — often read as the mind guided by clarity rather than by panic.", associatedDeities: ["Krishna", "Arjuna"]),
+                SymbolEntry(id: "sym_lowered_bow", name: "The Lowered Bow", meaning: "Arjuna setting down his bow is a tender image of the honest standstill — the moment of doubt that comes before any real act of courage.", associatedDeities: ["Arjuna"]),
+                SymbolEntry(id: "sym_conch", name: "Conch", sanskritName: "Shankha", meaning: "Its sound is often read as a call to begin — a clear note that marks the turn from hesitation toward the next true step.", associatedDeities: ["Krishna", "Vishnu"])
+            ],
+            reflectionPrompt: "When you feel frozen by a hard choice, what helps you take the first small step?",
+            relatedMantraId: "lesson.gayatri.basics",
+            relatedFestivalId: "festival.janmashtami",
+            traditionNote: "Stories vary by tradition, region, and family lineage.",
+            sourceName: "Bhagavad Gita",
+            sourceNote: "A brief, accessible retelling of the opening moment; many readings exist.",
+            reviewStatus: "reviewed",
+            region: ["pan-India"],
+            tags: ["courage", "action", "clarity", "doubt"]
         )
     ]
 
