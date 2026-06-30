@@ -26,7 +26,9 @@ final class StoreService {
     /// Whether the user currently has any Svara Plus entitlement.
     var isPlus: Bool { !purchasedProductIDs.isEmpty }
 
-    nonisolated(unsafe) private var updatesTask: Task<Void, Never>?
+    /// Internal plumbing — not observed state; `nonisolated(unsafe)` so the
+    /// nonisolated `deinit` can cancel it.
+    @ObservationIgnored nonisolated(unsafe) private var updatesTask: Task<Void, Never>?
 
     init() {
         updatesTask = listenForTransactions()
