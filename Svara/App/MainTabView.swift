@@ -5,15 +5,22 @@ import SwiftUI
 /// and Learn are always present and first (see `FeatureFlags`).
 struct MainTabView: View {
     @Environment(AppEnvironment.self) private var env
-    @State private var selection: MainTab = .today
     @State private var showAchievement: Achievement?
 
     var body: some View {
-        TabView(selection: $selection) {
+        @Bindable var nav = env.navigation
+        TabView(selection: $nav.selection) {
             ForEach(env.featureFlags.primaryTabs) { tab in
                 view(for: tab)
                     .tabItem { Label(tab.title, systemImage: tab.systemImage) }
                     .tag(tab)
+            }
+        }
+        .onChange(of: env.navigation.selection) { _, new in
+            // A deep link could target a tab that's staged out of the current
+            // scope; fall back to Today so selection always points at a real tab.
+            if !env.featureFlags.primaryTabs.contains(new) {
+                env.navigation.selection = .today
             }
         }
         .overlay(alignment: .top) {

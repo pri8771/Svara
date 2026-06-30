@@ -33,9 +33,25 @@ struct LearnView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.hidden, for: .navigationBar)
         }
-        .task { await viewModel.load(content: env.content) }
+        .task {
+            await viewModel.load(content: env.content)
+            openDeepLinkedLesson(env.navigation.learnLessonID)
+        }
+        .onChange(of: env.navigation.learnLessonID) { _, id in openDeepLinkedLesson(id) }
         .fullScreenCover(item: $activeLesson) { LessonPlayerView(lesson: $0) }
         .sheet(isPresented: $showPaywall) { PaywallView() }
+    }
+
+    /// Opens a lesson arrived at via a deep link (e.g. a shloka "lesson:" target),
+    /// honouring premium gating.
+    private func openDeepLinkedLesson(_ id: String?) {
+        guard let id, let lesson = viewModel.lessons.first(where: { $0.id == id }) else { return }
+        env.navigation.learnLessonID = nil
+        if lesson.isPremium && !env.isPremium {
+            showPaywall = true
+        } else {
+            activeLesson = lesson
+        }
     }
 
     // MARK: Recommendation

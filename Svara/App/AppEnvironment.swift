@@ -22,6 +22,9 @@ final class AppEnvironment {
     /// Which primary surfaces are active (full product vs. staged beta scope).
     let featureFlags: FeatureFlags
 
+    /// Cross-tab navigation / deep-link routing (e.g. shloka-of-the-day links).
+    let navigation = NavigationCoordinator()
+
     private let kvStore: KeyValueStore
 
     // MARK: Session state

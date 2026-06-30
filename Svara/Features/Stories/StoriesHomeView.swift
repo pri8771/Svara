@@ -5,6 +5,7 @@ import SwiftUI
 struct StoriesHomeView: View {
     @Environment(AppEnvironment.self) private var env
     @StateObject private var viewModel = StoriesViewModel()
+    @State private var path: [Story] = []
 
     private let columns = [
         GridItem(.flexible(), spacing: SvaraTheme.Spacing.md),
@@ -12,7 +13,7 @@ struct StoriesHomeView: View {
     ]
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             ScrollView {
                 VStack(alignment: .leading, spacing: SvaraTheme.Spacing.lg) {
                     GreetingHeader(eyebrow: "STORIES & SYMBOLS", title: "Stories")
@@ -52,7 +53,18 @@ struct StoriesHomeView: View {
                 StoryDetailView(story: story)
             }
         }
-        .task { viewModel.load(service: env.storyLibrary) }
+        .task {
+            viewModel.load(service: env.storyLibrary)
+            openDeepLinkedStory(env.navigation.storyID)
+        }
+        .onChange(of: env.navigation.storyID) { _, id in openDeepLinkedStory(id) }
+    }
+
+    /// Pushes a story arrived at via a deep link (e.g. a shloka "story:" target).
+    private func openDeepLinkedStory(_ id: String?) {
+        guard let id, let story = env.storyLibrary.story(id: id) else { return }
+        env.navigation.storyID = nil
+        if path.last != story { path.append(story) }
     }
 
     // MARK: Featured hero

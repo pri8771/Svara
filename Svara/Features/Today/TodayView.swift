@@ -32,6 +32,16 @@ struct TodayView: View {
                         }
                         .buttonStyle(.plain)
                     }
+
+                    if let shloka = viewModel.shloka {
+                        SectionHeader(title: "Shloka of the day", subtitle: "A verse to sit with")
+                        Button {
+                            env.navigation.route(deepLink: shloka.deepLinkTarget)
+                        } label: {
+                            ShlokaOfDayCard(shloka: shloka)
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
                 .padding(.horizontal, SvaraTheme.Spacing.screenMargin)
                 .padding(.vertical, SvaraTheme.Spacing.lg)
@@ -45,6 +55,18 @@ struct TodayView: View {
             PracticePlayerView(practice: practice, mantra: viewModel.mantra(id: practice.mantraID))
         }
         .fullScreenCover(item: $activeLesson) { LessonPlayerView(lesson: $0) }
+        .sheet(item: deepLinkMantra) { mantra in
+            NavigationStack { MantraDetailView(mantra: mantra) }
+        }
+    }
+
+    /// Resolves a `mantra:` shloka deep link to the mantra to present, and clears
+    /// the pending id on dismiss.
+    private var deepLinkMantra: Binding<Mantra?> {
+        Binding(
+            get: { viewModel.mantra(id: env.navigation.todayMantraID) },
+            set: { if $0 == nil { env.navigation.todayMantraID = nil } }
+        )
     }
 
     /// Surfaces the learner's next Aaroh step right on the home screen so it's
@@ -180,6 +202,40 @@ struct MantraOfDayCard: View {
                     .foregroundStyle(SvaraTheme.Colors.textSecondary)
             }
         }
+    }
+}
+
+/// Compact card for the shloka of the day. Tapping it follows the shloka's
+/// `deepLinkTarget` into the most relevant place in the app.
+struct ShlokaOfDayCard: View {
+    let shloka: ShlokaOfDay
+
+    var body: some View {
+        SvaraCard {
+            VStack(alignment: .leading, spacing: SvaraTheme.Spacing.sm) {
+                HStack {
+                    ThemeChip(theme: shloka.theme)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(SvaraTheme.Colors.textSecondary)
+                }
+                Text(shloka.transliteration)
+                    .font(.svaraSanskrit)
+                    .foregroundStyle(SvaraTheme.Colors.accent)
+                    .lineLimit(3)
+                Text(shloka.translation)
+                    .font(.svaraCallout)
+                    .italic()
+                    .foregroundStyle(SvaraTheme.Colors.textSecondary)
+                if let source = shloka.sourceName {
+                    Text(source)
+                        .font(.svaraCaption)
+                        .foregroundStyle(SvaraTheme.Colors.textSecondary.opacity(0.8))
+                }
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Shloka of the day. \(shloka.translation). \(shloka.sourceName.map { "Source: \($0)." } ?? "") Opens related content.")
     }
 }
 
