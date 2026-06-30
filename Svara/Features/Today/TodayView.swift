@@ -147,6 +147,7 @@ struct TodayView: View {
                 VStack(spacing: 2) {
                     Image(systemName: "sparkles")
                         .foregroundStyle(SvaraTheme.Colors.points)
+                        .accessibilityHidden(true)
                     Text("\(env.profile.totalPoints)")
                         .font(.svaraTitle)
                         .foregroundStyle(SvaraTheme.Colors.textOnDark)
@@ -156,6 +157,8 @@ struct TodayView: View {
                 }
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(env.profile.currentStreak) day streak. \(env.profile.totalPoints) Svara points.")
     }
 
     private var practiceList: some View {
@@ -202,6 +205,9 @@ struct MantraOfDayCard: View {
                     .foregroundStyle(SvaraTheme.Colors.textSecondary)
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Mantra of the day: \(mantra.title). \(mantra.translation).")
+        .accessibilityHint("Opens the mantra")
     }
 }
 

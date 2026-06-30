@@ -39,6 +39,11 @@ struct PracticeCard: View {
             .shadow(color: SvaraTheme.Palette.indigo.opacity(0.25), radius: 14, x: 0, y: 8)
         }
         .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(practice.timeOfDay.label) practice: \(practice.title). \(practice.subtitle). \(practice.durationMinutes) minutes, earns \(practice.points) points.")
+        .accessibilityValue(isCompleted ? "Completed today" : "")
+        .accessibilityHint(isCompleted ? "" : "Begins a guided practice")
+        .accessibilityAddTraits(.isButton)
     }
 
     private var iconBadge: some View {

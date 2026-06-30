@@ -135,6 +135,7 @@ private struct StatTile: View {
             Image(systemName: systemImage)
                 .font(.title3)
                 .foregroundStyle(tint)
+                .accessibilityHidden(true)
             Text(value)
                 .font(.svaraTitle)
                 .foregroundStyle(SvaraTheme.Colors.textPrimary)
@@ -142,6 +143,8 @@ private struct StatTile: View {
                 .font(.svaraCaption)
                 .foregroundStyle(SvaraTheme.Colors.textSecondary)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(label): \(value)")
         .frame(maxWidth: .infinity)
         .padding(.vertical, SvaraTheme.Spacing.lg)
         .background(SvaraTheme.Colors.surface)
