@@ -2,7 +2,27 @@
 
 > Svara is a daily spiritual-wellness iOS app rooted in Hindu culture — "Headspace meets Duolingo" with a Hindu soul. It is for Indians aged 18–35, in India and across the diaspora, who want a gentle daily habit: a three-minute practice (morning mantra / midday breath / evening prayer / gratitude), bite-sized lessons that teach a sloka's meaning, the stories behind festivals, and deity tales organised by human themes. The core loop is: open **Today → run a timed guided practice → earn Svara Points → keep a gentle streak**, with **Learn**, **Festivals**, **Stories** and **Profile** as supporting surfaces.
 >
-> **Implementation maturity: working SwiftUI app + tests (Building).** The repo is a navigable iOS 17 SwiftUI/MVVM app (56 app Swift files + 5 test, ~5.0k non-blank LOC) that runs entirely offline on bundled JSON seed content. The Today and Learn loops are wired end-to-end (practice player, lesson player, points, streaks, achievements, persistence). StoreKit 2 is real but unconfigured in the run scheme; auth is a local mock; Firebase is a deliberate, un-wired seam. It is **not** yet TestFlight-ready: the test target is hosted (depends on `Bundle.main`) and has never been run in CI, the in-code seed fallback diverges from the shipped JSON, and several App Store / privacy / content-review items are open. See §7 and §8.
+> **Implementation maturity: launch-candidate (~85%).** The repo is a navigable iOS 17 SwiftUI/MVVM app (77 app Swift files + 22 test files, 127 tests) that runs entirely offline on bundled JSON seed content. The Today and Learn loops are wired end-to-end (practice player, lesson player with a gentle hint system + persisted per-lesson progress, points, streaks, achievements, persistence), and the Phase 2B/2C/2D depth (Aaroh retention path, seasonal Festivals, Stories & Symbols) is merged in. StoreKit 2 is wired into the run scheme; auth defaults to a frictionless local guest; Firebase remains a deliberate, un-wired seam. See §0 for what changed this session.
+
+---
+
+## 0. Status update — 2026-06-30 (launch-readiness pass)
+
+This pass merged the Phase 2B–2D feature depth with the launch-prep line and
+worked the §8 checklist. **Readiness moved ~60% → ~85%.** Resolved:
+
+- **LB-1** ✅ In-code `SeedContent` fallback now mirrors the shipped JSON (mantras 10, stories 10, story-library 7); `SeedParityTests` assert id/count parity and that shloka deep links resolve in *both* sources.
+- **LB-2** ✅ No first-run auth wall — the app opens straight into content as a local guest; sign-in is optional from Settings (`AuthFlowTests`).
+- **LB-3** ✅ Content-review gate in `ContentValidation`: every shipped devotional item must be `humanReviewed`/`sourced` (Story = `reviewed`), else a blocking error (`ContentReviewGateTests`).
+- **LB-4** ✅ Branded Privacy Policy + Terms + landing published under `docs/` (GitHub Pages); all in-app/metadata URLs point at them via `SvaraLinks`.
+- **LB-5/LB-6** ✅ `Svara.storekit` wired into the run scheme; IAP pricing reconciled to $0.99 / $7.99 / $19.99 across config + metadata.
+- **LB-7** ✅ CI (`.github/workflows/ci.yml`) runs the full test suite on every push/PR.
+- **LB-8** ✅ Privacy manifest declares the UserDefaults required-reason API (CA92.1); App Privacy answers documented.
+- **Strategy lock** ✅ `FeatureFlags` (full vs `betaScope`) drives the tab spine — Today + Learn are the irreducible core; `TabConfigurationTests` fail if a staged tab reappears as a primary beta surface or a social surface ever enters the nav registry. Executable no-doctrinal-authority scan + tests added. Guardrails §8.4–8.6 codified.
+- **Design** ✅ Bespoke App Store icon + in-app logomark (sunrise + lotus, no bell) generated via CoreGraphics (`design/`).
+- **Polish** ✅ Festival date timezone off-by-one fixed; `StreakCalculator` now tested; paywall "smart reminders" oversell replaced with honest copy. (KL-2 hints / KL-5 per-lesson progress arrived with the Phase 2B merge.)
+
+**Still open before submission:** create the IAP products in App Store Connect; enable GitHub Pages for `docs/`; record human cultural/theological sign-off off-repo; real audio for "listen" steps and Firebase sync remain deferred (not blocking). Bug/risk items below are annotated **[resolved]** where addressed.
 
 ---
 

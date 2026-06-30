@@ -13,11 +13,13 @@ the festivals you grew up with, and the symbols behind the deities.
 > backend dependency hidden behind a protocol so Firebase and StoreKit can be
 > switched on without touching feature code.
 
-> _Updated 2026-06-30 to match the shipped product and launch scope. See
-> [`LAUNCH_READINESS.md`](LAUNCH_READINESS.md) for the canonical PRD, MVP feature
-> status (Built/Partial/Not built), bug & risk triage, and the path to TestFlight.
-> Implementation status: working SwiftUI app + tests (Building) — not yet
-> launch-ready._
+> _Updated 2026-06-30. Implementation status: **launch-candidate (~85%)** — a
+> navigable iOS 17 SwiftUI/MVVM app, 127 passing tests in CI, the full five-tab
+> product merged in (Today, Learn with the Aaroh retention path, Festivals,
+> Stories & Symbols, Profile), bespoke brand art, wired StoreKit, a frictionless
+> guest start, executable product guardrails, and published legal pages. See
+> [`LAUNCH_READINESS.md`](LAUNCH_READINESS.md) §0 for the launch-readiness pass
+> and what remains before App Store submission._
 
 ---
 
