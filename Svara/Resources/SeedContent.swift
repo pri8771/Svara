@@ -1204,7 +1204,7 @@ enum SeedContent {
             meaning: "The opening of a much-loved invocation to Ganesha, asking for a clear path before beginning anything new.",
             theme: .courage,
             reviewStatus: .humanReviewed,
-            deepLinkTarget: "story:story.ganesha.beginnings"
+            deepLinkTarget: "story:story_ganesha_obstacle"
         ),
         ShlokaOfDay(
             id: "shloka.lokah.samastah",

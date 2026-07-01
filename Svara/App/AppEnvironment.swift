@@ -36,6 +36,9 @@ final class AppEnvironment {
     /// the celebratory toast.
     var pendingAchievements: [Achievement] = []
 
+    /// Festivals the user has bookmarked — persisted locally.
+    var savedFestivalIDs: Set<String> = []
+
     /// Effective premium entitlement: an active purchase or a stored flag.
     var isPremium: Bool { store.isPlus || profile.isPremium }
 
@@ -59,6 +62,7 @@ final class AppEnvironment {
         self.kvStore = kvStore
         self.profile = .guest()
         self.hasCompletedOnboarding = kvStore.load(Bool.self, forKey: StorageKey.onboardingComplete) ?? false
+        self.savedFestivalIDs = kvStore.load(Set<String>.self, forKey: StorageKey.savedFestivalIDs) ?? []
     }
 
     // MARK: - Factories
@@ -137,6 +141,10 @@ final class AppEnvironment {
     /// an auth wall. The app stays open and usable.
     func signOut() async {
         try? await auth.signOut()
+        kvStore.remove(forKey: StorageKey.lessonProgress)
+        kvStore.remove(forKey: StorageKey.savedFestivalIDs)
+        savedFestivalIDs = []
+        reflections.clear()
         notifications.cancelAllReminders()
         await continueAsGuest()
     }
@@ -232,6 +240,19 @@ final class AppEnvironment {
 
     func isFestivalObserved(_ festival: Festival) -> Bool {
         profile.observedFestivalIDs.contains(festival.id)
+    }
+
+    func isFestivalSaved(_ festival: Festival) -> Bool {
+        savedFestivalIDs.contains(festival.id)
+    }
+
+    func toggleFestivalSaved(_ festival: Festival) {
+        if savedFestivalIDs.contains(festival.id) {
+            savedFestivalIDs.remove(festival.id)
+        } else {
+            savedFestivalIDs.insert(festival.id)
+        }
+        kvStore.save(savedFestivalIDs, forKey: StorageKey.savedFestivalIDs)
     }
 
     func isAchievementUnlocked(_ achievement: Achievement) -> Bool {

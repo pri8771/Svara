@@ -9,6 +9,6 @@ import Foundation
 enum SvaraLinks {
     static let privacyPolicy = URL(string: "https://pri8771.github.io/Svara/privacy.html")!
     static let termsOfService = URL(string: "https://pri8771.github.io/Svara/terms.html")!
-    static let support = URL(string: "https://github.com/pri8771/Svara")!
+    static let support = URL(string: "mailto:priyansh.chordia@gmail.com")!
     static let website = URL(string: "https://pri8771.github.io/Svara/")!
 }

@@ -41,4 +41,5 @@ enum StorageKey {
     static let sessions = "svara.sessions"
     static let onboardingComplete = "svara.onboardingComplete"
     static let lessonProgress = "svara.lessonProgress"
+    static let savedFestivalIDs = "svara.savedFestivalIDs"
 }

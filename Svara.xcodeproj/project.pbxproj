@@ -352,7 +352,7 @@
 				DEVELOPMENT_TEAM = 796XH483R4;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Svara/Resources/Preview Content\"";
-				ENABLE_PREVIEWS = YES;
+				ENABLE_PREVIEWS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Svara sends gentle daily reminders for your morning and evening practice.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

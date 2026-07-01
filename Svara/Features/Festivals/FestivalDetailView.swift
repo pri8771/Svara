@@ -14,7 +14,6 @@ struct FestivalDetailView: View {
     @State private var relatedPractice: DailyPractice?
     @State private var practiceMantra: Mantra?
     @State private var activeCover: ActiveCover?
-    @State private var isSaved = false
 
     /// A single full-screen cover, enum-driven (multiple `.fullScreenCover`
     /// modifiers on one view can conflict).
@@ -305,7 +304,8 @@ struct FestivalDetailView: View {
 
     private var saveShareRow: some View {
         HStack(spacing: SvaraTheme.Spacing.md) {
-            Button { isSaved.toggle() } label: {
+            let isSaved = env.isFestivalSaved(festival)
+            Button { env.toggleFestivalSaved(festival) } label: {
                 Label(isSaved ? "Saved" : "Save", systemImage: isSaved ? "bookmark.fill" : "bookmark")
                     .font(.svaraHeadline)
                     .foregroundStyle(SvaraTheme.Colors.accent)
