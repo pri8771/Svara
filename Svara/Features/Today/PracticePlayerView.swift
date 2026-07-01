@@ -29,7 +29,10 @@ struct PracticePlayerView: View {
             content
                 .padding(SvaraTheme.Spacing.screenMargin)
         }
-        .onDisappear { timer?.invalidate() }
+        .onDisappear {
+            timer?.invalidate()
+            env.audioPlayback.stop()
+        }
     }
 
     @ViewBuilder
@@ -63,6 +66,9 @@ struct PracticePlayerView: View {
                     .font(.svaraSanskrit)
                     .italic()
                     .foregroundStyle(.white.opacity(0.95))
+                if mantra.audioFileName != nil {
+                    audioButton(for: mantra)
+                }
             }
             Spacer()
             PrimaryButton(title: "Begin", systemImage: "play.fill") { start() }
@@ -96,6 +102,9 @@ struct PracticePlayerView: View {
                     .frame(maxWidth: .infinity)
                     .transition(.opacity)
                     .id(stepIndex)
+            }
+            if let mantra, mantra.audioFileName != nil {
+                audioButton(for: mantra)
             }
             Spacer()
             SecondaryButton(title: "Finish now") { complete() }
@@ -136,6 +145,23 @@ struct PracticePlayerView: View {
                     .foregroundStyle(.white.opacity(0.85))
             }
         }
+    }
+
+    /// A speaker control that plays/pauses the mantra's bundled chant audio.
+    private func audioButton(for mantra: Mantra) -> some View {
+        let isPlayingThis = env.audioPlayback.isPlaying && env.audioPlayback.currentFileName == mantra.audioFileName
+        return Button {
+            env.audioPlayback.toggle(fileName: mantra.audioFileName)
+        } label: {
+            Label(isPlayingThis ? "Pause chant" : "Play chant", systemImage: isPlayingThis ? "pause.circle.fill" : "speaker.wave.2.circle.fill")
+                .font(.svaraCallout.weight(.semibold))
+                .foregroundStyle(.white)
+                .padding(.horizontal, SvaraTheme.Spacing.md)
+                .padding(.vertical, SvaraTheme.Spacing.sm)
+                .background(.white.opacity(0.15))
+                .clipShape(Capsule())
+        }
+        .accessibilityLabel(isPlayingThis ? "Pause chant audio" : "Play chant audio")
     }
 
     // MARK: Timing

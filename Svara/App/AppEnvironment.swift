@@ -14,6 +14,8 @@ final class AppEnvironment {
     let progress: ProgressService
     let notifications: NotificationService
     let store: StoreService
+    /// Plays bundled mantra audio (chant-along) from the practice and lesson players.
+    let audioPlayback = AudioPlaybackService()
 
     /// Phase 2D Stories & Symbols library (Story model) and private reflections.
     let storyLibrary: StoriesService

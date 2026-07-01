@@ -18,6 +18,10 @@ struct LessonPlayerView: View {
     @State private var correctCount = 0
     @State private var finished = false
 
+    /// The mantra this lesson teaches, loaded once for the `listen` step's
+    /// chant-along audio.
+    @State private var mantra: Mantra?
+
     // Per-step answer state (reset on advance).
     @State private var selectedOption: Int?
     @State private var builtSyllables: [String] = []
@@ -44,6 +48,13 @@ struct LessonPlayerView: View {
         .padding(SvaraTheme.Spacing.screenMargin)
         .svaraScreenBackground()
         .onAppear(perform: syncSyllablePool)
+        .task { await loadMantra() }
+        .onDisappear { env.audioPlayback.stop() }
+    }
+
+    private func loadMantra() async {
+        guard let mantraID = lesson.mantraID else { return }
+        mantra = await env.content.mantra(id: mantraID)
     }
 
     // MARK: Top bar with progress
@@ -106,19 +117,30 @@ struct LessonPlayerView: View {
     }
 
     private var listenCard: some View {
-        SvaraCard(background: SvaraTheme.Colors.surfaceInverse) {
-            HStack {
-                Image(systemName: "speaker.wave.2.fill")
-                    .font(.title2)
-                    .foregroundStyle(SvaraTheme.Colors.points)
-                Text(LearnCopy.chantAlong)
-                    .font(.svaraHeadline)
-                    .foregroundStyle(SvaraTheme.Colors.textOnDark)
-                Spacer()
+        let audioFileName = mantra?.audioFileName
+        let isPlayingThis = audioFileName != nil
+            && env.audioPlayback.isPlaying
+            && env.audioPlayback.currentFileName == audioFileName
+        return Button {
+            env.audioPlayback.toggle(fileName: audioFileName)
+        } label: {
+            SvaraCard(background: SvaraTheme.Colors.surfaceInverse) {
+                HStack {
+                    Image(systemName: isPlayingThis ? "pause.circle.fill" : "speaker.wave.2.fill")
+                        .font(.title2)
+                        .foregroundStyle(SvaraTheme.Colors.points)
+                    Text(LearnCopy.chantAlong)
+                        .font(.svaraHeadline)
+                        .foregroundStyle(SvaraTheme.Colors.textOnDark)
+                    Spacer()
+                }
             }
         }
+        .buttonStyle(.plain)
+        .disabled(audioFileName == nil)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(LearnCopy.chantAlong)
+        .accessibilityAddTraits(.isButton)
     }
 
     // MARK: Option-based steps

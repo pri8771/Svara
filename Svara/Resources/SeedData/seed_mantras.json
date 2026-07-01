@@ -10,6 +10,7 @@
     "theme": "devotion",
     "repetitions": 9,
     "durationMinutes": 2,
+    "audioFileName": "mantra_om",
     "traditionNote": "Interpretations of Om are many; traditions vary by region and family.",
     "reviewStatus": "humanReviewed"
   },
@@ -24,6 +25,7 @@
     "theme": "wisdom",
     "repetitions": 9,
     "durationMinutes": 3,
+    "audioFileName": "mantra_gayatri",
     "sourceName": "Rig Veda 3.62.10",
     "reviewStatus": "sourced"
   },
@@ -38,6 +40,7 @@
     "theme": "courage",
     "repetitions": 3,
     "durationMinutes": 2,
+    "audioFileName": "mantra_vakratunda",
     "reviewStatus": "humanReviewed"
   },
   {
@@ -51,6 +54,7 @@
     "theme": "knowledge",
     "repetitions": 3,
     "durationMinutes": 2,
+    "audioFileName": "mantra_saraswati",
     "reviewStatus": "humanReviewed"
   },
   {
@@ -64,6 +68,7 @@
     "theme": "discipline",
     "repetitions": 11,
     "durationMinutes": 3,
+    "audioFileName": "mantra_shiva",
     "reviewStatus": "humanReviewed"
   },
   {
@@ -77,6 +82,7 @@
     "theme": "courage",
     "repetitions": 11,
     "durationMinutes": 2,
+    "audioFileName": "mantra_ganesha",
     "reviewStatus": "humanReviewed"
   },
   {
@@ -90,6 +96,7 @@
     "theme": "knowledge",
     "repetitions": 11,
     "durationMinutes": 2,
+    "audioFileName": "mantra_saraswati",
     "reviewStatus": "humanReviewed"
   },
   {
@@ -103,6 +110,7 @@
     "theme": "compassion",
     "repetitions": 3,
     "durationMinutes": 3,
+    "audioFileName": "mantra_shanti",
     "reviewStatus": "humanReviewed"
   },
   {
@@ -116,6 +124,7 @@
     "theme": "protection",
     "repetitions": 9,
     "durationMinutes": 4,
+    "audioFileName": "mantra_mahamrityunjaya",
     "sourceName": "Rig Veda 7.59.12",
     "reviewStatus": "sourced"
   },
@@ -130,6 +139,7 @@
     "theme": "prosperity",
     "repetitions": 11,
     "durationMinutes": 3,
+    "audioFileName": "mantra_lakshmi",
     "reviewStatus": "humanReviewed"
   }
 ]
