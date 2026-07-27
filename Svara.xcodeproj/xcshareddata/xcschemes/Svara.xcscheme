@@ -38,6 +38,16 @@
                ReferencedContainer = "container:Svara.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E331965674FEAD9B6FA2270F"
+               BuildableName = "SvaraUITests.xctest"
+               BlueprintName = "SvaraUITests"
+               ReferencedContainer = "container:Svara.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

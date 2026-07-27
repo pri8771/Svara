@@ -6,17 +6,62 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		59489EADFEF8F7033AE517BA /* SvaraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB955298A42E5E375EAC108 /* SvaraUITests.swift */; };
+		775B46D304745705A23575E1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39536676719C5E563D0CA558 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		580F6D897125ABC9C2F3A4F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA0000000000000000000006 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA0000000000000000000005;
+			remoteInfo = Svara;
+		};
+		AA000000000000000000001A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA0000000000000000000006 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA0000000000000000000005;
+			remoteInfo = Svara;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		39536676719C5E563D0CA558 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		AA0000000000000000000003 /* Svara.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Svara.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0000000000000000000012 /* SvaraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SvaraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5D8880C0E8647ED72AF1902 /* SvaraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SvaraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBB955298A42E5E375EAC108 /* SvaraUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SvaraUITests.swift; path = SvaraUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		AA0000000000000000000004 /* Svara */ = {isa = PBXFileSystemSynchronizedRootGroup; path = Svara; sourceTree = "<group>"; };
-		AA0000000000000000000011 /* SvaraTests */ = {isa = PBXFileSystemSynchronizedRootGroup; path = SvaraTests; sourceTree = "<group>"; };
+		AA0000000000000000000004 /* Svara */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = Svara;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000011 /* SvaraTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = SvaraTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6293553B8086821D336C80C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				775B46D304745705A23575E1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA0000000000000000000008 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -34,12 +79,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0654BC6E0B766D795AB19DA8 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				39536676719C5E563D0CA558 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		7B6C674582D36E9154E4F3FC /* SvaraUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EBB955298A42E5E375EAC108 /* SvaraUITests.swift */,
+			);
+			name = SvaraUITests;
+			path = SvaraUITests;
+			sourceTree = "<group>";
+		};
 		AA0000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000004 /* Svara */,
 				AA0000000000000000000011 /* SvaraTests */,
 				AA0000000000000000000002 /* Products */,
+				BC47094AFE7427CB866F06E5 /* Frameworks */,
+				7B6C674582D36E9154E4F3FC /* SvaraUITests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -48,8 +112,17 @@
 			children = (
 				AA0000000000000000000003 /* Svara.app */,
 				AA0000000000000000000012 /* SvaraTests.xctest */,
+				B5D8880C0E8647ED72AF1902 /* SvaraUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BC47094AFE7427CB866F06E5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0654BC6E0B766D795AB19DA8 /* iOS */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,8 +144,6 @@
 				AA0000000000000000000004 /* Svara */,
 			);
 			name = Svara;
-			packageProductDependencies = (
-			);
 			productName = Svara;
 			productReference = AA0000000000000000000003 /* Svara.app */;
 			productType = "com.apple.product-type.application";
@@ -94,11 +165,27 @@
 				AA0000000000000000000011 /* SvaraTests */,
 			);
 			name = SvaraTests;
-			packageProductDependencies = (
-			);
 			productName = SvaraTests;
 			productReference = AA0000000000000000000012 /* SvaraTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E331965674FEAD9B6FA2270F /* SvaraUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 41F1C9DCBF23C70D28F758B3 /* Build configuration list for PBXNativeTarget "SvaraUITests" */;
+			buildPhases = (
+				3FEF221A06FB053E22246FBB /* Sources */,
+				6293553B8086821D336C80C7 /* Frameworks */,
+				D2A2EF0F75B79A9A54763BED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8BCBD67E534D444C4878CDC4 /* PBXTargetDependency */,
+			);
+			name = SvaraUITests;
+			productName = SvaraUITests;
+			productReference = B5D8880C0E8647ED72AF1902 /* SvaraUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -114,6 +201,10 @@
 						CreatedOnToolsVersion = 16.0;
 					};
 					AA0000000000000000000010 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = AA0000000000000000000005;
+					};
+					E331965674FEAD9B6FA2270F = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = AA0000000000000000000005;
 					};
@@ -136,6 +227,7 @@
 			targets = (
 				AA0000000000000000000005 /* Svara */,
 				AA0000000000000000000010 /* SvaraTests */,
+				E331965674FEAD9B6FA2270F /* SvaraUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -155,9 +247,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2A2EF0F75B79A9A54763BED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3FEF221A06FB053E22246FBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59489EADFEF8F7033AE517BA /* SvaraUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA0000000000000000000007 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -175,6 +282,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8BCBD67E534D444C4878CDC4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Svara;
+			target = AA0000000000000000000005 /* Svara */;
+			targetProxy = 580F6D897125ABC9C2F3A4F8 /* PBXContainerItemProxy */;
+		};
 		AA0000000000000000000019 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AA0000000000000000000005 /* Svara */;
@@ -182,17 +295,60 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXContainerItemProxy section */
-		AA000000000000000000001A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA0000000000000000000006 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AA0000000000000000000005;
-			remoteInfo = Svara;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin XCBuildConfiguration section */
+		18548467AEF3C0369CFD5069 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 796XH483R4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.primandir.svara.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Svara;
+			};
+			name = Debug;
+		};
+		9FA1AEA3A13F0A86A35F9B6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 796XH483R4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.primandir.svara.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Svara;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		AA000000000000000000000C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -318,9 +474,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 796XH483R4;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Svara/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = 796XH483R4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Svara sends gentle daily reminders for your morning and evening practice.";
@@ -328,7 +484,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -339,7 +495,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -349,9 +505,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 796XH483R4;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Svara/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = 796XH483R4;
 				ENABLE_PREVIEWS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Svara sends gentle daily reminders for your morning and evening practice.";
@@ -359,7 +515,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -370,7 +526,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -380,8 +536,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 796XH483R4;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 796XH483R4;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -394,7 +550,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Svara.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Svara";
 			};
 			name = Debug;
@@ -405,8 +561,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 796XH483R4;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 796XH483R4;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -419,7 +575,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Svara.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Svara";
 			};
 			name = Release;
@@ -427,6 +583,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		41F1C9DCBF23C70D28F758B3 /* Build configuration list for PBXNativeTarget "SvaraUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9FA1AEA3A13F0A86A35F9B6D /* Release */,
+				18548467AEF3C0369CFD5069 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AA000000000000000000000A /* Build configuration list for PBXProject "Svara" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

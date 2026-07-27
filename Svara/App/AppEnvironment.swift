@@ -70,7 +70,22 @@ final class AppEnvironment {
     // MARK: - Factories
 
     static func live() -> AppEnvironment {
-        let kv = UserDefaultsStore()
+        let defaults = UserDefaults.standard
+        if ProcessInfo.processInfo.arguments.contains("-UITestResetState") {
+            // Deterministic starting point for XCUITest: wipe everything the app
+            // persists so each UI test run begins at onboarding with a 0-day streak,
+            // regardless of what a previous run left behind on this simulator.
+            for key in [
+                StorageKey.userProfile,
+                StorageKey.sessions,
+                StorageKey.onboardingComplete,
+                StorageKey.lessonProgress,
+                StorageKey.savedFestivalIDs
+            ] {
+                defaults.removeObject(forKey: key)
+            }
+        }
+        let kv = UserDefaultsStore(defaults: defaults)
         return AppEnvironment(
             auth: MockAuthService(store: kv),
             content: LocalContentRepository(),
