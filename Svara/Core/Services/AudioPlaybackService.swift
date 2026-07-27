@@ -39,7 +39,7 @@ final class AudioPlaybackService: NSObject {
     }
 
     /// Starts (or restarts) playback of `fileName` from the beginning.
-    func play(fileName: String?) {
+    func play(fileName: String?, loops: Bool = false) {
         guard let fileName else { return }
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") else {
             stop()
@@ -50,6 +50,7 @@ final class AudioPlaybackService: NSObject {
             activateSession()
             let newPlayer = try AVAudioPlayer(contentsOf: url)
             newPlayer.delegate = self
+            newPlayer.numberOfLoops = loops ? -1 : 0
             newPlayer.prepareToPlay()
             player = newPlayer
             currentFileName = fileName

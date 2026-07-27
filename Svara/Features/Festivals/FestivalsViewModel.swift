@@ -53,6 +53,16 @@ final class FestivalsViewModel {
         FestivalRegionFilter.ordered(festivals, for: selectedRegion)
     }
 
+    /// Look up a loaded festival by id (used for saved rows and deep links).
+    func festival(id: String) -> Festival? {
+        festivals.first { $0.id == id }
+    }
+
+    /// Loaded festivals the user has saved, in the same upcoming-first order.
+    func saved(ids: Set<String>) -> [Festival] {
+        festivals.filter { ids.contains($0.id) }
+    }
+
     /// Whether a festival matches the chosen region (for a gentle highlight).
     func matchesSelectedRegion(_ festival: Festival) -> Bool {
         guard let selectedRegion else { return true }

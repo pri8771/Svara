@@ -18,6 +18,7 @@ final class NavigationCoordinator {
     var todayMantraID: String?
     var learnLessonID: String?
     var storyID: String?
+    var festivalID: String?
 
     /// Routes a raw deep-link string (e.g. "mantra:mantra.om", "stories").
     func route(deepLink raw: String) {
@@ -37,8 +38,9 @@ final class NavigationCoordinator {
         case .story(let id):
             selection = .stories
             storyID = id
-        case .festival:
+        case .festival(let id):
             selection = .festivals
+            festivalID = id
         case .unknown:
             break
         }

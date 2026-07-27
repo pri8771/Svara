@@ -7,10 +7,11 @@ import SwiftUI
 struct FestivalsView: View {
     @Environment(AppEnvironment.self) private var env
     @State private var viewModel = FestivalsViewModel()
+    @State private var path: [Festival] = []
 
     var body: some View {
         @Bindable var vm = viewModel
-        return NavigationStack {
+        return NavigationStack(path: $path) {
             ScrollView {
                 VStack(alignment: .leading, spacing: SvaraTheme.Spacing.xl) {
                     GreetingHeader(eyebrow: "FESTIVALS", title: "Festival Moments")
@@ -19,6 +20,7 @@ struct FestivalsView: View {
                         ProgressView().frame(maxWidth: .infinity).padding(.vertical, SvaraTheme.Spacing.xxl)
                     } else {
                         RegionFilterView(selection: $vm.selectedRegion)
+                        savedSection
 
                         if let next = viewModel.next {
                             heroSection(next)
@@ -41,7 +43,41 @@ struct FestivalsView: View {
                 FestivalDetailView(festival: festival)
             }
         }
-        .task { await viewModel.load(content: env.content) }
+        .task {
+            await viewModel.load(content: env.content)
+            openDeepLinkedFestival(env.navigation.festivalID)
+        }
+        .onChange(of: env.navigation.festivalID) { _, id in openDeepLinkedFestival(id) }
+    }
+
+    /// Pushes a festival arrived at via a deep link (e.g. a "festival:" target).
+    private func openDeepLinkedFestival(_ id: String?) {
+        guard let id, let festival = viewModel.festival(id: id) else { return }
+        env.navigation.festivalID = nil
+        if path.last != festival { path.append(festival) }
+    }
+
+    // MARK: Saved (only what the user bookmarked)
+
+    @ViewBuilder
+    private var savedSection: some View {
+        let items = viewModel.saved(ids: env.savedFestivalIDs)
+        if !items.isEmpty {
+            VStack(alignment: .leading, spacing: SvaraTheme.Spacing.md) {
+                SectionHeader(title: "Saved", subtitle: "Festivals you bookmarked")
+                LazyVStack(spacing: SvaraTheme.Spacing.md) {
+                    ForEach(items) { festival in
+                        NavigationLink(value: festival) {
+                            FestivalRow(festival: festival,
+                                        daysUntil: viewModel.daysUntil(festival),
+                                        observed: env.hasCompletedFestivalActivity(festival),
+                                        dimmed: false)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
     }
 
     // MARK: Hero

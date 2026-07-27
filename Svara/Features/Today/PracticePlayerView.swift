@@ -174,6 +174,7 @@ struct PracticePlayerView: View {
 
     private func start() {
         withAnimation { phase = .active }
+        env.audioPlayback.play(fileName: mantra?.audioFileName, loops: true)
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             tick()
         }
@@ -195,6 +196,7 @@ struct PracticePlayerView: View {
 
     private func complete() {
         timer?.invalidate()
+        env.audioPlayback.stop()
         env.completePractice(practice, durationSeconds: max(1, elapsedSeconds))
         withAnimation { phase = .complete }
     }
