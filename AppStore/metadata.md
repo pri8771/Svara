@@ -33,7 +33,12 @@ No account required to start. No ads. No social feed. Just a quiet daily practic
 hindu,mantra,prayer,spiritual,meditation,yoga,gayatri,vedic,devotion,festival,sloka,Sanskrit,mindfulness,wellness,streaks
 
 ## Support URL
-https://github.com/pri8771/Svara
+TODO: not yet a real support page. `https://github.com/pri8771/Svara` (the bare
+repo) is not acceptable for submission — App Review expects a page that
+actually helps a user get support, not a source-code repo. The real URL
+depends on a pending decision about the support-email/support-page setup for
+this app, which is not this doc's call to make. Do not submit until this is
+replaced with a real support destination.
 
 ## Marketing URL
 https://pri8771.github.io/Svara/

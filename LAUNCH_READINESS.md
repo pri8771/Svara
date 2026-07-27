@@ -51,7 +51,7 @@ Many young Indians — especially in the diaspora — grew up *around* mantras, 
 - **UserNotifications** for local daily reminders (`LocalNotificationService`).
 - **Persistence:** Codable-over-`UserDefaults` (`UserDefaultsStore`). No SwiftData/CoreData.
 - **No third-party SDKs.** Firebase Auth/Firestore are *seams only* (`FirebaseAuthService` throws `.notConfigured`; `FirestoreContentRepository` is a commented block). No `Package.resolved`, no SPM dependencies.
-- Xcode 16 project using `PBXFileSystemSynchronizedRootGroup` (files added under `Svara/` are auto-included); `GENERATE_INFOPLIST_FILE = YES`; bundle id `com.svara.app`; `MARKETING_VERSION 1.0`.
+- Xcode 16 project using `PBXFileSystemSynchronizedRootGroup` (files added under `Svara/` are auto-included); `GENERATE_INFOPLIST_FILE = YES`; bundle id `com.primandir.svara`; `MARKETING_VERSION 1.0`.
 
 ### Business model (only what the repo supports)
 - **Freemium.** Free tier is a fully useful daily practice + most content. **Svara Plus** unlocks premium content (currently: lesson `lesson.shanti.peace`, story `story.samudra.manthan`) and "smart reminders."
@@ -351,7 +351,7 @@ Reaching items 1–6 (plus a clean CI test run) credibly moves readiness to ~85%
 - [ ] Wire `Svara.storekit` into the run scheme for simulator testing (LB-5).
 - [ ] Reconcile in-code seed fallback with JSON + add a parity test (LB-1).
 - [ ] Stand up CI (`xcodebuild test`) and confirm the hosted test target passes on a clean checkout (LB-7).
-- [ ] Confirm code signing / `DEVELOPMENT_TEAM` (796XH483R4) and bundle id (`com.svara.app`) for distribution.
+- [ ] Confirm code signing / `DEVELOPMENT_TEAM` (796XH483R4) and bundle id (`com.primandir.svara`) for distribution.
 - [ ] Provide a real App Icon set (1024 present; confirm all sizes via asset catalog) and confirm accent color.
 
 **Recommended pre-TestFlight scope gate**
