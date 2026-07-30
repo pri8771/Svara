@@ -1,7 +1,8 @@
 # TF-015 — Run One-Owner Internal TestFlight Smoke
 
-- **Status:** `blocked`
-- **Blocker:** TF-011 is not complete
+- **Status:** `in_progress`
+- **Blocker:** the owner must install build 1.0 (2) from the TestFlight app on
+  the physical iPhone and complete the bounded smoke
 - **Gate:** active owner-only internal TestFlight milestone
 - **Execution type:** hybrid; App Store Connect setup plus physical-device test
 - **Owner:** product/release owner
@@ -120,13 +121,13 @@ App Store readiness.
 
 ## Acceptance criteria
 
-- [ ] One internal group contains only the owner.
-- [ ] Exactly one processed TF-011 build is attached.
+- [x] One internal group contains only the owner.
+- [x] Exactly one processed TF-011 build is attached.
 - [ ] The recorded build installs and launches through TestFlight.
 - [ ] Onboarding, one practice, one lesson, one audio playback, relaunch
   persistence, and the notification permission path complete without a blocker.
-- [ ] Evidence exists at `quality/evidence/testflight/TF-015.md`.
-- [ ] Deferred external, rights, cultural, commerce, legal, and QA gates remain
+- [x] Partial evidence exists at `quality/evidence/testflight/TF-015.md`.
+- [x] Deferred external, rights, cultural, commerce, legal, and QA gates remain
   visibly open.
 
 ## Explicit exclusions

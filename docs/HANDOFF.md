@@ -49,6 +49,7 @@ See `docs/BUGS.md`.
 
 ## Next recommended task
 
-Configure the one-owner internal group and run TF-015 through TestFlight on
-the owner’s iPhone. Close friends remain gated by TF-006–TF-008,
+Open TestFlight on the owner’s iPhone, install the already attached/invited
+build 1.0 (2), and run the remaining TF-015 smoke. Close friends remain gated
+by TF-006–TF-008,
 TF-010, TF-013, and TF-014.

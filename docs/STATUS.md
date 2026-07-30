@@ -46,6 +46,10 @@ Svara Plus or purchase UI.
 - GitHub CI run `30589193485` passed the complete simulator action, Release
   analysis, and unsigned Release archive inspection for canonical commit
   `a4b57ac`; TestResults and ReleaseArchiveInspection artifacts are retained.
+- Internal group `Svara Owner Smoke` has automatic distribution disabled,
+  contains exactly one owner tester, and has only processed build 1.0 (2)
+  attached. The bounded What to Test instructions are saved and the owner
+  status is `Invited`.
 - Comprehensive simulator UI audit: all app-owned workflow families traversed;
   13-test consolidated run passed with 8 ordinary passes, 4 expected product
   failures, one StoreKit environment skip, and no unexpected failures. Small
@@ -89,7 +93,9 @@ Jira and Notion are non-authoritative mirrors.
 
 ## Next action
 
-Configure the one-owner internal group and run the owner’s TestFlight smoke.
+On the owner’s iPhone, open TestFlight, install Svara 1.0 (2), and run/record
+the TF-015 onboarding, practice, lesson, audio, relaunch, notification, and
+legal-link smoke.
 Before inviting close friends, finish the human content/audio sign-off, live
 legal-page check, physical-device accessibility/audio/notification matrix, and
 TestFlight App Review.

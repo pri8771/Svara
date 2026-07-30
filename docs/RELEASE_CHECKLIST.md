@@ -66,8 +66,9 @@ human/external gates prevent `done`.
 
 ## Owner internal smoke gate
 
-- [ ] [`TF-015`] One owner-only internal group contains exactly the owner.
-- [ ] [`TF-015`] The processed TF-011 build installs through TestFlight on the
+- [x] [`TF-015`] One owner-only internal group contains exactly the owner.
+- [ ] [`TF-015`] The processed TF-011 build is attached and invited; installation
+  through TestFlight on the
   owner’s physical iPhone.
 - [ ] [`TF-015`] The bounded onboarding, practice, lesson, audio, relaunch
   persistence, and notification-prompt smoke passes.
