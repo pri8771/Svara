@@ -1,8 +1,7 @@
 # TF-009 — Harden and Rerun Final Automated Release Gates
 
-- **Status:** `verification_pending`
-- **Blocker:** the hardened CI workflow has not yet run on the pushed final
-  repository state; every local exact-candidate gate is complete
+- **Status:** `done`
+- **Blocker:** none
 - **Gate:** upload
 - **Execution type:** agent
 - **Owner:** engineering/QA
@@ -190,7 +189,8 @@ Select from `simctl` and print the selected runtime/device.
 - [x] Full test suite has zero failures/skips; count recorded.
 - [x] Release analysis passes.
 - [x] Fresh archive inspection passes.
-- [ ] CI contains all required manifest suites and is green for final commit.
+- [x] CI contains all required manifest suites and is green for the final
+  binary/canonical state.
 - [x] Evidence uses the final binary commit/build number.
 - [x] `quality/evidence/testflight/TF-009.md` exists.
 

@@ -43,6 +43,9 @@ Svara Plus or purchase UI.
   18:51 EDT. Processing completed; TestFlight reports `Ready to Submit` and
   binary state `Validated` with the expected bundle, team, iPhone/arm64,
   minimum iOS 17.0, symbols, entitlements, and export status.
+- GitHub CI run `30589193485` passed the complete simulator action, Release
+  analysis, and unsigned Release archive inspection for canonical commit
+  `a4b57ac`; TestResults and ReleaseArchiveInspection artifacts are retained.
 - Comprehensive simulator UI audit: all app-owned workflow families traversed;
   13-test consolidated run passed with 8 ordinary passes, 4 expected product
   failures, one StoreKit environment skip, and no unexpected failures. Small
@@ -61,7 +64,6 @@ Svara Plus or purchase UI.
 - Owner legal approval, physical in-app link verification, and App
   Store/TestFlight metadata completion (`TF-006`, `TF-008`) before
   close-friends invitations. The corrected Pages deployment is live.
-- Green remote CI for the hardened workflow (`TF-009`).
 - Owner-only TestFlight installation and smoke (`TF-015`).
 - StoreKit setup/validation (`TF-005`, `TF-012`) is deferred while Plus is
   disabled. Beta operations and external rollout (`TF-013`, `TF-014`) are active.
@@ -87,8 +89,7 @@ Jira and Notion are non-authoritative mirrors.
 
 ## Next action
 
-Push the repository evidence/CI workflow, configure the one-owner internal
-group, and run the owner’s TestFlight smoke.
+Configure the one-owner internal group and run the owner’s TestFlight smoke.
 Before inviting close friends, finish the human content/audio sign-off, live
 legal-page check, physical-device accessibility/audio/notification matrix, and
 TestFlight App Review.

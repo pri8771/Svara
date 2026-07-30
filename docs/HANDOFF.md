@@ -49,7 +49,6 @@ See `docs/BUGS.md`.
 
 ## Next recommended task
 
-Push the canonical evidence and hardened CI workflow, configure the one-owner
-internal group, and run TF-015 through TestFlight on the owner’s iPhone. Close
-friends remain gated by TF-006–TF-008,
+Configure the one-owner internal group and run TF-015 through TestFlight on
+the owner’s iPhone. Close friends remain gated by TF-006–TF-008,
 TF-010, TF-013, and TF-014.

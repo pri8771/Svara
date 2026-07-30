@@ -66,9 +66,9 @@ canonical task.
 | TF-006 | Publish and verify legal/support/privacy surfaces | external | hybrid | human_review_required | owner legal approval and physical in-app link check |
 | TF-007 | Complete cultural-content and audio-rights sign-off | factory/external | human | blocked | TF-001 |
 | TF-008 | Complete App Store Connect and TestFlight metadata | external review | hybrid | in_progress | TF-001, TF-004; TF-006/TF-007 gate completion |
-| TF-009 | Harden and rerun final automated release gates | upload | agent | verification_pending | TF-001; remote CI result pending |
+| TF-009 | Harden and rerun final automated release gates | upload | agent | done | TF-001 |
 | TF-010 | Complete manual device, accessibility, audio, and permission QA | external | hybrid | human_review_required | TF-001, TF-009 |
-| TF-011 | Produce, validate, upload, and process the signed build | upload | hybrid | done | TF-003, TF-004; TF-009 remote CI evidence remains a governance follow-up |
+| TF-011 | Produce, validate, upload, and process the signed build | upload | hybrid | done | TF-003, TF-004, TF-009 |
 | TF-012 | Run future monetized TestFlight and live StoreKit sandbox validation | IAP | hybrid | deferred | TF-005; not applicable while Plus is disabled |
 | TF-013 | Define beta operations, monitoring, triage, and stop criteria | external | hybrid | done | TF-001 |
 | TF-014 | Submit TestFlight App Review and roll out the external cohort | external | human | blocked | TF-006, TF-007, TF-008, TF-010, TF-011, TF-013 |

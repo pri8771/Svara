@@ -38,8 +38,8 @@ human/external gates prevent `done`.
   those URLs and content-checked from a clean network. Deferred from TF-015.
 - [x] App Store keywords are at most 100 UTF-8 bytes.
 - [x] Export-compliance Info.plist flag is declared.
-- [ ] [`TF-009`] Repository gates, 153/153 tests, Release analysis, final
-  commit/SHA, and archive inspection pass; remote CI evidence remains.
+- [x] [`TF-009`] Repository gates, 153/153 local tests, Release analysis,
+  final commit/SHA, archive inspection, and hardened remote CI pass.
 
 ## App Store Connect and signing
 
