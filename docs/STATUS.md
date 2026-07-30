@@ -58,8 +58,9 @@ Svara Plus or purchase UI.
 
 ## Verification pending
 
-- Deployment of legal/support pages and App Store/TestFlight metadata
-  (`TF-006`, `TF-008`) before close-friends invitations.
+- Owner legal approval, physical in-app link verification, and App
+  Store/TestFlight metadata completion (`TF-006`, `TF-008`) before
+  close-friends invitations. The corrected Pages deployment is live.
 - Green remote CI for the hardened workflow (`TF-009`).
 - Owner-only TestFlight installation and smoke (`TF-015`).
 - StoreKit setup/validation (`TF-005`, `TF-012`) is deferred while Plus is

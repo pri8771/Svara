@@ -63,7 +63,7 @@ canonical task.
 | TF-003 | Repair distribution signing and provisioning | upload | hybrid | done | TF-002 upload-role verification |
 | TF-004 | Verify or create the App Store Connect app record | upload | hybrid | done | TF-001, TF-002 upload-role verification |
 | TF-005 | Re-enable and reconcile future Svara Plus products | IAP | hybrid | deferred | TF-001, TF-002, TF-004 |
-| TF-006 | Publish and verify legal/support/privacy surfaces | external | hybrid | blocked | TF-001 |
+| TF-006 | Publish and verify legal/support/privacy surfaces | external | hybrid | human_review_required | owner legal approval and physical in-app link check |
 | TF-007 | Complete cultural-content and audio-rights sign-off | factory/external | human | blocked | TF-001 |
 | TF-008 | Complete App Store Connect and TestFlight metadata | external review | hybrid | in_progress | TF-001, TF-004; TF-006/TF-007 gate completion |
 | TF-009 | Harden and rerun final automated release gates | upload | agent | verification_pending | TF-001; remote CI result pending |

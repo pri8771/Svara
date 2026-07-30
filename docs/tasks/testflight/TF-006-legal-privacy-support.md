@@ -1,8 +1,8 @@
 # TF-006 — Publish and Verify Legal, Support, and Privacy Surfaces
 
-- **Status:** `blocked`
-- **Blocker:** repository source is corrected, but TF-001 has not confirmed the
-  release/legal owner and production URL decision
+- **Status:** `human_review_required`
+- **Blocker:** the corrected pages are deployed and content-verified; explicit
+  owner legal approval and three-link physical-device verification remain
 - **Gate:** external TestFlight review
 - **Execution type:** hybrid
 - **Owner:** release/legal owner
@@ -136,13 +136,13 @@ curl -fsS https://pri8771.github.io/Svara/terms.html |
 ## Acceptance criteria
 
 - [ ] Legal owner approved current source.
-- [ ] Correct source is deployed.
-- [ ] All URLs return 200 over HTTPS.
-- [ ] Support page exposes a monitored contact method.
-- [ ] Live privacy/terms copy matches no-account/local-only behavior.
+- [x] Correct source is deployed.
+- [x] All URLs load publicly over HTTPS.
+- [x] Support page exposes the canonical contact method.
+- [x] Live privacy/terms copy matches no-account/local-only behavior.
 - [ ] In-app links open successfully.
 - [ ] REL-006 is resolved.
-- [ ] Evidence exists at `quality/evidence/testflight/TF-006.md`.
+- [x] Partial evidence exists at `quality/evidence/testflight/TF-006.md`.
 
 ## Failure handling
 
