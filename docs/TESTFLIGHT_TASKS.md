@@ -42,8 +42,11 @@ task and evidence first, then copy the same state to Jira/Notion.
 - **Notion:** not created. Workspace search found no Svara spec, plan, project,
   or task database. Existing task databases belong to other projects and must
   not be reused by inference.
-- **Commit reference:** pending. Mirrors must not be created until these
-  canonical files have a repository commit SHA to record.
+- **Binary commit:** `6e9d0b16de5713119770fa160292442dbe32baba`.
+- **First processed-build evidence commit:**
+  `df1dcdb` (`Record processed TestFlight build 2`). Later documentation-only
+  reconciliation commits do not change the uploaded binary. Mirrors must
+  record the latest pushed canonical commit plus the binary commit.
 
 When destinations and a commit exist, create one parent Epic/plan and fifteen
 children with the exact IDs, titles, statuses, dependencies, repository paths,
