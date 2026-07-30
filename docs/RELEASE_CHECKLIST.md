@@ -9,10 +9,10 @@ human/external gates prevent `done`.
 - [x] [`TF-001`] Full five-tab, iPhone-only, English (U.S.), SKU, owner roles,
   private close-friends group, and stop authority are recorded in `DEC-005`;
   commerce is explicitly deferred.
-- [ ] [`TF-002`] Apple membership, team, upload/internal-testing roles, and
+- [x] [`TF-002`] Apple membership, team, upload/internal-testing roles, and
   upload-required agreement state are verified. Paid Apps, banking, and tax may
   remain explicitly deferred to TF-005.
-- [ ] [`TF-004`] The App Store Connect record exactly matches the confirmed
+- [x] [`TF-004`] The App Store Connect record exactly matches the confirmed
   bundle ID, team, version, SKU, language, and platform.
 
 ## Automated and repository gates
@@ -38,20 +38,21 @@ human/external gates prevent `done`.
   those URLs and content-checked from a clean network. Deferred from TF-015.
 - [x] App Store keywords are at most 100 UTF-8 bytes.
 - [x] Export-compliance Info.plist flag is declared.
-- [ ] [`TF-009`] Repository gates, 153/153 tests, and Release analysis pass;
-  final commit/SHA, archive inspection, and CI evidence remain to close it.
+- [ ] [`TF-009`] Repository gates, 153/153 tests, Release analysis, final
+  commit/SHA, and archive inspection pass; remote CI evidence remains.
 
 ## App Store Connect and signing
 
-- [ ] [`TF-003`] Distribution certificate and App Store provisioning are valid
+- [x] [`TF-003`] Automatic cloud-managed App Store distribution is valid
   for the confirmed team and explicit App ID.
 - [ ] [`TF-005`] Before any future monetized build, monthly, yearly, and
   lifetime IAPs match identifiers, group, prices, localization, availability,
   and review state. Deferred from the current free build.
 - [ ] [`TF-008`] App Privacy, age rating, content rights, export compliance, and
   TestFlight metadata are complete and match the build.
-- [ ] [`TF-011`] A signed, external-eligible build 2 archive validates, uploads
-  without the **TestFlight Internal Only** restriction, and finishes processing.
+- [x] [`TF-011`] A signed, external-eligible build 2 archive validated,
+  uploaded without the **TestFlight Internal Only** restriction, processed to
+  `Ready to Submit`, and passed Apple build-metadata inspection.
 
 ## Human and device gates
 
@@ -92,8 +93,9 @@ this external TestFlight gate unless the release owner explicitly adds them.
 ## Release decision
 
 - **Current state:** `verification_pending`
-- **Owner internal smoke allowed:** No, until TF-002–TF-004, TF-009,
-  TF-011, and TF-015 evidence is complete.
+- **Owner internal smoke allowed:** Yes for processed build 2; configure the
+  owner-only group and perform/record TF-015. Remote CI remains a repository
+  release-governance gate.
 - **External beta allowed:** No, until every blocker above is checked or an
   explicit, approved, time-bounded waiver is recorded in `quality/waivers/`.
 

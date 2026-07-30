@@ -1,7 +1,8 @@
 # TF-002 — Verify Apple Account, Roles, Agreements, Tax, and Banking
 
-- **Status:** `blocked`
-- **Blocker:** TF-001 is not complete
+- **Status:** `done`
+- **Blocker:** none for the free TestFlight scope; paid-commerce business
+  setup remains deferred to TF-005
 - **Gate:** app record, IAP, signing, upload
 - **Execution type:** human-only for sensitive/account actions
 - **Owner:** Account Holder or delegated Admin/Finance
@@ -114,12 +115,12 @@ scope-aware capability matrix and parent go/no-go result.
 
 ## Acceptance criteria
 
-- [ ] Membership/team verified.
-- [ ] Latest agreement accepted.
-- [ ] Paid Apps, banking, and tax are either complete/active or explicitly
+- [x] Membership/team verified.
+- [x] Latest upload-required agreement accepted.
+- [x] Paid Apps, banking, and tax are either complete/active or explicitly
   deferred to TF-005 under DEC-005.
-- [ ] Required roles and app access verified.
-- [ ] Sanitized evidence exists at
+- [x] Required roles and app access verified.
+- [x] Sanitized evidence exists at
   `quality/evidence/testflight/TF-002.md`.
 
 ## Failure handling

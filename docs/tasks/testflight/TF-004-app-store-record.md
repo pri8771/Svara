@@ -1,6 +1,6 @@
 # TF-004 — Verify or Create the App Store Connect App Record
 
-- **Status:** `blocked`
+- **Status:** `done`
 - **Gate:** upload
 - **Execution type:** hybrid
 - **Owner:** App Manager/Admin
@@ -106,11 +106,11 @@ repository identity record and closed ASM-001.
 
 ## Acceptance criteria
 
-- [ ] Exactly one correct app record exists.
-- [ ] Explicit App ID exists.
-- [ ] Apple ID, SKU, language, and access are documented.
-- [ ] ASM-001 is resolved.
-- [ ] Evidence exists at `quality/evidence/testflight/TF-004.md`.
+- [x] Exactly one correct app record exists.
+- [x] Explicit App ID exists.
+- [x] Apple ID, SKU, language, and access are documented.
+- [x] ASM-001 is resolved.
+- [x] Evidence exists at `quality/evidence/testflight/TF-004.md`.
 
 ## Failure handling
 

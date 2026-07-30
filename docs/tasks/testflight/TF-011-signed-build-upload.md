@@ -1,6 +1,8 @@
 # TF-011 — Produce, Validate, Upload, and Process the Signed Build
 
-- **Status:** `in_progress`
+- **Status:** `done`
+- **Current state:** upload accepted at 2026-07-30 18:51 EDT; App Store
+  Connect reports build 1.0 (2) `Ready to Submit` and binary `Validated`
 - **Gate:** TestFlight upload
 - **Execution type:** hybrid
 - **Owner:** release owner
@@ -135,14 +137,14 @@ warning requiring action, or accidental Internal Only restriction.
 
 ## Acceptance criteria
 
-- [ ] Signed archive comes from recorded final commit.
-- [ ] Xcode validation passes.
-- [ ] Upload succeeds.
-- [ ] Apple processing reaches `Complete`.
-- [ ] Build metadata is inspected and clean.
-- [ ] Exact build number and App Store Connect build link/reference are recorded.
-- [ ] Evidence exists at `quality/evidence/testflight/TF-011.md`.
-- [ ] Evidence states the build is external-eligible but cannot be invited
+- [x] Signed archive comes from recorded final commit.
+- [x] Xcode/App Store Connect validation passes.
+- [x] Upload succeeds.
+- [x] Apple processing reaches the terminal `Ready to Submit` state.
+- [x] Build metadata is inspected and clean.
+- [x] Exact build number and App Store Connect build link/reference are recorded.
+- [x] Evidence exists at `quality/evidence/testflight/TF-011.md`.
+- [x] Evidence states the build is external-eligible but cannot be invited
   externally until TF-014 dependencies and TestFlight App Review complete.
 
 ## Security

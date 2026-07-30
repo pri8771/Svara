@@ -1,7 +1,7 @@
 # TF-003 — Repair Distribution Signing and Provisioning
 
-- **Status:** `blocked`
-- **Blocker:** TF-002 is not complete; current Mac reports zero valid identities
+- **Status:** `done`
+- **Blocker:** none; automatic cloud-managed distribution is the approved path
 - **Gate:** signed archive/upload
 - **Execution type:** hybrid; account action plus local verification
 - **Owner:** release owner / Apple Admin
@@ -84,8 +84,10 @@ precisely blocked REL-001 row.
 
 ## Current evidence
 
-`security find-identity -v -p codesigning` returned `0 valid identities`.
-Xcode also reported installed provisioning profiles missing required UUID data.
+The 2026-07-29 baseline reported no local distribution identity. On
+2026-07-30, Xcode automatic/cloud-managed distribution for team `796XH483R4`
+successfully exported and uploaded Svara 1.0 (2) with
+`testFlightInternalTestingOnly=false`. No certificate was revoked or exported.
 
 ## Preferred approach
 
@@ -137,14 +139,14 @@ Do not commit the archive or provisioning material.
 
 ## Acceptance criteria
 
-- [ ] At least one appropriate valid signing identity or approved cloud-signing
+- [x] At least one appropriate valid signing identity or approved cloud-signing
   path is available.
-- [ ] Signed archive succeeds for the correct team/bundle ID.
-- [ ] `codesign --verify` succeeds.
-- [ ] Embedded profile/application identifier matches
+- [x] Signed archive succeeds for the correct team/bundle ID.
+- [x] `codesign --verify` succeeds.
+- [x] App Store Connect accepted the cloud-signed application identifier for
   `796XH483R4.com.primandir.svara`.
-- [ ] No unintended entitlements appear.
-- [ ] Sanitized evidence exists at
+- [x] No unintended entitlements appear.
+- [x] Sanitized evidence exists at
   `quality/evidence/testflight/TF-003.md`.
 
 ## Apple sources

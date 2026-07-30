@@ -8,9 +8,10 @@ Connect differs, update and approve the repository first.
 
 - Version/build: 1.0 (2)
 - Bundle ID: `com.primandir.svara`
+- Apple ID: `6785557134`
 - Platform: iPhone, iOS 17+
 - Primary language: English (U.S.)
-- SKU if a new record is required: `SVARA-IOS-001`
+- Existing immutable SKU: `SVARA001`
 - Surface: full five-tab app
 - Distribution: owner internal smoke, then invitation-only external group
   `Svara Close Friends`, initial limit 10; public link disabled

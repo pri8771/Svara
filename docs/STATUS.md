@@ -6,7 +6,8 @@
 
 ## Current objective
 
-Prepare Svara 1.0 (build 2) for an owner TestFlight smoke followed by an
+Finish processing Svara 1.0 (build 2), then run an owner TestFlight smoke
+followed by an
 invitation-only close-friends external beta under App Factory standard 0.4.0.
 The public App Store release and monetization remain deferred. Build 2 is
 external-eligible and must not be marked TestFlight Internal Only.
@@ -31,9 +32,17 @@ Svara Plus or purchase UI.
   split into two bounded tests after the simulator test runner terminated one
   five-minute method; both bounded tests and the subsequent complete run pass.
 - Release static analysis: passed.
-- Unsigned generic iOS Release archive: passed with product validation.
+- Signed generic iOS Release archive and cloud-managed App Store export:
+  passed.
 - Archive: arm64, iOS 17.0 minimum, matching dSYM, privacy manifest embedded,
   `Svara.storekit` absent, 1024×1024 source icon without alpha.
+- Apple account/upload scope, signing path, and the existing App Store Connect
+  record are verified. The record is Apple ID `6785557134`, immutable SKU
+  `SVARA001`, English (U.S.), and bundle `com.primandir.svara`.
+- App Store Connect accepted external-eligible Svara 1.0 (2) at 2026-07-30
+  18:51 EDT. Processing completed; TestFlight reports `Ready to Submit` and
+  binary state `Validated` with the expected bundle, team, iPhone/arm64,
+  minimum iOS 17.0, symbols, entitlements, and export status.
 - Comprehensive simulator UI audit: all app-owned workflow families traversed;
   13-test consolidated run passed with 8 ordinary passes, 4 expected product
   failures, one StoreKit environment skip, and no unexpected failures. Small
@@ -49,15 +58,12 @@ Svara Plus or purchase UI.
 
 ## Verification pending
 
-- Apple membership/roles, signing, and App Store record (`TF-002`–`TF-004`).
 - Deployment of legal/support pages and App Store/TestFlight metadata
   (`TF-006`, `TF-008`) before close-friends invitations.
-- Final gates on the exact release commit and signed upload
-  (`TF-009`, `TF-011`).
+- Green remote CI for the hardened workflow (`TF-009`).
 - Owner-only TestFlight installation and smoke (`TF-015`).
 - StoreKit setup/validation (`TF-005`, `TF-012`) is deferred while Plus is
   disabled. Beta operations and external rollout (`TF-013`, `TF-014`) are active.
-- Signed distribution archive and App Store Connect upload.
 - Physical-device matrix, StoreKit sandbox, VoiceOver, and maximum Dynamic Type.
 - Physical-device verification of `UI-006`, `UI-007`, and hardened `UI-014`.
   Commerce-only `UI-004`, `UI-011`, and `UI-012` remain deferred while Plus is
@@ -80,8 +86,8 @@ Jira and Notion are non-authoritative mirrors.
 
 ## Next action
 
-Complete the final full simulator run, Release analysis, signed archive, and
-App Store Connect upload for build 2. Then run the owner’s TestFlight smoke.
+Push the repository evidence/CI workflow, configure the one-owner internal
+group, and run the owner’s TestFlight smoke.
 Before inviting close friends, finish the human content/audio sign-off, live
 legal-page check, physical-device accessibility/audio/notification matrix, and
 TestFlight App Review.

@@ -57,8 +57,9 @@
   candidate for the owner first and a small, invitation-only close-friends
   cohort after TestFlight App Review. The build uses the full five-tab surface,
   targets iPhone on iOS 17+, and uses English (U.S.) as its primary language.
-  Public links remain disabled. If a new App Store Connect record is required,
-  use the stable internal SKU `SVARA-IOS-001`. The private external group is
+  Public links remain disabled. The existing App Store Connect record uses the
+  immutable internal SKU `SVARA001` (reconciled on 2026-07-30; the earlier
+  fallback proposal `SVARA-IOS-001` was never created). The private external group is
   `Svara Close Friends`, initially capped at 10 testers. The owner is the
   release operator, QA/feedback owner, and stop authority.
 - **Review contact:** Use the owner’s secure contact record in App Store

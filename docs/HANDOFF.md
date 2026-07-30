@@ -11,8 +11,10 @@ The implementation is targeting an external-eligible build 2 upload, owner
 TestFlight smoke, and invitation-only close-friends beta after Apple review.
 Factory registration and current quality state live in `.factory/`,
 `quality/`, `docs/STATUS.md`, and the canonical
-`docs/TESTFLIGHT_TASKS.md`. Signing and the App Store Connect app record remain
-active upload gates. Per `DEC-006`, every content item is free
+`docs/TESTFLIGHT_TASKS.md`. Apple account scope, cloud-managed signing, and
+the existing record (Apple ID `6785557134`) are verified. Build 1.0 (2) was
+uploaded as external-eligible and is now `Ready to Submit` in TestFlight. Per
+`DEC-006`, every content item is free
 and Plus/paywall/membership UI is hidden in the current testing configuration.
 Dormant StoreKit commerce is deferred. Deployed legal pages, content review,
 audio rights, and full physical-device QA remain required before friend
@@ -47,7 +49,7 @@ See `docs/BUGS.md`.
 
 ## Next recommended task
 
-Finish the exact-candidate TF-009 checks, verify the Apple record/cloud-managed
-distribution path, upload build 2 under TF-011, and run TF-015. Do not mark the
-build TestFlight Internal Only. Close friends remain gated by TF-006–TF-008,
+Push the canonical evidence and hardened CI workflow, configure the one-owner
+internal group, and run TF-015 through TestFlight on the owner’s iPhone. Close
+friends remain gated by TF-006–TF-008,
 TF-010, TF-013, and TF-014.

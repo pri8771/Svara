@@ -2,7 +2,7 @@
 
 | ID | Severity | Area | Summary | Status | Owning task | Evidence |
 |---|---|---|---|---|---|---|
-| REL-001 | blocker | Signing | No valid Apple Distribution identity/provisioning profile is available on this Mac. | external_blocked | `TF-003` | `security find-identity -v -p codesigning` returned 0 valid identities on 2026-07-29. |
+| REL-001 | blocker | Signing | Historical local distribution-identity gap; automatic cloud-managed distribution now signs and uploads successfully. | resolved | `TF-003` | Svara 1.0 (2) cloud-signed upload accepted by App Store Connect on 2026-07-30; `quality/evidence/testflight/TF-003.md` |
 | REL-002 | external blocker | Audio | Source, performer consent, and distribution license are not recorded for nine bundled MP3 files; the sole owner accepts private evaluation only. | human_review_required | `TF-007` | `docs/AUDIO_PROVENANCE.md` |
 | REL-003 | external blocker | Content | Automated guardrails pass, but the required human cultural/theological sign-off record is not present; this does not authorize external access. | human_review_required | `TF-007` | `ProductGuardrails.md`; `docs/CONTENT_REVIEW_SIGNOFF.md` |
 | REL-004 | external blocker | StoreKit | App Store Connect product state, agreements, pricing, and sandbox purchase/restore are deferred and not locally verifiable. | external_blocked | `TF-005`, `TF-012` | `AppStore/metadata.md` |
