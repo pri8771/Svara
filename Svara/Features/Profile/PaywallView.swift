@@ -8,7 +8,9 @@ struct PaywallView: View {
 
     @State private var selectedProduct: Product?
     @State private var isPurchasing = false
+    @State private var isRestoring = false
     @State private var errorMessage: String?
+    @State private var noticeMessage: String?
 
     private let benefits = [
         ("infinity", "Every lesson", "The full learning path, including premium tracks."),
@@ -29,17 +31,37 @@ struct PaywallView: View {
                             .font(.svaraCaption)
                             .foregroundStyle(.red)
                     }
-                    purchaseButton
-                    Button("Restore Purchases") {
-                        Task { await env.store.restorePurchases(); syncEntitlement() }
+                    if let noticeMessage {
+                        Text(noticeMessage)
+                            .font(.svaraCaption)
+                            .foregroundStyle(SvaraTheme.Colors.textSecondary)
                     }
+                    purchaseButton
+                    Button {
+                        Task { await restorePurchases() }
+                    } label: {
+                        if isRestoring {
+                            ProgressView()
+                        } else {
+                            Text("Restore Purchases")
+                        }
+                    }
+                    .disabled(isRestoring || isPurchasing)
                     .font(.svaraCallout)
                     .foregroundStyle(SvaraTheme.Colors.textSecondary)
 
-                    Text("Payment is charged to your Apple ID. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the period.")
+                    Text(purchaseDisclosure)
                         .font(.caption2)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(SvaraTheme.Colors.textSecondary)
+
+                    HStack {
+                        Link("Privacy Policy", destination: SvaraLinks.privacyPolicy)
+                        Text("•")
+                        Link("Terms of Service", destination: SvaraLinks.termsOfService)
+                    }
+                    .font(.caption2)
+                    .foregroundStyle(SvaraTheme.Colors.textSecondary)
                 }
                 .padding(.horizontal, SvaraTheme.Spacing.screenMargin)
                 .padding(.vertical, SvaraTheme.Spacing.lg)
@@ -59,7 +81,7 @@ struct PaywallView: View {
             selectedProduct = env.store.products.first
         }
         .onChange(of: env.store.isPlus) { _, isPlus in
-            if isPlus { syncEntitlement() }
+            if isPlus { dismiss() }
         }
     }
 
@@ -100,7 +122,7 @@ struct PaywallView: View {
         if env.store.isLoading {
             ProgressView().padding()
         } else if env.store.products.isEmpty {
-            Text("Upgrade options aren't available right now. Add the StoreKit configuration in Xcode to preview pricing.")
+            Text("Upgrade options aren't available right now. Please try again later.")
                 .font(.svaraCallout)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(SvaraTheme.Colors.textSecondary)
@@ -124,7 +146,7 @@ struct PaywallView: View {
                 .foregroundStyle(SvaraTheme.Colors.success)
         } else {
             PrimaryButton(
-                title: "Start free trial",
+                title: purchaseButtonTitle,
                 isLoading: isPurchasing,
                 isEnabled: selectedProduct != nil
             ) { Task { await purchase() } }
@@ -134,21 +156,56 @@ struct PaywallView: View {
     private func purchase() async {
         guard let product = selectedProduct else { return }
         errorMessage = nil
+        noticeMessage = nil
         isPurchasing = true
         defer { isPurchasing = false }
         do {
-            let success = try await env.store.purchase(product)
-            if success { syncEntitlement() }
+            switch try await env.store.purchase(product) {
+            case .verified:
+                if env.store.isPlus { dismiss() }
+            case .pending:
+                noticeMessage = "Your purchase is pending approval. Access will unlock after Apple confirms it."
+            case .cancelled:
+                break
+            }
         } catch {
             errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         }
     }
 
-    private func syncEntitlement() {
-        if env.store.isPlus {
-            env.setPremium(true)
-            dismiss()
+    private func restorePurchases() async {
+        errorMessage = nil
+        noticeMessage = nil
+        isRestoring = true
+        defer { isRestoring = false }
+        do {
+            try await env.store.restorePurchases()
+            if env.store.isPlus {
+                dismiss()
+            } else {
+                noticeMessage = "No active purchases were found for this Apple ID."
+            }
+        } catch {
+            errorMessage = "Purchases couldn't be restored. Please try again."
         }
+    }
+
+    private var purchaseButtonTitle: String {
+        guard let selectedProduct else { return "Select an option" }
+        if selectedProduct.type == .nonConsumable {
+            return "Buy Lifetime Access — \(selectedProduct.displayPrice)"
+        }
+        return "Subscribe — \(selectedProduct.displayPrice)"
+    }
+
+    private var purchaseDisclosure: String {
+        guard let selectedProduct else {
+            return "Payment will be charged to your Apple ID after you select and confirm an option."
+        }
+        if selectedProduct.type == .nonConsumable {
+            return "This is a one-time purchase charged to your Apple ID."
+        }
+        return "Payment is charged to your Apple ID. The subscription renews automatically unless cancelled at least 24 hours before the end of the period."
     }
 }
 

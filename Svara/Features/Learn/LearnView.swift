@@ -47,7 +47,7 @@ struct LearnView: View {
     private func openDeepLinkedLesson(_ id: String?) {
         guard let id, let lesson = viewModel.lessons.first(where: { $0.id == id }) else { return }
         env.navigation.learnLessonID = nil
-        if lesson.isPremium && !env.isPremium {
+        if env.isLockedBehindPlus(lesson) {
             showPaywall = true
         } else {
             activeLesson = lesson
@@ -178,7 +178,7 @@ struct LearnView: View {
                     BeyondLessonRow(
                         lesson: lesson,
                         isCompleted: env.completedLessonIDs.contains(lesson.id),
-                        isLocked: lesson.isPremium && !env.isPremium
+                        isLocked: env.isLockedBehindPlus(lesson)
                     )
                 }
                 .buttonStyle(.plain)
@@ -206,7 +206,7 @@ struct LearnView: View {
     // MARK: Actions
 
     private func open(_ lesson: Lesson) {
-        if lesson.isPremium && !env.isPremium {
+        if env.isLockedBehindPlus(lesson) {
             showPaywall = true
         } else {
             activeLesson = lesson

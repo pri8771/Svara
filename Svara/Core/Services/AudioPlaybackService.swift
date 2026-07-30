@@ -16,6 +16,40 @@ final class AudioPlaybackService: NSObject {
     private(set) var currentFileName: String?
 
     @ObservationIgnored private var player: AVAudioPlayer?
+    @ObservationIgnored private var observers: [NSObjectProtocol] = []
+    @ObservationIgnored private var shouldResumeAfterInterruption = false
+
+    override init() {
+        super.init()
+        let center = NotificationCenter.default
+        observers.append(center.addObserver(
+            forName: AVAudioSession.interruptionNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            Task { @MainActor in self?.handleInterruption(notification) }
+        })
+        observers.append(center.addObserver(
+            forName: AVAudioSession.routeChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            Task { @MainActor in self?.handleRouteChange(notification) }
+        })
+        observers.append(center.addObserver(
+            forName: AVAudioSession.mediaServicesWereResetNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in self?.stop() }
+        })
+    }
+
+    deinit {
+        for observer in observers {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
 
     /// Toggles playback of `fileName` (as stored on `Mantra.audioFileName`):
     /// starts it if nothing is playing (or a different clip is loaded), pauses
@@ -82,6 +116,36 @@ final class AudioPlaybackService: NSObject {
 
     private func deactivateSession() {
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+    }
+
+    private func handleInterruption(_ notification: Notification) {
+        guard let rawType = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: rawType) else { return }
+        switch type {
+        case .began:
+            shouldResumeAfterInterruption = isPlaying
+            player?.pause()
+            isPlaying = false
+        case .ended:
+            let rawOptions = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt ?? 0
+            let options = AVAudioSession.InterruptionOptions(rawValue: rawOptions)
+            if shouldResumeAfterInterruption, options.contains(.shouldResume), player != nil {
+                activateSession()
+                player?.play()
+                isPlaying = player?.isPlaying == true
+            }
+            shouldResumeAfterInterruption = false
+        @unknown default:
+            pause()
+        }
+    }
+
+    private func handleRouteChange(_ notification: Notification) {
+        guard let rawReason = notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt,
+              AVAudioSession.RouteChangeReason(rawValue: rawReason) == .oldDeviceUnavailable else { return }
+        // Avoid unexpectedly moving a chant from disconnected headphones to
+        // the speaker. The user can explicitly resume from the visible control.
+        pause()
     }
 }
 

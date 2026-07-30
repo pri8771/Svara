@@ -32,6 +32,10 @@ final class TabConfigurationTests: XCTestCase {
     func testFullProductExposesAllSurfaces() {
         let tabs = FeatureFlags.full.primaryTabs
         XCTAssertEqual(tabs, [.today, .learn, .festivals, .stories, .profile])
+        XCTAssertFalse(FeatureFlags.current.plusTierEnabled,
+                       "The owner-only testing build must keep all content free.")
+        XCTAssertTrue(FeatureFlags.monetizedFull.plusTierEnabled,
+                      "A deliberate future configuration must preserve the Plus reactivation path.")
     }
 
     func testFlagsActuallyControlOptionalTabs() {

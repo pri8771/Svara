@@ -41,6 +41,47 @@ final class ProgressDeduplicationTests: XCTestCase {
         XCTAssertEqual(Set(p2.completedLessonIDs), ["l1", "l2"])
     }
 
+    func testSamePracticeAwardsAndPersistsOnlyOncePerLocalDay() {
+        let today = date(2026, 6, 28)
+        let svc = makeService(now: { today })
+        let first = PracticeSession(
+            practiceID: "morning",
+            practiceTitle: "Morning Mantra",
+            kind: .mantra,
+            durationSeconds: 60,
+            pointsEarned: 10
+        )
+        let repeatSession = PracticeSession(
+            practiceID: "morning",
+            practiceTitle: "Morning Mantra",
+            kind: .mantra,
+            durationSeconds: 90,
+            pointsEarned: 10
+        )
+
+        let (p1, _) = svc.recordSession(first, for: .guest())
+        let (p2, achievements) = svc.recordSession(repeatSession, for: p1)
+
+        XCTAssertEqual(p2.totalPoints, 10)
+        XCTAssertEqual(p2.completedSessionIDs, [first.id])
+        XCTAssertEqual(svc.loadSessions().map(\.id), [first.id])
+        XCTAssertTrue(achievements.isEmpty)
+    }
+
+    func testDifferentPracticesCanEachAwardOnTheSameDay() {
+        let svc = makeService(now: { self.date(2026, 6, 28) })
+        let morning = PracticeSession(practiceID: "morning", practiceTitle: "Morning",
+                                      kind: .mantra, durationSeconds: 60, pointsEarned: 10)
+        let evening = PracticeSession(practiceID: "evening", practiceTitle: "Evening",
+                                      kind: .mantra, durationSeconds: 60, pointsEarned: 15)
+
+        let (p1, _) = svc.recordSession(morning, for: .guest())
+        let (p2, _) = svc.recordSession(evening, for: p1)
+
+        XCTAssertEqual(p2.totalPoints, 25)
+        XCTAssertEqual(svc.loadSessions().count, 2)
+    }
+
     // MARK: Streak once per local day
 
     func testStreakIncrementsOncePerLocalDay_ViaLessons() {

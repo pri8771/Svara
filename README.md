@@ -9,17 +9,15 @@ modern daily habit: three-minute practices, bite-sized lessons, the stories behi
 the festivals you grew up with, and the symbols behind the deities.
 
 > Built with SwiftUI, iOS 17+, MVVM. This repository contains the Phase 1
-> foundation: a fully navigable app running on local seed content, with every
-> backend dependency hidden behind a protocol so Firebase and StoreKit can be
-> switched on without touching feature code.
+> foundation: a fully navigable app running on local seed content, with
+> persistence and system integrations behind testable service boundaries.
 
-> _Updated 2026-06-30. Implementation status: **launch-candidate (~85%)** — a
-> navigable iOS 17 SwiftUI/MVVM app, 127 passing tests in CI, the full five-tab
-> product merged in (Today, Learn with the Aaroh retention path, Festivals,
-> Stories & Symbols, Profile), bespoke brand art, wired StoreKit, a frictionless
-> guest start, executable product guardrails, and published legal pages. See
-> [`LAUNCH_READINESS.md`](LAUNCH_READINESS.md) §0 for the launch-readiness pass
-> and what remains before App Store submission._
+> _Updated 2026-07-30. Implementation status: `verification_pending` under App
+> Factory standard 0.4.0. The five-tab product, bundled audio, free owner-testing
+> mode, guest start, executable product guardrails, CI, and legal pages are present. See
+> [`docs/STATUS.md`](docs/STATUS.md), the canonical
+> [`docs/TESTFLIGHT_TASKS.md`](docs/TESTFLIGHT_TASKS.md) backlog, and
+> [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) for remaining gates._
 
 ---
 
@@ -31,7 +29,7 @@ the festivals you grew up with, and the symbols behind the deities.
 | **Learn** | A guided **Aaroh Path**: a 7-day beginner journey (Om → Vakratunda → Saraswati Namastubhyam) of 60–120s lessons. Your next step is obvious on open; each lesson unlocks one piece of meaning and gently unlocks the next. |
 | **Festivals** | Seasonal cultural **moments**, not a calendar: an upcoming hero with a countdown, a "Coming soon" rail, a "This season" section, a gentle regional lens, and per-festival pages with the story, symbols, a tiny 2–5 min activity, and a family conversation prompt. |
 | **Stories** | A calm library of deity stories & symbols by human theme (Courage, Wisdom, Abundance, Stillness, Beginnings, Devotion, Strength): a daily featured story, theme chips, search, full readers with a symbolism rail and a humble meaning callout, and **private, local-only reflections**. |
-| **Profile** | Streak, Svara Points, best streak, achievements grid, settings, and the Svara Plus upgrade. |
+| **Profile** | Streak, Svara Points, best streak, achievements grid, and local settings. |
 
 Gamification: **streaks**, **Svara Points**, and **achievements** that unlock with a
 celebratory toast.
@@ -45,24 +43,24 @@ Not in MVP: community feed.
 ```
 Svara/
 ├── App/                     App entry, DI container, root navigation
-│   ├── SvaraApp.swift        @main, appearance, Firebase seam
+│   ├── SvaraApp.swift        @main and appearance
 │   ├── AppEnvironment.swift  Composition root: owns services + session state (@Observable)
-│   ├── RootView.swift        Onboarding → Auth → Main routing
+│   ├── RootView.swift        Onboarding → Main routing
 │   └── MainTabView.swift     The 5-tab spine + achievement toast
 ├── Core/
 │   ├── Models/              UserProfile, DailyPractice, Mantra, Lesson,
 │   │                        Festival, StorySymbol, PracticeSession, Achievement
 │   ├── Services/            Protocol-based services + local implementations
-│   │   ├── AuthService            (+ MockAuthService, FirebaseAuthService seam)
+│   │   ├── ProfileSessionService  (local profile persistence)
 │   │   ├── ContentRepository      (+ LocalContentRepository, Firestore seam)
 │   │   ├── ProgressService        (+ LocalProgressService, StreakCalculator)
 │   │   ├── NotificationService    (+ LocalNotificationService)
-│   │   ├── StoreService           (StoreKit 2, freemium)
+│   │   ├── StoreService           (dormant future StoreKit 2 commerce)
 │   │   └── Persistence            (KeyValueStore over UserDefaults)
 │   └── DesignSystem/        SvaraTheme (colors/spacing/gradients), typography,
 │                            SvaraCard, PracticeCard, PrimaryButton, common UI
 ├── Features/                One folder per surface, MVVM
-│   ├── Onboarding / Auth
+│   ├── Onboarding / local profile editing
 │   ├── Today  (TodayViewModel, TodayView, PracticePlayerView)
 │   ├── Learn  (LearnViewModel, LearnView, LessonPlayerView, LessonResultView,
 │   │          MantraCourseView, + pure logic: LessonEvaluator, AarohPath,
@@ -210,12 +208,12 @@ learner always continues. **No lives, hearts, or failure states** (ProductGuardr
 uses humble, plural framing — "One common translation…", "One way to understand
 this…", "Traditions vary by family and region." (ProductGuardrails §7).
 
-**What's mocked / local.** Content loads from bundled JSON via
+**What's local.** Content loads from bundled JSON via
 `SeedContentProvider` (Firestore later, behind `ContentRepository`). Lesson and
 streak progress persist locally via `KeyValueStore` over `UserDefaults` (behind
-the protocol; Firestore subcollections later). There is **no audio** for mantras
-yet and **no WidgetKit** in this phase. SwiftUI previews run entirely on
-mock/local data — Firebase stays behind protocols and is optional for local dev.
+the protocol; Firestore subcollections later). Bundled mantra audio plays
+locally; there is **no WidgetKit** in this phase. SwiftUI previews use isolated
+local fixtures.
 
 ### Patterns
 
@@ -228,26 +226,19 @@ mock/local data — Firebase stays behind protocols and is optional for local de
 
 ---
 
-## Backend integration (production seams)
+## Backend integration
 
-Everything runs offline today on bundled seed content. To go live:
+Everything in 1.0 runs offline. Accounts and cloud sync are intentionally
+excluded. Adding either requires a new feature contract, real authentication,
+migration and deletion semantics, and an updated privacy review. Compile-time
+Firebase seams are not configured or called by the production app.
 
-### Firebase Auth + Firestore
-1. Add the `firebase-ios-sdk` Swift Package (FirebaseAuth, FirebaseFirestore).
-2. Drop `GoogleService-Info.plist` into the app target (it's git-ignored).
-3. Uncomment `FirebaseApp.configure()` in `SvaraApp.init`.
-4. Swap `MockAuthService` → `FirebaseAuthService` and `LocalContentRepository`
-   → `FirestoreContentRepository` in `AppEnvironment.live()`.
-
-See `FirebaseAuthService.swift` and the commented `FirestoreContentRepository`
-in `ContentRepository.swift` — both already conform to the protocols.
-
-### StoreKit 2 (freemium "Svara Plus")
-`StoreService.swift` is real StoreKit 2: it loads products, processes purchases,
-listens for transaction updates, and derives entitlement from
-`Transaction.currentEntitlements`. Product IDs live in `SvaraProductID`. The
-`Svara.storekit` configuration lets you test purchases in the simulator —
-select it under *Scheme → Run → Options → StoreKit Configuration*.
+### Free owner-testing mode
+`FeatureFlags.current.plusTierEnabled` is `false`. Every bundled lesson, story,
+festival, and practice is available without payment, no Plus/paywall UI is
+shown, and the app does not load StoreKit products. The existing StoreKit 2
+implementation and local `Svara.storekit` fixture remain dormant for a future,
+explicitly approved monetized build.
 
 ### Local notifications
 `NotificationService` schedules gentle morning/evening reminders via
@@ -324,5 +315,5 @@ Run with `⌘U` in Xcode, or `xcodebuild test -scheme Svara -destination 'platfo
   + local-only `ReflectionStore`, home (featured/themes/search), full reader with
   symbolism rail, meaning callout and reflections, 7 richly authored stories, and
   tests for filtering, featured rotation, and local-only reflections
-- Phase 2 — Firebase wiring, real audio for mantras, content authoring
+- Phase 2 — deeper content authoring and accessibility/device coverage
 - Phase 3 — personalised daily plan, richer streaks, widgets & Live Activities

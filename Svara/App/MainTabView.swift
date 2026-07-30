@@ -32,7 +32,7 @@ struct MainTabView: View {
             }
         }
         .onChange(of: env.pendingAchievements) { _, new in
-            guard let first = new.first else { return }
+            guard showAchievement == nil, let first = new.first else { return }
             presentAchievement(first)
         }
         .animation(.spring(duration: 0.4), value: showAchievement)
@@ -54,7 +54,10 @@ struct MainTabView: View {
         Task {
             try? await Task.sleep(for: .seconds(2.6))
             showAchievement = nil
-            env.clearPendingAchievements()
+            env.clearPendingAchievement(achievement)
+            if let next = env.pendingAchievements.first {
+                presentAchievement(next)
+            }
         }
     }
 }

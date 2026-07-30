@@ -6,12 +6,14 @@ import XCTest
 @MainActor
 final class AuthFlowTests: XCTestCase {
 
-    private func makeEnv(suite: String) -> AppEnvironment {
+    private func makeEnv(suite: String, reset: Bool = true) -> AppEnvironment {
         let defaults = UserDefaults(suiteName: suite)!
-        defaults.removePersistentDomain(forName: suite)
+        if reset {
+            defaults.removePersistentDomain(forName: suite)
+        }
         let kv = UserDefaultsStore(defaults: defaults)
         return AppEnvironment(
-            auth: MockAuthService(store: kv),
+            profileSession: LocalProfileSessionService(store: kv),
             content: LocalContentRepository(),
             progress: LocalProgressService(store: kv),
             notifications: LocalNotificationService(),
@@ -27,18 +29,37 @@ final class AuthFlowTests: XCTestCase {
         XCTAssertTrue(env.profile.isGuest, "A fresh launch should land on a local guest profile.")
     }
 
-    func testGuestVersusSignedInProfile() {
+    func testLocalProfileHasNoAccount() {
         XCTAssertTrue(UserProfile.guest().isGuest)
         XCTAssertTrue(UserProfile(displayName: "Friend").isGuest, "No email ⇒ guest.")
-        XCTAssertFalse(UserProfile(displayName: "Ananya", email: "a@b.com").isGuest)
     }
 
-    func testSignOutReturnsToGuestNotAWall() async {
-        let env = makeEnv(suite: "svara.test.auth.signout")
-        try? await env.signIn(email: "ananya@example.com", password: "secret")
-        XCTAssertFalse(env.profile.isGuest)
-        await env.signOut()
-        XCTAssertTrue(env.isAuthenticated, "Sign-out drops to guest, never an auth wall.")
-        XCTAssertTrue(env.profile.isGuest)
+    func testDisplayNameUpdatePersistsWithoutCreatingAccount() {
+        let env = makeEnv(suite: "svara.test.profile.name")
+        env.updateDisplayName("  Ananya  ")
+        XCTAssertEqual(env.profile.displayName, "Ananya")
+        XCTAssertNil(env.profile.email)
+    }
+
+    func testLegacyMockAccountAndPremiumFlagAreCleared() async {
+        let suite = "svara.test.auth.migration"
+        let defaults = UserDefaults(suiteName: suite)!
+        defaults.removePersistentDomain(forName: suite)
+        let kv = UserDefaultsStore(defaults: defaults)
+        kv.save(
+            UserProfile(
+                displayName: "Ananya",
+                email: "ananya@example.com",
+                isPremium: true
+            ),
+            forKey: StorageKey.userProfile
+        )
+
+        let env = makeEnv(suite: suite, reset: false)
+        await env.bootstrap()
+
+        XCTAssertNil(env.profile.email)
+        XCTAssertFalse(env.profile.isPremium)
+        XCTAssertFalse(env.isPremium, "Only a current StoreKit entitlement unlocks Plus.")
     }
 }

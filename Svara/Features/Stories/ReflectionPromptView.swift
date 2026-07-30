@@ -12,6 +12,7 @@ struct ReflectionPromptView: View {
     var onSaved: () -> Void = {}
 
     @State private var text: String = ""
+    @State private var saveError: String?
 
     private let maxChars = 500
 
@@ -63,6 +64,14 @@ struct ReflectionPromptView: View {
                     Button("Cancel") { dismiss() }
                 }
             }
+            .alert("Reflection not saved", isPresented: Binding(
+                get: { saveError != nil },
+                set: { if !$0 { saveError = nil } }
+            )) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(saveError ?? "Please try again.")
+            }
         }
     }
 
@@ -90,9 +99,13 @@ struct ReflectionPromptView: View {
 
     private func save() {
         let entry = ReflectionEntry(storyId: story.id, text: trimmed)
-        env.reflections.save(entry)
-        onSaved()
-        dismiss()
+        do {
+            try env.reflections.save(entry)
+            onSaved()
+            dismiss()
+        } catch {
+            saveError = "Your reflection is still in the editor. Check available storage and try again."
+        }
     }
 }
 

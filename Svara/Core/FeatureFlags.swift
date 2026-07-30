@@ -53,12 +53,47 @@ struct FeatureFlags: Equatable {
     /// social graph — it hands a short text to the system share sheet so a user
     /// can pass a festival on to a friend. Gated so the focused beta can omit it.
     var contentSharing: Bool
+    /// Commerce is intentionally hidden for the owner-only testing build.
+    /// Authored premium markers and StoreKit code remain available for a later,
+    /// deliberate reactivation.
+    var plusTierEnabled: Bool
 
-    /// The complete product: all content surfaces on.
-    static let full = FeatureFlags(festivalsTab: true, storiesTab: true, contentSharing: true)
+    init(
+        festivalsTab: Bool,
+        storiesTab: Bool,
+        contentSharing: Bool,
+        plusTierEnabled: Bool = false
+    ) {
+        self.festivalsTab = festivalsTab
+        self.storiesTab = storiesTab
+        self.contentSharing = contentSharing
+        self.plusTierEnabled = plusTierEnabled
+    }
+
+    /// The current full-surface testing product: all content is free and Plus
+    /// has no visible entry point.
+    static let full = FeatureFlags(
+        festivalsTab: true,
+        storiesTab: true,
+        contentSharing: true,
+        plusTierEnabled: false
+    )
+
+    /// Future monetized configuration retained for deliberate reactivation.
+    static let monetizedFull = FeatureFlags(
+        festivalsTab: true,
+        storiesTab: true,
+        contentSharing: true,
+        plusTierEnabled: true
+    )
 
     /// The strategy-lock beta: Today + Learn primary; Festivals/Stories + sharing staged out.
-    static let betaScope = FeatureFlags(festivalsTab: false, storiesTab: false, contentSharing: false)
+    static let betaScope = FeatureFlags(
+        festivalsTab: false,
+        storiesTab: false,
+        contentSharing: false,
+        plusTierEnabled: false
+    )
 
     /// The configuration the app currently ships with.
     static let current = FeatureFlags.full

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://raw.githubusercontent.com/pri8771/iOS_app_factory_rules/main/schemas/repository-map.schema.json",
+  "schemaVersion": "1.0.0",
+  "repositoryType": "product",
+  "entryPoints": [
+    "AGENTS.md",
+    ".factory/repository-map.json",
+    ".factory/project-context.json",
+    "docs/README.md"
+  ],
+  "canonicalDocuments": {
+    "projectIdentity": ".factory/project-context.json",
+    "standardsLock": ".factory/standard-lock.json",
+    "libraryCatalog": ".factory/library-catalog.json",
+    "documentationIndex": "docs/README.md",
+    "productGuardrails": "ProductGuardrails.md",
+    "currentStatus": "docs/STATUS.md",
+    "currentArchitecture": "docs/ARCHITECTURE.md",
+    "featureInventory": "docs/FEATURES.md",
+    "bugs": "docs/BUGS.md",
+    "decisions": "docs/DECISIONS.md",
+    "risks": "docs/RISKS.md",
+    "assumptions": "docs/ASSUMPTIONS.md",
+    "testPlan": "docs/TEST_PLAN.md",
+    "testFlightTasks": "docs/TESTFLIGHT_TASKS.md",
+    "appleTestFlightRequirements": "docs/APPLE_TESTFLIGHT_REQUIREMENTS.md",
+    "releaseReadiness": "docs/RELEASE_CHECKLIST.md",
+    "appStoreMetadata": "AppStore/metadata.md",
+    "contentReview": "docs/CONTENT_REVIEW_SIGNOFF.md",
+    "audioRights": "docs/AUDIO_PROVENANCE.md",
+    "handoff": "docs/HANDOFF.md",
+    "reusableComponents": "docs/REUSABLE_COMPONENTS.md"
+  },
+  "locations": {
+    "sourceRoots": ["Svara"],
+    "testRoots": ["SvaraTests", "SvaraUITests"],
+    "buildConfiguration": ["Svara.xcodeproj", "Svara.xcodeproj/xcshareddata/xcschemes/Svara.xcscheme"],
+    "ciConfiguration": [".github/workflows"],
+    "featureContracts": "quality/feature-contracts",
+    "completionReports": "quality/completion-reports",
+    "qualityEvidence": "quality/evidence",
+    "libraryCatalog": ".factory/library-catalog.json",
+    "reusableComponents": "docs/REUSABLE_COMPONENTS.md"
+  },
+  "taskRoutes": {
+    "onboarding": [
+      ".factory/project-context.json",
+      "docs/STATUS.md",
+      "docs/ARCHITECTURE.md",
+      "docs/FEATURES.md",
+      "ProductGuardrails.md"
+    ],
+    "featureWork": [
+      "docs/STATUS.md",
+      "docs/ARCHITECTURE.md",
+      "docs/FEATURES.md",
+      "ProductGuardrails.md",
+      "quality/feature-contracts"
+    ],
+    "bugFix": [
+      "docs/BUGS.md",
+      "docs/ARCHITECTURE.md",
+      "docs/TEST_PLAN.md",
+      "quality/feature-contracts"
+    ],
+    "reusableInfrastructure": [
+      ".factory/library-catalog.json",
+      "docs/REUSABLE_COMPONENTS.md",
+      "docs/ARCHITECTURE.md",
+      "docs/DECISIONS.md"
+    ],
+    "testFlightRelease": [
+      "docs/STATUS.md",
+      "docs/TESTFLIGHT_TASKS.md",
+      "docs/tasks/testflight/README.md",
+      "docs/APPLE_TESTFLIGHT_REQUIREMENTS.md",
+      "docs/RELEASE_CHECKLIST.md"
+    ],
+    "testFlightTask": [
+      "docs/TESTFLIGHT_TASKS.md",
+      "docs/tasks/testflight/README.md",
+      "docs/STATUS.md",
+      "docs/BUGS.md"
+    ],
+    "contentOrAudioReview": [
+      "ProductGuardrails.md",
+      "docs/CONTENT_REVIEW_SIGNOFF.md",
+      "docs/AUDIO_PROVENANCE.md",
+      "docs/tasks/testflight/TF-007-content-audio-signoff.md"
+    ]
+  },
+  "nonAuthoritative": [
+    "Jira",
+    "Notion",
+    "quality/completion-reports",
+    "quality/evidence",
+    "design"
+  ],
+  "notes": [
+    "Jira and Notion may mirror TestFlight tasks but never override repository state.",
+    "Completion reports and evidence are historical records; current status belongs in docs/STATUS.md.",
+    "The design directory contains references and artifacts, not implemented-product authority."
+  ]
+}

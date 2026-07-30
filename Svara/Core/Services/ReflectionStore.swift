@@ -30,10 +30,10 @@ final class ReflectionStore {
     var storageURL: URL { fileURL }
 
     /// Appends a reflection and persists.
-    func save(_ entry: ReflectionEntry) {
+    func save(_ entry: ReflectionEntry) throws {
         var entries = allEntries()
         entries.append(entry)
-        persist(entries)
+        try persist(entries)
     }
 
     /// All reflections for a story, oldest first.
@@ -57,8 +57,8 @@ final class ReflectionStore {
         try? FileManager.default.removeItem(at: fileURL)
     }
 
-    private func persist(_ entries: [ReflectionEntry]) {
-        guard let data = try? encoder.encode(entries) else { return }
-        try? data.write(to: fileURL, options: [.atomic])
+    private func persist(_ entries: [ReflectionEntry]) throws {
+        let data = try encoder.encode(entries)
+        try data.write(to: fileURL, options: [.atomic])
     }
 }

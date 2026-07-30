@@ -1,8 +1,7 @@
 import Foundation
 
-/// The local representation of the signed-in user and all progress state.
-/// Persisted locally and (when configured) synced to Firestore behind
-/// `ContentRepository` / `ProgressService`.
+/// The local profile and progress state. Svara 1.0 has no account or cloud
+/// identity; this value is persisted only on the device.
 struct UserProfile: Identifiable, Codable, Hashable {
     let id: String
     var displayName: String
@@ -22,7 +21,8 @@ struct UserProfile: Identifiable, Codable, Hashable {
     var observedFestivalIDs: [String]
     var unlockedAchievementIDs: [String]
 
-    // Entitlement
+    // Legacy migration field. StoreKit is the only entitlement authority.
+    // Keep decoding this property so profiles from pre-1.0 builds migrate.
     var isPremium: Bool
 
     // Preferences
@@ -68,8 +68,7 @@ struct UserProfile: Identifiable, Codable, Hashable {
         self.eveningReminderHour = eveningReminderHour
     }
 
-    /// True when this is an anonymous, local-only profile (no account). The app
-    /// is fully usable as a guest — sign-in is optional and only adds an email.
+    /// True when this is an anonymous, local-only profile (no account).
     var isGuest: Bool { email == nil }
 
     /// A fresh guest profile used before sign-in / for previews.

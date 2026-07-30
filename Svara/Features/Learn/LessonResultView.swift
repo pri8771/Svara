@@ -11,6 +11,7 @@ struct LessonResultView: View {
 
     let lesson: Lesson
     let correctCount: Int
+    let earnedPoints: Bool
     let onDone: () -> Void
 
     @State private var nextLesson: Lesson?
@@ -46,7 +47,7 @@ struct LessonResultView: View {
             Text(LearnCopy.lessonCompleteTitle)
                 .font(.svaraDisplay)
                 .foregroundStyle(SvaraTheme.Colors.textPrimary)
-            Text("+\(lesson.xp) Svara Points")
+            Text(earnedPoints ? "+\(lesson.xp) Svara Points" : "Practice complete")
                 .font(.svaraHeadline)
                 .foregroundStyle(SvaraTheme.Colors.textSecondary)
             if lesson.quizCount > 0 {
@@ -58,7 +59,11 @@ struct LessonResultView: View {
             }
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(LearnCopy.lessonCompleteTitle). You earned \(lesson.xp) Svara Points.")
+        .accessibilityLabel(
+            earnedPoints
+                ? "\(LearnCopy.lessonCompleteTitle). You earned \(lesson.xp) Svara Points."
+                : "\(LearnCopy.lessonCompleteTitle). Practice complete; points were awarded on your first completion."
+        )
     }
 
     // MARK: Meaning unlock
@@ -137,6 +142,6 @@ struct LessonResultView: View {
 }
 
 #Preview {
-    LessonResultView(lesson: SeedContent.lessons[3], correctCount: 2) {}
+    LessonResultView(lesson: SeedContent.lessons[3], correctCount: 2, earnedPoints: true) {}
         .environment(AppEnvironment.preview())
 }

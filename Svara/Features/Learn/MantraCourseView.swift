@@ -15,6 +15,7 @@ struct MantraCourseView: View {
 
     @State private var activeLesson: Lesson?
     @State private var showPaywall = false
+    @State private var showLockedLessonMessage = false
 
     var body: some View {
         ScrollView {
@@ -44,6 +45,11 @@ struct MantraCourseView: View {
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(item: $activeLesson) { LessonPlayerView(lesson: $0) }
         .sheet(isPresented: $showPaywall) { PaywallView() }
+        .alert("Complete the earlier step first", isPresented: $showLockedLessonMessage) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("This lesson will open after you complete the step before it in Aaroh.")
+        }
     }
 
     private func state(for lesson: Lesson) -> LessonNodeState {
@@ -51,7 +57,7 @@ struct MantraCourseView: View {
     }
 
     private func isPremiumLocked(_ lesson: Lesson) -> Bool {
-        lesson.isPremium && !env.isPremium
+        env.isLockedBehindPlus(lesson)
     }
 
     private func open(_ lesson: Lesson) {
@@ -61,7 +67,11 @@ struct MantraCourseView: View {
         }
         // Allow starting the current step or revisiting completed ones.
         let unlocked = AarohPath.isUnlocked(lesson, in: allLessons, completedIDs: env.completedLessonIDs)
-        if unlocked { activeLesson = lesson }
+        if unlocked {
+            activeLesson = lesson
+        } else {
+            showLockedLessonMessage = true
+        }
     }
 }
 

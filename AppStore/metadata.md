@@ -1,5 +1,31 @@
 # Svara — App Store Metadata
 
+Repository source for `TF-008`. Copy this material to App Store Connect only
+after `TF-001`, `TF-004`, `TF-006`, and `TF-007` are complete. If App Store
+Connect differs, update and approve the repository first.
+
+## Approved TestFlight Configuration
+
+- Version/build: 1.0 (2)
+- Bundle ID: `com.primandir.svara`
+- Platform: iPhone, iOS 17+
+- Primary language: English (U.S.)
+- SKU if a new record is required: `SVARA-IOS-001`
+- Surface: full five-tab app
+- Distribution: owner internal smoke, then invitation-only external group
+  `Svara Close Friends`, initial limit 10; public link disabled
+- Operator, QA/feedback owner, and stop authority: product owner
+- Review contact: use the owner’s secure App Store Connect contact record
+- Commerce: disabled under `DEC-006`; all content is free
+
+Still required before inviting external testers: final age-rating and rights
+answers, content/audio sign-off, live legal-page verification, physical-device
+QA, TestFlight test information comparison, and Apple TestFlight App Review.
+
+Copyright/legal seller text is not required for TestFlight App Review. It
+remains deferred to the eventual public App Store version submission and must
+use the real rights owner when that work begins.
+
 ## Name
 Svara
 
@@ -30,15 +56,10 @@ The tales behind the deities, organised by the human themes they speak to — co
 No account required to start. No ads. No social feed. Just a quiet daily practice, yours.
 
 ## Keywords
-hindu,mantra,prayer,spiritual,meditation,yoga,gayatri,vedic,devotion,festival,sloka,Sanskrit,mindfulness,wellness,streaks
+mantra,prayer,meditation,yoga,gayatri,vedic,devotion,festival,sloka,Sanskrit,mindfulness,streaks
 
 ## Support URL
-TODO: not yet a real support page. `https://github.com/pri8771/Svara` (the bare
-repo) is not acceptable for submission — App Review expects a page that
-actually helps a user get support, not a source-code repo. The real URL
-depends on a pending decision about the support-email/support-page setup for
-this app, which is not this doc's call to make. Do not submit until this is
-replaced with a real support destination.
+https://pri8771.github.io/Svara/
 
 ## Marketing URL
 https://pri8771.github.io/Svara/
@@ -54,24 +75,27 @@ https://pri8771.github.io/Svara/terms.html
 > default, folder = `/docs`). A `.nojekyll` file is included so the static HTML
 > serves as-is.
 
-## Age Rating
-4+
+## Proposed Age Rating (Unverified)
+
+Expected: 4+. This is not authoritative until `TF-008` completes Apple's
+current questionnaire and records all calculated regional results.
 
 ## Pricing
-Free with in-app purchase (Svara Plus)
+Free. No in-app purchases are exposed in the current owner-only testing build.
 
-## In-App Purchases
-- Svara Plus Monthly — $0.99/month
-- Svara Plus Yearly — $7.99/year
-- Svara Plus Lifetime — $19.99
+## Deferred Future In-App Purchases
+The dormant monthly, yearly, and lifetime Plus definitions are not part of this
+testing build. They require explicit reactivation and completion of `TF-005`
+and `TF-012` before they may appear in metadata or the app.
 
 ## App Privacy (App Store Connect "nutrition label")
-This release stores data **on-device only** — no analytics, no ads, no backend,
+This release stores data **on-device only** — no account, analytics, ads, backend,
 no tracking. Answer the App Privacy questionnaire as:
 
 - **Data used to track you:** None.
-- **Data linked to you:** None. (Name/optional email are stored on the device and
-  are not transmitted to us, so they are not "collected" per Apple's definition.)
+- **Data linked to you:** None. (The optional display name is stored on the
+  device and is not transmitted to us, so it is not "collected" per Apple's
+  definition.)
 - **Data not linked to you:** None collected.
 - **Does this app collect data?** No.
 
@@ -80,3 +104,41 @@ Required-reason API declared in `PrivacyInfo.xcprivacy`: UserDefaults (reason
 
 ## What's New (v1.0)
 First release. Daily practices, guided lesson path, festival calendar, and stories library — all in three minutes a day.
+
+## TestFlight Beta App Description
+Svara is a local-first daily spiritual-wellness app rooted in Hindu culture.
+This beta includes guided daily practices with bundled mantra audio, the Aaroh
+learning path, festival moments, stories and symbols, local progress, gentle
+reminders, and free access to all bundled content. No account is required, no
+purchase flow is shown, and no user data leaves the device.
+
+## What to Test
+
+1. Complete onboarding and confirm the Today tab opens without sign-in.
+2. Finish a practice and a lesson; relaunch and confirm points, streak, and
+   progress remain.
+3. Play and pause mantra audio from a practice and a listening lesson.
+4. Enable reminders, including the denied-permission path.
+5. Confirm all lessons and content open without a paywall or membership prompt.
+6. Review Festival and Stories content for clarity, respectful framing,
+   truncation, Dynamic Type, dark mode, and VoiceOver.
+
+Please report the device model, iOS version, screen, steps, and a screenshot
+when possible.
+
+## Beta Feedback Email
+priyansh.chordia@gmail.com
+
+## Beta App Review Notes
+
+- No login is required. Complete onboarding to enter the app.
+- The app is local-first and has no backend, analytics, ads, or tracking.
+- All content is free in this testing build. Plus and StoreKit product loading
+  are disabled.
+- Notification permission is requested only after the tester enables practice
+  reminders in Settings.
+- Legal and support links are under Profile → Settings.
+
+## Export Compliance
+The app does not implement non-exempt encryption. The generated Info.plist sets
+`ITSAppUsesNonExemptEncryption` to `NO`.

@@ -15,7 +15,7 @@ struct ProfileView: View {
                 VStack(alignment: .leading, spacing: SvaraTheme.Spacing.xl) {
                     profileHeader
                     statsRow
-                    if !env.isPremium { upgradeCard }
+                    if env.isPlusTierEnabled && !env.isPremium { upgradeCard }
                     achievementsSection
                 }
                 .padding(.horizontal, SvaraTheme.Spacing.screenMargin)
@@ -32,6 +32,7 @@ struct ProfileView: View {
                         Image(systemName: "gearshape.fill")
                             .foregroundStyle(SvaraTheme.Colors.accent)
                     }
+                    .accessibilityLabel("Settings")
                 }
             }
         }

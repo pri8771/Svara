@@ -29,7 +29,5 @@
 			</array>
 		</dict>
 	</array>
-	<key>NSUserNotificationsUsageDescription</key>
-	<string>Svara sends gentle daily reminders for your morning and evening practice.</string>
 </dict>
 </plist>

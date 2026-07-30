@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/pri8771/iOS_app_factory_rules/main/schemas/feature-contract.schema.json",
+  "id": "FEAT-001",
+  "name": "TestFlight release candidate",
+  "status": "verification_pending",
+  "userOutcome": "The owner can install Svara, enter without an account, access every bundled content item without payment, complete and retain a practice or lesson, and play bundled audio.",
+  "entryPoints": ["Onboarding", "Today", "Learn", "Festivals", "Stories", "Profile", "Settings"],
+  "productionDataSource": "Bundled reviewed JSON and audio assets, local UserDefaults and Documents persistence, and UserNotifications. StoreKit remains dormant while the testing build is free.",
+  "states": ["loading", "content", "empty", "error", "disabled", "permission_denied"],
+  "errorBehavior": "Failures remain scoped to the operation, preserve progress and input, and present user-safe recovery copy. The current build must not show a Plus surface or restrict bundled content.",
+  "duplicateProtectionRequired": true,
+  "persistenceRequired": true,
+  "layoutScenarios": ["small supported iPhone", "large current iPhone", "portrait", "dark mode", "maximum accessibility text"],
+  "accessibilityRequirements": ["VoiceOver labels and order on primary workflows", "Dynamic Type without unreachable primary actions", "non-color status indicators", "reduced-motion-safe behavior"],
+  "prohibitedBehavior": [
+    "No arbitrary-credential or fake account flow.",
+    "No persisted profile flag as premium authority.",
+    "No Plus, paywall, membership, purchase, or restricted-content surface while plusTierEnabled is false.",
+    "No StoreKit test configuration in the production bundle.",
+    "No unreviewed cultural content or audio rights claim.",
+    "No claim of a free trial without verified eligibility."
+  ],
+  "taskBacklog": "docs/TESTFLIGHT_TASKS.md",
+  "releaseTaskIDs": [
+    "TF-001",
+    "TF-002",
+    "TF-003",
+    "TF-004",
+    "TF-005",
+    "TF-006",
+    "TF-007",
+    "TF-008",
+    "TF-009",
+    "TF-010",
+    "TF-011",
+    "TF-012",
+    "TF-013",
+    "TF-014",
+    "TF-015"
+  ],
+  "acceptanceTests": [
+    "All unit and UI smoke tests pass on a clean iOS simulator.",
+    "A Release build and unsigned archive complete with product validation.",
+    "The archived bundle contains PrivacyInfo.xcprivacy and excludes Svara.storekit.",
+    "Every bundled lesson opens from Learn and Today without a paywall in the free testing configuration.",
+    "A physical-device pass covers audio interruption, notifications, and VoiceOver.",
+    "Content and audio receive recorded human review before external testing.",
+    "The signed final build uploads and finishes App Store Connect processing.",
+    "The sole owner installs the declared internal-only build through TestFlight and completes the bounded TF-015 smoke without claiming external readiness.",
+    "Any future monetized build completes TF-005 and TF-012 before exposing Plus.",
+    "The internally verified build passes TestFlight App Review before external testers receive access."
+  ]
+}

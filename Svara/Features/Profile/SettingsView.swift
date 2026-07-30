@@ -2,81 +2,91 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(AppEnvironment.self) private var env
+    @Environment(\.openURL) private var openURL
 
     @State private var notificationsEnabled = false
     @State private var morningHour = 8
     @State private var eveningHour = 20
     @State private var isSavingReminders = false
-    @State private var showSignOutConfirm = false
-    @State private var showSignIn = false
+    @State private var reminderSaveQueued = false
+    @State private var showNotificationSettings = false
+    @State private var showProfileEditor = false
 
     private let hours = Array(0...23)
 
     var body: some View {
         Form {
-            Section("Daily Reminders") {
+            Section {
                 Toggle("Practice reminders", isOn: $notificationsEnabled)
                     .tint(SvaraTheme.Colors.primary)
+                    .foregroundStyle(SvaraTheme.Colors.textPrimary)
 
                 if notificationsEnabled {
                     Picker("Morning", selection: $morningHour) {
                         ForEach(hours, id: \.self) { Text(hourLabel($0)).tag($0) }
                     }
+                    .foregroundStyle(SvaraTheme.Colors.textPrimary)
+                    .tint(SvaraTheme.Colors.accent)
                     Picker("Evening", selection: $eveningHour) {
                         ForEach(hours, id: \.self) { Text(hourLabel($0)).tag($0) }
                     }
-                }
-            }
-
-            Section {
-                LabeledContent("Name", value: env.profile.displayName)
-                if let email = env.profile.email {
-                    LabeledContent("Email", value: email)
-                }
-                LabeledContent("Membership", value: env.isPremium ? "Svara Plus" : "Free")
-
-                if env.profile.isGuest {
-                    Button {
-                        showSignIn = true
-                    } label: {
-                        Label("Sign in or create an account", systemImage: "person.crop.circle.badge.plus")
-                    }
+                    .foregroundStyle(SvaraTheme.Colors.textPrimary)
                     .tint(SvaraTheme.Colors.accent)
                 }
             } header: {
-                Text("Account")
-            } footer: {
-                if env.profile.isGuest {
-                    Text("Optional. Your practice already works without an account — signing in just saves your name.")
-                }
+                settingsHeader("Daily Reminders")
             }
+            .listRowBackground(SvaraTheme.Colors.surface)
 
-            Section("About") {
-                LabeledContent("Version", value: appVersion)
+            Section {
+                LabeledContent {
+                    Text(env.profile.displayName)
+                        .foregroundStyle(SvaraTheme.Colors.textSecondary)
+                } label: {
+                    Text("Name")
+                        .foregroundStyle(SvaraTheme.Colors.textPrimary)
+                }
+
+                Button {
+                    showProfileEditor = true
+                } label: {
+                    Label("Edit display name", systemImage: "pencil")
+                }
+                .tint(SvaraTheme.Colors.accent)
+            } header: {
+                settingsHeader("Local Profile")
+            } footer: {
+                Text("No account is created. Your name and progress stay on this iPhone.")
+                    .foregroundStyle(SvaraTheme.Colors.textSecondary)
+            }
+            .listRowBackground(SvaraTheme.Colors.surface)
+
+            Section {
+                LabeledContent {
+                    Text(appVersion)
+                        .foregroundStyle(SvaraTheme.Colors.textSecondary)
+                } label: {
+                    Text("Version")
+                        .foregroundStyle(SvaraTheme.Colors.textPrimary)
+                }
                 Link("Privacy Policy", destination: SvaraLinks.privacyPolicy)
                 Link("Terms of Service", destination: SvaraLinks.termsOfService)
                 Link("Support", destination: SvaraLinks.support)
+            } header: {
+                settingsHeader("About")
             }
-
-            if !env.profile.isGuest {
-                Section {
-                    Button(role: .destructive) {
-                        showSignOutConfirm = true
-                    } label: {
-                        Text("Sign Out")
-                            .frame(maxWidth: .infinity)
-                    }
-                }
-            }
+            .foregroundStyle(SvaraTheme.Colors.accent)
+            .listRowBackground(SvaraTheme.Colors.surface)
         }
         .scrollContentBackground(.hidden)
         .svaraScreenBackground()
+        .tint(SvaraTheme.Colors.accent)
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showSignIn) {
+        .sheet(isPresented: $showProfileEditor) {
             NavigationStack {
-                AuthView(asSheet: true)
-                    .navigationTitle("Sign In")
+                LocalProfileEditorView()
+                    .navigationTitle("Edit Profile")
                     .navigationBarTitleDisplayMode(.inline)
             }
         }
@@ -84,9 +94,14 @@ struct SettingsView: View {
         .onChange(of: notificationsEnabled) { _, _ in saveReminders() }
         .onChange(of: morningHour) { _, _ in saveReminders() }
         .onChange(of: eveningHour) { _, _ in saveReminders() }
-        .confirmationDialog("Sign out of Svara?", isPresented: $showSignOutConfirm, titleVisibility: .visible) {
-            Button("Sign Out", role: .destructive) { Task { await env.signOut() } }
-            Button("Cancel", role: .cancel) {}
+        .alert("Reminders are turned off", isPresented: $showNotificationSettings) {
+            Button("Not now", role: .cancel) {}
+            Button("Open Settings") {
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                openURL(url)
+            }
+        } message: {
+            Text("Allow notifications in iPhone Settings if you want Svara practice reminders.")
         }
     }
 
@@ -97,16 +112,27 @@ struct SettingsView: View {
     }
 
     private func saveReminders() {
-        guard !isSavingReminders else { return }
+        guard !isSavingReminders else {
+            reminderSaveQueued = true
+            return
+        }
         isSavingReminders = true
         Task {
-            await env.updateNotificationPreferences(
-                enabled: notificationsEnabled,
-                morningHour: morningHour,
-                eveningHour: eveningHour
-            )
-            // Reflect any permission denial back into the toggle.
-            notificationsEnabled = env.profile.notificationsEnabled
+            repeat {
+                reminderSaveQueued = false
+                let requestedEnabled = notificationsEnabled
+                let requestedMorning = morningHour
+                let requestedEvening = eveningHour
+                let accepted = await env.updateNotificationPreferences(
+                    enabled: requestedEnabled,
+                    morningHour: requestedMorning,
+                    eveningHour: requestedEvening
+                )
+                if requestedEnabled && !accepted {
+                    notificationsEnabled = false
+                    showNotificationSettings = true
+                }
+            } while reminderSaveQueued
             isSavingReminders = false
         }
     }
@@ -118,6 +144,12 @@ struct SettingsView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "h a"
         return formatter.string(from: date)
+    }
+
+    private func settingsHeader(_ title: String) -> some View {
+        Text(title)
+            .font(.svaraCaption.weight(.bold))
+            .foregroundStyle(SvaraTheme.Colors.textPrimary)
     }
 
     private var appVersion: String {

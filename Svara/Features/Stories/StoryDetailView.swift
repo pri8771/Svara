@@ -12,6 +12,8 @@ struct StoryDetailView: View {
     @State private var relatedLesson: Lesson?
     @State private var relatedFestival: Festival?
     @State private var activeLesson: Lesson?
+    @State private var allLessons: [Lesson] = []
+    @State private var showLockedLessonMessage = false
 
     var body: some View {
         ScrollView {
@@ -33,6 +35,11 @@ struct StoryDetailView: View {
             ReflectionPromptView(story: story) { reflections = env.reflections.entries(for: story.id) }
         }
         .fullScreenCover(item: $activeLesson) { LessonPlayerView(lesson: $0) }
+        .alert("Complete the earlier Aaroh steps first", isPresented: $showLockedLessonMessage) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("This lesson will open after you complete the lessons before it in Aaroh.")
+        }
         .task {
             reflections = env.reflections.entries(for: story.id)
             await loadRelated()
@@ -170,7 +177,7 @@ struct StoryDetailView: View {
             VStack(alignment: .leading, spacing: SvaraTheme.Spacing.md) {
                 Text("Carry it further").svaraEyebrow()
                 if let lesson = relatedLesson {
-                    Button { activeLesson = lesson } label: {
+                    Button { openRelatedLesson(lesson) } label: {
                         relatedRow(icon: "graduationcap.fill", title: "Practice this in Aaroh", subtitle: lesson.title)
                     }
                     .buttonStyle(.plain)
@@ -226,12 +233,25 @@ struct StoryDetailView: View {
     }
 
     private func loadRelated() async {
+        allLessons = await env.content.lessons()
         if let id = story.relatedMantraId {
-            relatedLesson = (await env.content.lessons()).first { $0.id == id }
+            relatedLesson = allLessons.first { $0.id == id }
         }
         if let id = story.relatedFestivalId {
             relatedFestival = (await env.content.festivals()).first { $0.id == id }
         }
+    }
+
+    private func openRelatedLesson(_ lesson: Lesson) {
+        guard AarohPath.isUnlocked(
+            lesson,
+            in: allLessons,
+            completedIDs: env.completedLessonIDs
+        ) else {
+            showLockedLessonMessage = true
+            return
+        }
+        activeLesson = lesson
     }
 }
 

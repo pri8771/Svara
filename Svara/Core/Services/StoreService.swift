@@ -30,7 +30,8 @@ final class StoreService {
     /// nonisolated `deinit` can cancel it.
     @ObservationIgnored nonisolated(unsafe) private var updatesTask: Task<Void, Never>?
 
-    init() {
+    init(previewPurchasedProductIDs: Set<String> = []) {
+        purchasedProductIDs = previewPurchasedProductIDs
         updatesTask = listenForTransactions()
     }
 
@@ -56,24 +57,25 @@ final class StoreService {
 
     // MARK: - Purchase
 
-    @discardableResult
-    func purchase(_ product: Product) async throws -> Bool {
+    func purchase(_ product: Product) async throws -> PurchaseOutcome {
         let result = try await product.purchase()
         switch result {
         case .success(let verification):
             let transaction = try checkVerified(verification)
             await refreshEntitlements()
             await transaction.finish()
-            return true
-        case .userCancelled, .pending:
-            return false
+            return .verified
+        case .userCancelled:
+            return .cancelled
+        case .pending:
+            return .pending
         @unknown default:
-            return false
+            return .cancelled
         }
     }
 
-    func restorePurchases() async {
-        try? await AppStore.sync()
+    func restorePurchases() async throws {
+        try await AppStore.sync()
         await refreshEntitlements()
     }
 
@@ -110,6 +112,12 @@ final class StoreService {
             return safe
         }
     }
+}
+
+enum PurchaseOutcome {
+    case verified
+    case pending
+    case cancelled
 }
 
 enum StoreError: LocalizedError {

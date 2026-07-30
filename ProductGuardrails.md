@@ -136,7 +136,9 @@ Gamification exists to build a **gentle daily habit**, not to exploit.
 - **Avoid medical/spiritual overclaims.** A breath practice calms; it does not
   "cure". Keep wellness claims modest and honest.
 - **Human review.** All shipped devotional content should pass human review
-  before release, in addition to automated `ContentValidation`.
+  before release, in addition to automated `ContentValidation`. The release
+  procedure and item-level sign-off are `TF-007` and
+  `docs/CONTENT_REVIEW_SIGNOFF.md`.
 
 ---
 

@@ -136,6 +136,18 @@ final class LocalProgressService: ProgressService {
     func recordSession(_ session: PracticeSession, for profile: UserProfile) -> (UserProfile, [Achievement]) {
         var updated = profile
         let today = now()
+        let calendar = Calendar.current
+
+        // A daily-practice card is a once-per-local-day completion. Reopening
+        // the same card may still be useful, but it must not create another
+        // history row, award points again, or inflate achievement counters.
+        guard !loadSessions().contains(where: {
+            $0.practiceID == session.practiceID
+                && $0.completed
+                && calendar.isDate($0.date, inSameDayAs: today)
+        }) else {
+            return (updated, [])
+        }
 
         updated.currentStreak = StreakCalculator.updatedStreak(
             current: profile.currentStreak,
@@ -147,7 +159,18 @@ final class LocalProgressService: ProgressService {
         updated.totalPoints += session.pointsEarned
         updated.completedSessionIDs.append(session.id)
 
-        append(session)
+        // Use the service clock as the authoritative completion time. This
+        // keeps persisted history, streak math, and deterministic tests aligned.
+        append(PracticeSession(
+            id: session.id,
+            practiceID: session.practiceID,
+            practiceTitle: session.practiceTitle,
+            kind: session.kind,
+            date: today,
+            durationSeconds: session.durationSeconds,
+            pointsEarned: session.pointsEarned,
+            completed: session.completed
+        ))
         return applyAchievements(to: updated)
     }
 

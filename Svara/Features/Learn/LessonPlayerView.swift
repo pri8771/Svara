@@ -17,6 +17,7 @@ struct LessonPlayerView: View {
     @State private var hasChecked = false
     @State private var correctCount = 0
     @State private var finished = false
+    @State private var earnedPoints = false
 
     /// The mantra this lesson teaches, loaded once for the `listen` step's
     /// chant-along audio.
@@ -37,7 +38,11 @@ struct LessonPlayerView: View {
         VStack(spacing: SvaraTheme.Spacing.lg) {
             topBar
             if finished {
-                LessonResultView(lesson: lesson, correctCount: correctCount) { dismiss() }
+                LessonResultView(
+                    lesson: lesson,
+                    correctCount: correctCount,
+                    earnedPoints: earnedPoints
+                ) { dismiss() }
             } else {
                 stepContent
                 Spacer(minLength: 0)
@@ -47,7 +52,7 @@ struct LessonPlayerView: View {
         }
         .padding(SvaraTheme.Spacing.screenMargin)
         .svaraScreenBackground()
-        .onAppear(perform: syncSyllablePool)
+        .onAppear(perform: restoreSavedProgress)
         .task { await loadMantra() }
         .onDisappear { env.audioPlayback.stop() }
     }
@@ -55,6 +60,20 @@ struct LessonPlayerView: View {
     private func loadMantra() async {
         guard let mantraID = lesson.mantraID else { return }
         mantra = await env.content.mantra(id: mantraID)
+    }
+
+    /// Continue at the first step not yet recorded. Completed lessons reopen
+    /// from the beginning for an intentional review rather than at the result.
+    private func restoreSavedProgress() {
+        if let progress = env.lessonProgress(for: lesson), !progress.isCompleted,
+           let nextIndex = lesson.steps.firstIndex(where: {
+               !progress.completedStepIDs.contains($0.id)
+           }) {
+            index = nextIndex
+        } else {
+            index = 0
+        }
+        resetStepState()
     }
 
     // MARK: Top bar with progress
@@ -126,7 +145,7 @@ struct LessonPlayerView: View {
         } label: {
             SvaraCard(background: SvaraTheme.Colors.surfaceInverse) {
                 HStack {
-                    Image(systemName: isPlayingThis ? "pause.circle.fill" : "speaker.wave.2.fill")
+                    Image(systemName: isPlayingThis ? "pause.circle.fill" : "play.circle.fill")
                         .font(.title2)
                         .foregroundStyle(SvaraTheme.Colors.points)
                     Text(LearnCopy.chantAlong)
@@ -226,8 +245,6 @@ struct LessonPlayerView: View {
                 guard !hasChecked else { return }
                 returnSyllable(tapped)
             }
-            .accessibilityLabel("Your arrangement")
-            .accessibilityValue(builtSyllables.isEmpty ? "Empty" : builtSyllables.joined(separator: ", "))
 
             Divider().background(SvaraTheme.Colors.separator)
 
@@ -236,7 +253,6 @@ struct LessonPlayerView: View {
                 guard !hasChecked else { return }
                 chooseSyllable(tapped)
             }
-            .accessibilityLabel("Available syllables")
 
             if hasChecked, !lastAnswerMatched {
                 Text("In order: \(step.syllables.joined(separator: " · "))")
@@ -272,6 +288,15 @@ struct LessonPlayerView: View {
             ? Array(correct[1...]) + [correct[0]]
             : scrambled
         builtSyllables = []
+    }
+
+    private func resetStepState() {
+        selectedOption = nil
+        hasChecked = false
+        hintShown = false
+        lastAnswerMatched = false
+        wrongAttempts = 0
+        syncSyllablePool()
     }
 
     // MARK: Hint
@@ -392,17 +417,12 @@ struct LessonPlayerView: View {
         )
 
         if isLastStep {
-            env.completeLesson(lesson, correctCount: correctCount)
+            earnedPoints = env.completeLesson(lesson, correctCount: correctCount)
             withAnimation { finished = true }
         } else {
             withAnimation {
                 index += 1
-                selectedOption = nil
-                hasChecked = false
-                hintShown = false
-                lastAnswerMatched = false
-                wrongAttempts = 0
-                syncSyllablePool()
+                resetStepState()
             }
         }
     }

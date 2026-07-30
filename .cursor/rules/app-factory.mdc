@@ -1,0 +1,18 @@
+---
+description: App Factory project registration and quality rules
+globs:
+alwaysApply: true
+---
+
+Before editing this repository, read:
+
+- `.factory/repository-map.json`
+- `.factory/project-context.json`
+- `.factory/standard-lock.json`
+- `docs/README.md`
+- only the task-relevant canonical documents and feature contracts
+
+Do not re-scaffold this existing project. Do not use undisclosed fake
+production data, disconnected controls, or unverified completion claims.
+Search `.factory/library-catalog.json` before implementing cross-cutting
+infrastructure and update `docs/REUSABLE_COMPONENTS.md` when appropriate.

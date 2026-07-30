@@ -6,8 +6,6 @@ struct SvaraApp: App {
     @State private var environment = AppEnvironment.live()
 
     init() {
-        // Firebase production seam — uncomment once GoogleService-Info.plist is added:
-        // FirebaseApp.configure()
         configureAppearance()
     }
 

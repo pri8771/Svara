@@ -9,7 +9,7 @@ import SwiftUI
 final class AppEnvironment {
 
     // MARK: Services (protocol-typed for swappability)
-    let auth: AuthService
+    let profileSession: ProfileSessionService
     let content: ContentRepository
     let progress: ProgressService
     let notifications: NotificationService
@@ -41,11 +41,21 @@ final class AppEnvironment {
     /// Festivals the user has bookmarked — persisted locally.
     var savedFestivalIDs: Set<String> = []
 
-    /// Effective premium entitlement: an active purchase or a stored flag.
-    var isPremium: Bool { store.isPlus || profile.isPremium }
+    /// StoreKit is the sole authority for premium access. A profile flag cannot
+    /// outlive an expired, refunded, or revoked transaction.
+    var isPremium: Bool { store.isPlus }
+
+    /// Whether the dormant Plus experience is intentionally exposed.
+    var isPlusTierEnabled: Bool { featureFlags.plusTierEnabled }
+
+    /// Premium markers remain authored for a future paid release, but they do
+    /// not restrict content while the owner-only testing build is free.
+    func isLockedBehindPlus(_ lesson: Lesson) -> Bool {
+        isPlusTierEnabled && lesson.isPremium && !isPremium
+    }
 
     init(
-        auth: AuthService,
+        profileSession: ProfileSessionService,
         content: ContentRepository,
         progress: ProgressService,
         notifications: NotificationService,
@@ -53,7 +63,7 @@ final class AppEnvironment {
         kvStore: KeyValueStore,
         featureFlags: FeatureFlags = .current
     ) {
-        self.auth = auth
+        self.profileSession = profileSession
         self.content = content
         self.progress = progress
         self.notifications = notifications
@@ -87,7 +97,7 @@ final class AppEnvironment {
         }
         let kv = UserDefaultsStore(defaults: defaults)
         return AppEnvironment(
-            auth: MockAuthService(store: kv),
+            profileSession: LocalProfileSessionService(store: kv),
             content: LocalContentRepository(),
             progress: LocalProgressService(store: kv),
             notifications: LocalNotificationService(),
@@ -100,20 +110,22 @@ final class AppEnvironment {
     static func preview(premium: Bool = false) -> AppEnvironment {
         let kv = UserDefaultsStore(defaults: UserDefaults(suiteName: "svara.preview") ?? .standard)
         let env = AppEnvironment(
-            auth: MockAuthService(store: kv),
+            profileSession: LocalProfileSessionService(store: kv),
             content: LocalContentRepository(),
             progress: LocalProgressService(store: kv),
             notifications: LocalNotificationService(),
-            store: StoreService(),
+            store: StoreService(
+                previewPurchasedProductIDs: premium ? [SvaraProductID.lifetime] : []
+            ),
             kvStore: kv
         )
         env.profile = UserProfile(
             displayName: "Ananya",
-            email: "ananya@example.com",
+            email: nil,
             currentStreak: 5,
             longestStreak: 12,
             totalPoints: 340,
-            isPremium: premium
+            isPremium: false
         )
         env.isAuthenticated = true
         env.hasCompletedOnboarding = true
@@ -126,49 +138,35 @@ final class AppEnvironment {
     /// saved session, establishes a local **guest** so the app opens straight
     /// into content with no account required (LB-2 / "no account to start").
     func bootstrap() async {
-        if let restored = await auth.restoreSession() {
+        if let restored = await profileSession.restoreProfile() {
             profile = restored
+            clearLegacyAccountState()
             isAuthenticated = true
         } else {
-            await continueAsGuest()
+            await establishLocalProfile()
         }
-        await store.loadProducts()
-    }
-
-    func signIn(email: String, password: String) async throws {
-        let user = try await auth.signIn(email: email, password: password)
-        profile = user
-        isAuthenticated = true
-    }
-
-    func register(displayName: String, email: String, password: String) async throws {
-        let user = try await auth.register(displayName: displayName, email: email, password: password)
-        profile = user
-        isAuthenticated = true
-    }
-
-    func continueAsGuest() async {
-        if let user = try? await auth.signInAnonymously() {
-            profile = user
-            isAuthenticated = true
+        if isPlusTierEnabled {
+            await store.loadProducts()
         }
     }
 
-    /// Signs out of an account and drops back to a fresh local guest — never to
-    /// an auth wall. The app stays open and usable.
-    func signOut() async {
-        try? await auth.signOut()
-        kvStore.remove(forKey: StorageKey.lessonProgress)
-        kvStore.remove(forKey: StorageKey.savedFestivalIDs)
-        savedFestivalIDs = []
-        reflections.clear()
-        notifications.cancelAllReminders()
-        await continueAsGuest()
+    func establishLocalProfile() async {
+        profile = await profileSession.createProfileIfNeeded()
+        clearLegacyAccountState()
+        isAuthenticated = true
     }
 
     func completeOnboarding() {
         hasCompletedOnboarding = true
         kvStore.save(true, forKey: StorageKey.onboardingComplete)
+#if DEBUG
+        // XCUITest terminates the process immediately after this transition.
+        // Flush only in that harness so the forced termination cannot race the
+        // preferences daemon; production keeps normal asynchronous UserDefaults.
+        if ProcessInfo.processInfo.arguments.contains("-UITestResetState") {
+            UserDefaults.standard.synchronize()
+        }
+#endif
     }
 
     // MARK: - Progress mutations
@@ -199,7 +197,9 @@ final class AppEnvironment {
 
     /// Completes a lesson: finalises step-level progress (best score) and awards
     /// points/streak exactly once via the unified progress rules.
-    func completeLesson(_ lesson: Lesson, correctCount: Int = 0) {
+    @discardableResult
+    func completeLesson(_ lesson: Lesson, correctCount: Int = 0) -> Bool {
+        let earnsPoints = !profile.completedLessonIDs.contains(lesson.id)
         progress.finalizeLessonProgress(
             lessonID: lesson.id,
             correctCount: correctCount,
@@ -207,6 +207,7 @@ final class AppEnvironment {
         )
         let (updated, unlocked) = progress.completeLesson(lesson, for: profile)
         apply(updated, unlocked: unlocked)
+        return earnsPoints
     }
 
     // MARK: - Lesson progress reads
@@ -278,7 +279,8 @@ final class AppEnvironment {
 
     // MARK: - Preferences
 
-    func updateNotificationPreferences(enabled: Bool, morningHour: Int, eveningHour: Int) async {
+    @discardableResult
+    func updateNotificationPreferences(enabled: Bool, morningHour: Int, eveningHour: Int) async -> Bool {
         profile.notificationsEnabled = enabled
         profile.morningReminderHour = morningHour
         profile.eveningReminderHour = eveningHour
@@ -291,14 +293,18 @@ final class AppEnvironment {
             } else {
                 profile.notificationsEnabled = false
                 persistProfile()
+                return false
             }
         } else {
             notifications.cancelAllReminders()
         }
+        return true
     }
 
-    func setPremium(_ value: Bool) {
-        profile.isPremium = value
+    func updateDisplayName(_ displayName: String) {
+        let trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        profile.displayName = trimmed
         persistProfile()
     }
 
@@ -316,7 +322,17 @@ final class AppEnvironment {
         kvStore.save(profile, forKey: StorageKey.userProfile)
     }
 
-    func clearPendingAchievements() {
-        pendingAchievements.removeAll()
+    func clearPendingAchievement(_ achievement: Achievement) {
+        pendingAchievements.removeAll { $0.id == achievement.id }
+    }
+
+    /// Migrates profiles created by the former local mock sign-in. That UI
+    /// accepted arbitrary credentials and could persist premium access, so
+    /// neither field is trusted by the production app.
+    private func clearLegacyAccountState() {
+        guard profile.email != nil || profile.isPremium else { return }
+        profile.email = nil
+        profile.isPremium = false
+        persistProfile()
     }
 }
