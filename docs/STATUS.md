@@ -26,6 +26,11 @@ Svara Plus or purchase UI.
 
 ## Verified locally
 
+- Exact build 3 candidate `ed29548`: locked Factory verification and repository
+  checks pass; the complete clean-simulator action passes 159/159 with zero
+  failures/skips; Release analysis passes; remote CI run `30647389027` is
+  green; and a fresh 1.0 (3) archive passes bundle, privacy, audio, exclusion,
+  architecture, and matching-dSYM inspection.
 - Build 3 audio remediation: all nine AAC-in-M4A exports decode to non-silent
   PCM; 138/138 unit tests pass, including the new bundle/decode regression; the
   focused Today auto-start/pause UI workflow passes; and an unsigned Release
@@ -86,9 +91,9 @@ Svara Plus or purchase UI.
 - Physical-device verification of `UI-006`, `UI-007`, and hardened `UI-014`.
   Commerce-only `UI-004`, `UI-011`, and `UI-012` remain deferred while Plus is
   disabled.
-- `UI-015` build 3 verification: rerun the exact-candidate gates, install the
-  replacement build, and confirm audible output on the owner iPhone. Build 2
-  must not be used to close TF-015.
+- `UI-015` build 3 device verification: install the replacement through
+  TestFlight and confirm audible output on the owner iPhone. Build 2 must not
+  be used to close TF-015.
 
 ## Human review required before external distribution
 
@@ -107,8 +112,8 @@ Jira and Notion are non-authoritative mirrors.
 
 ## Next action
 
-Finish and freeze build 3, rerun TF-009, upload/process it through TF-011, then
-install it through TestFlight and rerun the TF-015 onboarding, practice,
+Sign, validate, upload, and process frozen build 3 through TF-011, then install
+it through TestFlight and rerun the TF-015 onboarding, practice,
 lesson, audio, relaunch, notification, and legal-link smoke.
 Before inviting close friends, finish the human content/audio sign-off, live
 legal-page check, physical-device accessibility/audio/notification matrix, and

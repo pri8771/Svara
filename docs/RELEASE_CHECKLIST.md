@@ -38,9 +38,9 @@ human/external gates prevent `done`.
   those URLs and content-checked from a clean network. Deferred from TF-015.
 - [x] App Store keywords are at most 100 UTF-8 bytes.
 - [x] Export-compliance Info.plist flag is declared.
-- [ ] [`TF-009`] Build 3 repository gates, complete tests, Release analysis,
-  final commit/SHA, archive inspection, and remote CI pass. The prior 153/153
-  build 2 evidence is historical after `UI-015` changed the binary.
+- [x] [`TF-009`] Build 3 repository gates, 159/159 complete tests, Release
+  analysis, frozen commit `ed29548`, archive inspection, and remote CI pass.
+  The prior build 2 evidence remains historical.
 
 ## App Store Connect and signing
 
@@ -96,8 +96,8 @@ this external TestFlight gate unless the release owner explicitly adds them.
 ## Release decision
 
 - **Current state:** `verification_pending`
-- **Owner internal smoke allowed:** Not yet for build 3. Complete TF-009 and
-  TF-011, replace build 2 in the owner group, then perform/record TF-015.
+- **Owner internal smoke allowed:** After TF-011 uploads/processes build 3 and
+  replaces build 2 in the owner group; then perform and record TF-015.
 - **External beta allowed:** No, until every blocker above is checked or an
   explicit, approved, time-bounded waiver is recorded in `quality/waivers/`.
 

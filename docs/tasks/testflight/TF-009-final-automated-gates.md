@@ -1,8 +1,8 @@
 # TF-009 — Harden and Rerun Final Automated Release Gates
 
-- **Status:** `verification_pending`
-- **Blocker:** build 3 requires the complete gate after the audio resource and
-  playback-behavior change
+- **Status:** `done`
+- **Completed:** 2026-07-31 for build 1.0 (3), binary commit
+  `ed29548cd782ae6859b7d7b63c216f60693e8705`
 - **Gate:** upload
 - **Execution type:** agent
 - **Owner:** engineering/QA
