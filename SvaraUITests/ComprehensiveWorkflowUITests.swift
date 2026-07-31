@@ -199,18 +199,20 @@ final class ComprehensiveWorkflowUITests: XCTestCase {
             XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 5) || app.buttons["Close activity"].exists)
 
             let expectsAudio = title == "Morning Mantra" || title == "Evening Prayer"
-            let playAudio = app.buttons["Play chant audio"]
             if expectsAudio {
-                XCTAssertTrue(playAudio.waitForExistence(timeout: 5), "\(title) should expose bundled audio")
-                playAudio.tap()
-                XCTAssertTrue(app.buttons["Pause chant audio"].waitForExistence(timeout: 3))
-                app.buttons["Pause chant audio"].tap()
+                XCTAssertFalse(app.buttons["Play practice audio"].exists, "Audio should not be presented as an intro option")
             } else {
-                XCTAssertFalse(playAudio.exists, "\(title) should not invent an audio control")
+                XCTAssertFalse(app.buttons["Play practice audio"].exists, "\(title) should not invent an audio control")
             }
 
             tapPrimaryButton("Begin", app: app)
             XCTAssertTrue(app.buttons["Finish now"].waitForExistence(timeout: 5))
+            if expectsAudio {
+                let pauseAudio = app.buttons["Pause practice audio"]
+                XCTAssertTrue(pauseAudio.waitForExistence(timeout: 3), "\(title) audio should start automatically")
+                pauseAudio.tap()
+                XCTAssertTrue(app.buttons["Play practice audio"].waitForExistence(timeout: 3))
+            }
             app.buttons["Finish now"].tap()
             XCTAssertTrue(app.staticTexts["Well done"].waitForExistence(timeout: 5))
             tapPrimaryButton("Done", app: app)

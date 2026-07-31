@@ -71,3 +71,21 @@
   external testing. Upload and owner-internal smoke may proceed first. External
   invitations remain blocked until metadata/legal/content/audio and physical
   QA gates are satisfied and Apple approves TestFlight App Review.
+
+## DEC-007 — Daily-practice and breath audio behavior
+
+- **Status:** accepted
+- **Date:** 2026-07-31
+- **Decision:** A mantra recording is not presented as a separate “chant” mode
+  in Today. It starts automatically when the user begins a mantra or prayer
+  practice, with an ordinary play/pause control available during the active
+  timer. Breathing practices should later receive optional, audio-on-by-default
+  nonverbal timing cues plus a visible mute/play control; they should not reuse
+  mantra recordings or require continuous spoken coaching.
+- **Why:** The user chose a guided practice by tapping Begin, so a second chant
+  choice is confusing. Sparse breath cues can make eyes-closed timing usable
+  without turning calm guidance into constant narration.
+- **Consequences:** Build 3 replaces Apple-incompatible MP3 encodings with
+  AAC-in-M4A assets and adds explicit playback-failure UI. Breath cues remain a
+  separate asset, content, accessibility, and physical-device QA task; no
+  unreviewed cue is invented for this release candidate.

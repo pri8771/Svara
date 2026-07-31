@@ -6,11 +6,12 @@
 
 ## Current objective
 
-Finish processing Svara 1.0 (build 2), then run an owner TestFlight smoke
-followed by an
-invitation-only close-friends external beta under App Factory standard 0.4.0.
-The public App Store release and monetization remain deferred. Build 2 is
-external-eligible and must not be marked TestFlight Internal Only.
+Replace Svara 1.0 (build 2) with build 3 after the owner found that Apple's
+audio stack could not decode the bundled MP3 recordings, then run the owner
+TestFlight smoke followed by an invitation-only close-friends external beta
+under App Factory standard 0.4.0. The public App Store release and monetization
+remain deferred. The replacement build must remain external-eligible and must
+not be marked TestFlight Internal Only.
 Per `DEC-006`, this testing build makes every content item free and exposes no
 Svara Plus or purchase UI.
 
@@ -25,6 +26,10 @@ Svara Plus or purchase UI.
 
 ## Verified locally
 
+- Build 3 audio remediation: all nine AAC-in-M4A exports decode to non-silent
+  PCM; 138/138 unit tests pass, including the new bundle/decode regression; the
+  focused Today auto-start/pause UI workflow passes; and an unsigned Release
+  build succeeds with exactly nine M4A files, no MP3 files, and build number 3.
 - App Factory registration verifier: passed at standard 0.4.0.
 - Exact build 2 candidate gate: 153 passed, 0 failed, 0 skipped, and 0 expected
   failures on iPhone 17 Pro, iOS 26.4.1 Simulator
@@ -75,6 +80,9 @@ Svara Plus or purchase UI.
 - Physical-device verification of `UI-006`, `UI-007`, and hardened `UI-014`.
   Commerce-only `UI-004`, `UI-011`, and `UI-012` remain deferred while Plus is
   disabled.
+- `UI-015` build 3 verification: rerun the exact-candidate gates, install the
+  replacement build, and confirm audible output on the owner iPhone. Build 2
+  must not be used to close TF-015.
 
 ## Human review required before external distribution
 
@@ -93,9 +101,9 @@ Jira and Notion are non-authoritative mirrors.
 
 ## Next action
 
-On the owner’s iPhone, open TestFlight, install Svara 1.0 (2), and run/record
-the TF-015 onboarding, practice, lesson, audio, relaunch, notification, and
-legal-link smoke.
+Finish and freeze build 3, rerun TF-009, upload/process it through TF-011, then
+install it through TestFlight and rerun the TF-015 onboarding, practice,
+lesson, audio, relaunch, notification, and legal-link smoke.
 Before inviting close friends, finish the human content/audio sign-off, live
 legal-page check, physical-device accessibility/audio/notification matrix, and
 TestFlight App Review.

@@ -1,8 +1,9 @@
 # TF-011 — Produce, Validate, Upload, and Process the Signed Build
 
-- **Status:** `done`
-- **Current state:** upload accepted at 2026-07-30 18:51 EDT; App Store
-  Connect reports build 1.0 (2) `Ready to Submit` and binary `Validated`
+- **Status:** `blocked`
+- **Current state:** build 1.0 (2) remains processed historical evidence, but
+  its incompatible audio encoding failed owner device evaluation. Build 1.0
+  (3) must complete TF-009 before archive, validation, and upload.
 - **Gate:** TestFlight upload
 - **Execution type:** hybrid
 - **Owner:** release owner
@@ -24,7 +25,7 @@ signed for the intended app, and accepted by Apple. We perform a clean preflight
 archive, validate, upload once, wait for terminal processing, and inspect the
 result. This task is intentionally controlled because a different commit or
 reused build number breaks all prior evidence.
-**Expected change:** Apple reports the one validated, signed build 2 candidate
+**Expected change:** Apple reports the one validated, signed build 3 candidate
 as fully processed, eligible for the owner’s TF-015 smoke and later external
 review, and tied to the frozen source/build evidence.
 

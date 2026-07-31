@@ -55,11 +55,23 @@ struct LessonPlayerView: View {
         .onAppear(perform: restoreSavedProgress)
         .task { await loadMantra() }
         .onDisappear { env.audioPlayback.stop() }
+        .alert("Audio unavailable", isPresented: audioErrorIsPresented) {
+            Button("OK", role: .cancel) { env.audioPlayback.clearPlaybackError() }
+        } message: {
+            Text(env.audioPlayback.playbackErrorMessage ?? "")
+        }
     }
 
     private func loadMantra() async {
         guard let mantraID = lesson.mantraID else { return }
         mantra = await env.content.mantra(id: mantraID)
+    }
+
+    private var audioErrorIsPresented: Binding<Bool> {
+        Binding(
+            get: { env.audioPlayback.playbackErrorMessage != nil },
+            set: { if !$0 { env.audioPlayback.clearPlaybackError() } }
+        )
     }
 
     /// Continue at the first step not yet recorded. Completed lessons reopen

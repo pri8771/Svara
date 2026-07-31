@@ -1,6 +1,6 @@
 # Canonical TestFlight Task Register
 
-_Last reconciled: 2026-07-30._
+_Last reconciled: 2026-07-31._
 
 This is the source of truth for TestFlight work. Jira and Notion may mirror
 these tasks, but they must not become authoritative. Every mirror uses the
@@ -12,13 +12,14 @@ unchanged `TF-###` ID and links to the corresponding repository file.
 - Platform: iPhone / iOS 17+
 - Bundle ID: `com.primandir.svara`
 - Marketing version: `1.0`
-- Current release-candidate build number: `2`
+- Current release-candidate build number: `3` (build 2 is retained as historical
+  processed evidence but cannot pass the owner audio smoke)
 - Team configured in Xcode: `796XH483R4`
 - Active target: owner internal smoke followed by an invitation-only,
   external close-friends beta (initial limit 10; no public link)
 - Deferred target: public App Store release and all monetization
-- Factory lifecycle: `verification_pending` (processed build available; remote
-  CI and owner physical smoke pending)
+- Factory lifecycle: `verification_pending` (audio remediation is implemented;
+  replacement candidate gates, upload, and owner physical smoke are pending)
 
 ## Status rules
 
@@ -42,7 +43,9 @@ task and evidence first, then copy the same state to Jira/Notion.
 - **Notion:** not created. Workspace search found no Svara spec, plan, project,
   or task database. Existing task databases belong to other projects and must
   not be reused by inference.
-- **Binary commit:** `6e9d0b16de5713119770fa160292442dbe32baba`.
+- **Historical build 2 binary commit:**
+  `6e9d0b16de5713119770fa160292442dbe32baba`.
+- **Replacement build 3 binary commit:** pending candidate freeze.
 - **First processed-build evidence commit:**
   `df1dcdb` (`Record processed TestFlight build 2`). Later documentation-only
   reconciliation commits do not change the uploaded binary. Mirrors must
@@ -66,13 +69,13 @@ canonical task.
 | TF-006 | Publish and verify legal/support/privacy surfaces | external | hybrid | human_review_required | owner legal approval and physical in-app link check |
 | TF-007 | Complete cultural-content and audio-rights sign-off | factory/external | human | blocked | TF-001 |
 | TF-008 | Complete App Store Connect and TestFlight metadata | external review | hybrid | in_progress | TF-001, TF-004; TF-006/TF-007 gate completion |
-| TF-009 | Harden and rerun final automated release gates | upload | agent | done | TF-001 |
+| TF-009 | Harden and rerun final automated release gates | upload | agent | verification_pending | build 3 changed binary resources and playback behavior |
 | TF-010 | Complete manual device, accessibility, audio, and permission QA | external | hybrid | human_review_required | TF-001, TF-009 |
-| TF-011 | Produce, validate, upload, and process the signed build | upload | hybrid | done | TF-003, TF-004, TF-009 |
+| TF-011 | Produce, validate, upload, and process the signed build | upload | hybrid | blocked | build 3 TF-009 evidence |
 | TF-012 | Run future monetized TestFlight and live StoreKit sandbox validation | IAP | hybrid | deferred | TF-005; not applicable while Plus is disabled |
 | TF-013 | Define beta operations, monitoring, triage, and stop criteria | external | hybrid | done | TF-001 |
 | TF-014 | Submit TestFlight App Review and roll out the external cohort | external | human | blocked | TF-006, TF-007, TF-008, TF-010, TF-011, TF-013 |
-| TF-015 | Run one-owner internal TestFlight smoke | internal owner | hybrid | in_progress | physical TestFlight install and smoke pending |
+| TF-015 | Run one-owner internal TestFlight smoke | internal owner | hybrid | blocked | build 3 TF-009/TF-011 replacement and physical smoke |
 
 ## Dependency graph
 
@@ -154,7 +157,7 @@ task may start and what state must exist before advancing.
 - TF-005 and TF-012 are not applicable while Plus is disabled. TF-006–TF-008
   and TF-010 do not block the owner’s TF-015 smoke, but do block invitations.
 - No internal tester invitation until the uploaded build is `Complete`.
-- Do **not** mark build 2 TestFlight Internal Only. It must remain eligible for
+- Do **not** mark a replacement build TestFlight Internal Only. It must remain eligible for
   the approved close-friends external cohort after owner smoke and review.
 - No purchase/restore gate applies while Plus and product loading are disabled.
 - No external invitation while audio rights or content sign-off are unresolved.

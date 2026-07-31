@@ -3,7 +3,7 @@
 | ID | Severity | Area | Summary | Status | Owning task | Evidence |
 |---|---|---|---|---|---|---|
 | REL-001 | blocker | Signing | Historical local distribution-identity gap; automatic cloud-managed distribution now signs and uploads successfully. | resolved | `TF-003` | Svara 1.0 (2) cloud-signed upload accepted by App Store Connect on 2026-07-30; `quality/evidence/testflight/TF-003.md` |
-| REL-002 | external blocker | Audio | Source, performer consent, and distribution license are not recorded for nine bundled MP3 files; the sole owner accepts private evaluation only. | human_review_required | `TF-007` | `docs/AUDIO_PROVENANCE.md` |
+| REL-002 | external blocker | Audio | Source, performer consent, and distribution license are not recorded for nine bundled recordings; the sole owner accepts private evaluation only. | human_review_required | `TF-007` | `docs/AUDIO_PROVENANCE.md` |
 | REL-003 | external blocker | Content | Automated guardrails pass, but the required human cultural/theological sign-off record is not present; this does not authorize external access. | human_review_required | `TF-007` | `ProductGuardrails.md`; `docs/CONTENT_REVIEW_SIGNOFF.md` |
 | REL-004 | external blocker | StoreKit | App Store Connect product state, agreements, pricing, and sandbox purchase/restore are deferred and not locally verifiable. | external_blocked | `TF-005`, `TF-012` | `AppStore/metadata.md` |
 | REL-005 | high | Device QA | Physical-device audio interruption, notification, VoiceOver, and largest-text review remain. | human_review_required | `TF-010` | `docs/TEST_PLAN.md` |
@@ -22,6 +22,7 @@
 | UI-012 | medium | StoreKit/recovery | Product-load failure has no Retry action. Product loading is disabled in the current free build. | deferred_plus_disabled | `TF-005` | `DEC-006`; `quality/evidence/UI-WORKFLOW-AUDIT-2026-07-30.md` |
 | UI-013 | high | Accessibility | Settings now has an explicit label; dormant paywall close accessibility remains to be fixed before Plus returns. | partially_fixed_plus_deferred | `TF-010` | focused simulator verification; `quality/evidence/UI-WORKFLOW-AUDIT-2026-07-30.md` |
 | UI-014 | high | Audio | Playback has no interruption, route-change, background, or lock recovery handling. | code_complete_human_review_required | `TF-010` | Interruption/resume, route loss, and media-reset handling implemented; real-device accessories/lock QA pending |
+| UI-015 | high | Audio | The nine bundled MP3 recordings are rejected by Apple's audio stack (`fmt?`), so build 2 can show a playback state without audible output. | code_complete_verification_pending | `TF-009`, `TF-010`, `TF-015` | Re-encoded as AAC-in-M4A with non-silent output verified; decode regression passes; build 3 physical/TestFlight playback remains pending |
 
 Resolved readiness defects belong in the completion report rather than being
 left as open bugs.

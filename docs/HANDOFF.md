@@ -7,13 +7,15 @@ learning, festival context, stories, and gentle progress.
 
 ## Current state
 
-The implementation is targeting an external-eligible build 2 upload, owner
+The implementation is targeting an external-eligible build 3 replacement, owner
 TestFlight smoke, and invitation-only close-friends beta after Apple review.
 Factory registration and current quality state live in `.factory/`,
 `quality/`, `docs/STATUS.md`, and the canonical
 `docs/TESTFLIGHT_TASKS.md`. Apple account scope, cloud-managed signing, and
 the existing record (Apple ID `6785557134`) are verified. Build 1.0 (2) was
-uploaded as external-eligible and is now `Ready to Submit` in TestFlight. Per
+uploaded as external-eligible and processed, but its bundled MP3 encoding
+failed physical-device audio evaluation. Build 3 replaces those recordings
+with AAC-in-M4A and changes Today audio to start on Begin. Per
 `DEC-006`, every content item is free
 and Plus/paywall/membership UI is hidden in the current testing configuration.
 Dormant StoreKit commerce is deferred. Deployed legal pages, content review,
@@ -21,7 +23,7 @@ audio rights, and full physical-device QA remain required before friend
 invitations, although the owner may complete TF-015 first.
 
 The 2026-07-30 comprehensive simulator UI audit traversed the shipped workflow
-families. Its active product findings were remediated; final build 2 evidence
+families. Its active product findings were remediated; new build 3 evidence
 and remaining human audio/notification/accessibility checks govern release
 status. Read `quality/evidence/UI-WORKFLOW-AUDIT-2026-07-30.md`.
 
@@ -49,7 +51,7 @@ See `docs/BUGS.md`.
 
 ## Next recommended task
 
-Open TestFlight on the owner’s iPhone, install the already attached/invited
-build 1.0 (2), and run the remaining TF-015 smoke. Close friends remain gated
+Complete build 3 TF-009/TF-011, replace the owner-group build, then install it
+through TestFlight and run the remaining TF-015 smoke. Close friends remain gated
 by TF-006–TF-008,
 TF-010, TF-013, and TF-014.

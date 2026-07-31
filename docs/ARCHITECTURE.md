@@ -26,7 +26,10 @@ SwiftUI view
 - Dormant premium access: if deliberately re-enabled, only verified
   `Transaction.currentEntitlements`; legacy profile entitlement flags are
   cleared during bootstrap.
-- Audio: bundled MP3 files played by `AVAudioPlayer`.
+- Audio: bundled AAC-in-M4A recordings played by `AVAudioPlayer`. Daily mantra
+  practices start their recording when the timed practice begins; the active
+  practice exposes play/pause. Missing or undecodable recordings surface an
+  explicit user-safe error instead of reporting a false playing state.
 - Data-removal semantics: there is no sign-in or server account. Uninstalling
   the app removes its sandbox; reflection storage supports explicit local
   clearing. Any future in-app “erase all local data” control requires a

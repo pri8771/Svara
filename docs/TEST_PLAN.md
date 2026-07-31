@@ -10,6 +10,9 @@ Owner: `TF-009`.
 - Factory registration verifier.
 - JSON/schema validation for factory files and privacy manifest lint.
 - Full `SvaraTests` suite.
+- Audio-asset packaging/decode regression: every authored recording resolves
+  from the app bundle, opens through `AVAudioPlayer`, prepares, and has positive
+  duration.
 - `SvaraUITests` onboarding and primary-loop smoke suite.
 - `ComprehensiveWorkflowUITests`: every app-owned workflow, all daily
   practices, every lesson and lesson step kind, free access from every lesson
@@ -39,7 +42,10 @@ device/accessibility matrix.
 
 - VoiceOver traversal and activation for onboarding, practice, lesson, and
   Settings. Paywall review is deferred until Plus is re-enabled.
-- Audio play/pause, headphones, interruption, lock/background, and route change.
+- Daily mantra audio starts on Begin (with play/pause available), and audio
+  play/pause, headphones, interruption, lock/background, and route change work
+  on hardware. Breathing-practice cue audio is a follow-up product task, not a
+  build 3 acceptance assumption.
 - StoreKit sandbox purchase/restore/refund path (`TF-012` after a TestFlight
   install; local StoreKit configuration alone is insufficient).
 - Notification delivery and Settings recovery after denial.

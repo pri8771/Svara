@@ -1,7 +1,8 @@
 # TF-009 — Harden and Rerun Final Automated Release Gates
 
-- **Status:** `done`
-- **Blocker:** none
+- **Status:** `verification_pending`
+- **Blocker:** build 3 requires the complete gate after the audio resource and
+  playback-behavior change
 - **Gate:** upload
 - **Execution type:** agent
 - **Owner:** engineering/QA
@@ -9,13 +10,13 @@
 
 ## Objective
 
-Run every declared Factory suite against the exact external-eligible build 2
-source commit and produce durable evidence. Prior results are a baseline only;
-any subsequent binary/content change requires a new run.
+Run every declared Factory suite against the exact external-eligible build 3
+source commit and produce durable evidence. Build 2 results are a historical
+baseline only and were invalidated by `UI-015` remediation.
 
 ## Task description
 
-**Summary:** Freeze the build 2 candidate and reproduce every automated Factory
+**Summary:** Freeze the build 3 candidate and reproduce every automated Factory
 gate on that exact source and build identity. **User story:** As the release
 owner, I want durable automated evidence tied to one commit so an old passing
 test run cannot be mistaken for proof about a changed binary. We validate

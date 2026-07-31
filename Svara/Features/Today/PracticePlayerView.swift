@@ -33,6 +33,11 @@ struct PracticePlayerView: View {
             timer?.invalidate()
             env.audioPlayback.stop()
         }
+        .alert("Audio unavailable", isPresented: audioErrorIsPresented) {
+            Button("OK", role: .cancel) { env.audioPlayback.clearPlaybackError() }
+        } message: {
+            Text(env.audioPlayback.playbackErrorMessage ?? "")
+        }
     }
 
     @ViewBuilder
@@ -66,9 +71,6 @@ struct PracticePlayerView: View {
                     .font(.svaraSanskrit)
                     .italic()
                     .foregroundStyle(.white.opacity(0.95))
-                if mantra.audioFileName != nil {
-                    audioButton(for: mantra)
-                }
             }
             Spacer()
             PrimaryButton(title: "Begin", systemImage: "play.fill") { start() }
@@ -147,13 +149,14 @@ struct PracticePlayerView: View {
         }
     }
 
-    /// A speaker control that plays/pauses the mantra's bundled chant audio.
+    /// Playback starts automatically with the practice; this control lets the
+    /// user pause or resume it without presenting chanting as a separate mode.
     private func audioButton(for mantra: Mantra) -> some View {
         let isPlayingThis = env.audioPlayback.isPlaying && env.audioPlayback.currentFileName == mantra.audioFileName
         return Button {
             env.audioPlayback.toggle(fileName: mantra.audioFileName)
         } label: {
-            Label(isPlayingThis ? "Pause chant" : "Play chant", systemImage: isPlayingThis ? "pause.circle.fill" : "speaker.wave.2.circle.fill")
+            Label(isPlayingThis ? "Pause audio" : "Play audio", systemImage: isPlayingThis ? "pause.circle.fill" : "play.circle.fill")
                 .font(.svaraCallout.weight(.semibold))
                 .foregroundStyle(.white)
                 .padding(.horizontal, SvaraTheme.Spacing.md)
@@ -161,7 +164,14 @@ struct PracticePlayerView: View {
                 .background(.white.opacity(0.15))
                 .clipShape(Capsule())
         }
-        .accessibilityLabel(isPlayingThis ? "Pause chant audio" : "Play chant audio")
+        .accessibilityLabel(isPlayingThis ? "Pause practice audio" : "Play practice audio")
+    }
+
+    private var audioErrorIsPresented: Binding<Bool> {
+        Binding(
+            get: { env.audioPlayback.playbackErrorMessage != nil },
+            set: { if !$0 { env.audioPlayback.clearPlaybackError() } }
+        )
     }
 
     // MARK: Timing

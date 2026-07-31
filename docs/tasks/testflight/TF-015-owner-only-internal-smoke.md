@@ -1,8 +1,9 @@
 # TF-015 — Run One-Owner Internal TestFlight Smoke
 
-- **Status:** `in_progress`
-- **Blocker:** the owner must install build 1.0 (2) from the TestFlight app on
-  the physical iPhone and complete the bounded smoke
+- **Status:** `blocked`
+- **Blocker:** build 2 failed local physical-device audio evaluation; build 3
+  must pass TF-009 and TF-011 before the owner installs it through TestFlight
+  and repeats the bounded smoke
 - **Gate:** active owner-only internal TestFlight milestone
 - **Execution type:** hybrid; App Store Connect setup plus physical-device test
 - **Owner:** product/release owner

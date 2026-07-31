@@ -38,8 +38,9 @@ human/external gates prevent `done`.
   those URLs and content-checked from a clean network. Deferred from TF-015.
 - [x] App Store keywords are at most 100 UTF-8 bytes.
 - [x] Export-compliance Info.plist flag is declared.
-- [x] [`TF-009`] Repository gates, 153/153 local tests, Release analysis,
-  final commit/SHA, archive inspection, and hardened remote CI pass.
+- [ ] [`TF-009`] Build 3 repository gates, complete tests, Release analysis,
+  final commit/SHA, archive inspection, and remote CI pass. The prior 153/153
+  build 2 evidence is historical after `UI-015` changed the binary.
 
 ## App Store Connect and signing
 
@@ -50,9 +51,10 @@ human/external gates prevent `done`.
   and review state. Deferred from the current free build.
 - [ ] [`TF-008`] App Privacy, age rating, content rights, export compliance, and
   TestFlight metadata are complete and match the build.
-- [x] [`TF-011`] A signed, external-eligible build 2 archive validated,
-  uploaded without the **TestFlight Internal Only** restriction, processed to
-  `Ready to Submit`, and passed Apple build-metadata inspection.
+- [ ] [`TF-011`] A signed, external-eligible build 3 archive validates, uploads
+  without the **TestFlight Internal Only** restriction, processes, and passes
+  Apple build-metadata inspection. Build 2 did so historically but failed the
+  required audio smoke.
 
 ## Human and device gates
 
@@ -94,9 +96,8 @@ this external TestFlight gate unless the release owner explicitly adds them.
 ## Release decision
 
 - **Current state:** `verification_pending`
-- **Owner internal smoke allowed:** Yes for processed build 2; configure the
-  owner-only group and perform/record TF-015. Remote CI remains a repository
-  release-governance gate.
+- **Owner internal smoke allowed:** Not yet for build 3. Complete TF-009 and
+  TF-011, replace build 2 in the owner group, then perform/record TF-015.
 - **External beta allowed:** No, until every blocker above is checked or an
   explicit, approved, time-bounded waiver is recorded in `quality/waivers/`.
 
