@@ -1,9 +1,9 @@
 # TF-011 — Produce, Validate, Upload, and Process the Signed Build
 
-- **Status:** `blocked`
-- **Current state:** build 1.0 (2) remains processed historical evidence, but
-  its incompatible audio encoding failed owner device evaluation. Build 1.0
-  (3) must complete TF-009 before archive, validation, and upload.
+- **Status:** `done`
+- **Completed:** 2026-07-31 for external-eligible Svara 1.0 (3), binary commit
+  `ed29548cd782ae6859b7d7b63c216f60693e8705`. Apple reports the build ready
+  to test and it is attached to the owner-only internal group.
 - **Gate:** TestFlight upload
 - **Execution type:** hybrid
 - **Owner:** release owner

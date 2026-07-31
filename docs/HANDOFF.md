@@ -7,8 +7,9 @@ learning, festival context, stories, and gentle progress.
 
 ## Current state
 
-The implementation has frozen an external-eligible build 3 replacement, owner
-TestFlight smoke, and invitation-only close-friends beta after Apple review.
+The external-eligible build 3 replacement is processed and attached for the
+owner TestFlight smoke; the invitation-only close-friends beta follows Apple
+review.
 Factory registration and current quality state live in `.factory/`,
 `quality/`, `docs/STATUS.md`, and the canonical
 `docs/TESTFLIGHT_TASKS.md`. Apple account scope, cloud-managed signing, and
@@ -27,8 +28,9 @@ invitations, although the owner may complete TF-015 first.
 The 2026-07-30 comprehensive simulator UI audit traversed the shipped workflow
 families. Its active product findings were remediated. Exact build 3 commit
 `ed29548` passes the locked Factory checks, 159/159 complete tests, Release
-analysis, archive inspection, and remote CI. Remaining signed upload and human
-audio/notification/accessibility checks govern release status. Read
+analysis, archive inspection, remote CI, signed upload, and Apple processing.
+Historical build 2 detachment and human audio/notification/accessibility checks
+govern release status. Read
 `quality/evidence/UI-WORKFLOW-AUDIT-2026-07-30.md`.
 
 ## Build and run
@@ -55,7 +57,7 @@ See `docs/BUGS.md`.
 
 ## Next recommended task
 
-Complete build 3 TF-011, replace the owner-group build, then install it
-through TestFlight and run the remaining TF-015 smoke. Close friends remain gated
+Detach historical build 2, install build 3 through TestFlight, and run the
+remaining TF-015 smoke. Close friends remain gated
 by TF-006–TF-008,
 TF-010, TF-013, and TF-014.

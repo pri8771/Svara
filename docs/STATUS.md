@@ -59,13 +59,16 @@ Svara Plus or purchase UI.
   18:51 EDT. Processing completed; TestFlight reports `Ready to Submit` and
   binary state `Validated` with the expected bundle, team, iPhone/arm64,
   minimum iOS 17.0, symbols, entitlements, and export status.
+- App Store Connect accepted external-eligible Svara 1.0 (3) at 2026-07-31
+  15:03 EDT. Processing completed to `Ready to Submit`/`Ready to Test`, and the
+  build was manually attached to the one-owner `Svara Owner Smoke` group.
 - GitHub CI run `30589193485` passed the complete simulator action, Release
   analysis, and unsigned Release archive inspection for canonical commit
   `a4b57ac`; TestResults and ReleaseArchiveInspection artifacts are retained.
-- Internal group `Svara Owner Smoke` has automatic distribution disabled,
-  contains exactly one owner tester, and has only processed build 1.0 (2)
+- Internal group `Svara Owner Smoke` has manual distribution, contains exactly
+  one owner tester, and has build 1.0 (3) plus invalidated historical build 2
   attached. The bounded What to Test instructions are saved and the owner
-  status is `Invited`.
+  status is `Invited`; build 2 must be detached before TF-015 closure.
 - Comprehensive simulator UI audit: all app-owned workflow families traversed;
   13-test consolidated run passed with 8 ordinary passes, 4 expected product
   failures, one StoreKit environment skip, and no unexpected failures. Small
@@ -112,8 +115,8 @@ Jira and Notion are non-authoritative mirrors.
 
 ## Next action
 
-Sign, validate, upload, and process frozen build 3 through TF-011, then install
-it through TestFlight and rerun the TF-015 onboarding, practice,
+Detach historical build 2, install build 3 through TestFlight, and run the
+TF-015 onboarding, practice,
 lesson, audio, relaunch, notification, and legal-link smoke.
 Before inviting close friends, finish the human content/audio sign-off, live
 legal-page check, physical-device accessibility/audio/notification matrix, and

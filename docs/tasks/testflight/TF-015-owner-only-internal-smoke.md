@@ -1,9 +1,9 @@
 # TF-015 — Run One-Owner Internal TestFlight Smoke
 
-- **Status:** `blocked`
-- **Blocker:** build 2 failed local physical-device audio evaluation; build 3
-  must pass TF-009 and TF-011 before the owner installs it through TestFlight
-  and repeats the bounded smoke
+- **Status:** `in_progress`
+- **Current state:** processed build 1.0 (3) is attached and available to the
+  sole owner. Install build 3 through TestFlight, run the bounded physical
+  smoke, and remove historical build 2 before closing the exact-one-build gate.
 - **Gate:** active owner-only internal TestFlight milestone
 - **Execution type:** hybrid; App Store Connect setup plus physical-device test
 - **Owner:** product/release owner
@@ -123,7 +123,8 @@ App Store readiness.
 ## Acceptance criteria
 
 - [x] One internal group contains only the owner.
-- [x] Exactly one processed TF-011 build is attached.
+- [ ] Build 3 is the only attached candidate; it is attached, but invalidated
+  historical build 2 still needs removal before closure.
 - [ ] The recorded build installs and launches through TestFlight.
 - [ ] Onboarding, one practice, one lesson, one audio playback, relaunch
   persistence, and the notification permission path complete without a blocker.

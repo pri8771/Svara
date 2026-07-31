@@ -51,7 +51,7 @@ human/external gates prevent `done`.
   and review state. Deferred from the current free build.
 - [ ] [`TF-008`] App Privacy, age rating, content rights, export compliance, and
   TestFlight metadata are complete and match the build.
-- [ ] [`TF-011`] A signed, external-eligible build 3 archive validates, uploads
+- [x] [`TF-011`] A signed, external-eligible build 3 archive validates, uploads
   without the **TestFlight Internal Only** restriction, processes, and passes
   Apple build-metadata inspection. Build 2 did so historically but failed the
   required audio smoke.
@@ -69,9 +69,9 @@ human/external gates prevent `done`.
 ## Owner internal smoke gate
 
 - [x] [`TF-015`] One owner-only internal group contains exactly the owner.
-- [ ] [`TF-015`] The processed TF-011 build is attached and invited; installation
-  through TestFlight on the
-  owner’s physical iPhone.
+- [x] [`TF-015`] Processed build 3 is attached to the one-owner manual group.
+- [ ] [`TF-015`] Historical build 2 is detached and build 3 is installed through
+  TestFlight on the owner's physical iPhone.
 - [ ] [`TF-015`] The bounded onboarding, practice, lesson, audio, relaunch
   persistence, and notification-prompt smoke passes.
 
@@ -96,8 +96,8 @@ this external TestFlight gate unless the release owner explicitly adds them.
 ## Release decision
 
 - **Current state:** `verification_pending`
-- **Owner internal smoke allowed:** After TF-011 uploads/processes build 3 and
-  replaces build 2 in the owner group; then perform and record TF-015.
+- **Owner internal smoke allowed:** Yes for build 3 only. Detach historical
+  build 2, install build 3 through TestFlight, and perform/record TF-015.
 - **External beta allowed:** No, until every blocker above is checked or an
   explicit, approved, time-bounded waiver is recorded in `quality/waivers/`.
 

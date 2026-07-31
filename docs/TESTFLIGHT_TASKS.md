@@ -18,8 +18,9 @@ unchanged `TF-###` ID and links to the corresponding repository file.
 - Active target: owner internal smoke followed by an invitation-only,
   external close-friends beta (initial limit 10; no public link)
 - Deferred target: public App Store release and all monetization
-- Factory lifecycle: `verification_pending` (build 3 automated gates pass;
-  signed upload/processing and owner physical smoke are pending)
+- Factory lifecycle: `verification_pending` (build 3 automated gates and
+  signed upload/processing pass; historical build 2 detachment and the owner
+  physical smoke are pending)
 
 ## Status rules
 
@@ -72,11 +73,11 @@ canonical task.
 | TF-008 | Complete App Store Connect and TestFlight metadata | external review | hybrid | in_progress | TF-001, TF-004; TF-006/TF-007 gate completion |
 | TF-009 | Harden and rerun final automated release gates | upload | agent | done | TF-001 |
 | TF-010 | Complete manual device, accessibility, audio, and permission QA | external | hybrid | human_review_required | TF-001, TF-009 |
-| TF-011 | Produce, validate, upload, and process the signed build | upload | hybrid | in_progress | TF-003, TF-004, TF-009 |
+| TF-011 | Produce, validate, upload, and process the signed build | upload | hybrid | done | TF-003, TF-004, TF-009 |
 | TF-012 | Run future monetized TestFlight and live StoreKit sandbox validation | IAP | hybrid | deferred | TF-005; not applicable while Plus is disabled |
 | TF-013 | Define beta operations, monitoring, triage, and stop criteria | external | hybrid | done | TF-001 |
 | TF-014 | Submit TestFlight App Review and roll out the external cohort | external | human | blocked | TF-006, TF-007, TF-008, TF-010, TF-011, TF-013 |
-| TF-015 | Run one-owner internal TestFlight smoke | internal owner | hybrid | blocked | build 3 TF-011 replacement and physical smoke |
+| TF-015 | Run one-owner internal TestFlight smoke | internal owner | hybrid | in_progress | install/smoke build 3; detach historical build 2 before closure |
 
 ## Dependency graph
 
