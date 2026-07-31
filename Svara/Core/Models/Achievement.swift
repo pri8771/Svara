@@ -78,4 +78,21 @@ struct Achievement: Identifiable, Codable, Hashable {
             return n
         }
     }
+
+    /// Compact copy shown under locked badges so the unlock rule is visible
+    /// without requiring the user to infer it from a progress ring.
+    var requirementLabel: String {
+        switch requirement {
+        case .streakDays(let value): return "\(value)-day streak"
+        case .totalPractices(let value): return "\(value) practices"
+        case .totalPoints(let value): return "\(value) points"
+        case .lessonsCompleted(let value): return "\(value) lessons"
+        case .festivalsObserved(let value): return "\(value) festival activities"
+        }
+    }
+
+    var isPointsMilestone: Bool {
+        if case .totalPoints = requirement { return true }
+        return false
+    }
 }

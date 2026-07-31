@@ -89,3 +89,21 @@
   AAC-in-M4A assets and adds explicit playback-failure UI. Breath cues remain a
   separate asset, content, accessibility, and physical-device QA task; no
   unreviewed cue is invented for this release candidate.
+
+## DEC-008 — Svara Points unlock milestones, never content
+
+- **Status:** accepted
+- **Date:** 2026-07-31
+- **Decision:** Keep every bundled feature and content item free and available
+  independently of points. Svara Points are a private, cumulative record of
+  completed practices, lessons, festival activities, and achievement bonuses.
+  They unlock visible milestone badges at 100, 250, and 500 points; they cannot
+  be spent, purchased, compared publicly, or used to gate content.
+- **Why:** Points were shown and awarded without explaining their purpose, and
+  the sole 500-point achievement was too hidden to establish a useful mental
+  model. Explicit milestones provide gentle feedback without turning spiritual
+  practice into an economy or contradicting the all-free testing build.
+- **Expected product change:** Today identifies Svara Points as badge progress;
+  Profile explains how they are earned, shows the next unlock and progress,
+  and labels every badge requirement. A bonus that crosses a points threshold
+  unlocks the milestone in the same transaction.

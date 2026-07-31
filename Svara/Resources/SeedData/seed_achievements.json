@@ -64,10 +64,26 @@
     "bonusPoints": 120
   },
   {
-    "id": "ach.points500",
-    "title": "Five Hundred",
-    "detail": "Earn 500 Svara Points.",
+    "id": "ach.points100",
+    "title": "Practice Spark",
+    "detail": "Earn 100 Svara Points through practice and learning.",
     "systemImage": "sparkles",
+    "requirement": { "type": "totalPoints", "value": 100 },
+    "bonusPoints": 0
+  },
+  {
+    "id": "ach.points250",
+    "title": "Growing Rhythm",
+    "detail": "Earn 250 Svara Points through practice and learning.",
+    "systemImage": "waveform.path",
+    "requirement": { "type": "totalPoints", "value": 250 },
+    "bonusPoints": 0
+  },
+  {
+    "id": "ach.points500",
+    "title": "Steady Light",
+    "detail": "Earn 500 Svara Points through practice and learning.",
+    "systemImage": "sun.max.fill",
     "requirement": { "type": "totalPoints", "value": 500 },
     "bonusPoints": 0
   },

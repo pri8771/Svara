@@ -18,6 +18,8 @@ failed physical-device audio evaluation. Build 3 replaces those recordings
 with AAC-in-M4A and changes Today audio to start on Begin. Per
 `DEC-006`, every content item is free
 and Plus/paywall/membership UI is hidden in the current testing configuration.
+Current build 3 source also explains Svara Points in Today/Profile: points unlock
+private 100/250/500-point achievement badges and never gate content.
 Dormant StoreKit commerce is deferred. Deployed legal pages, content review,
 audio rights, and full physical-device QA remain required before friend
 invitations, although the owner may complete TF-015 first.

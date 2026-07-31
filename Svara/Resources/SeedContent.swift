@@ -1142,7 +1142,9 @@ enum SeedContent {
         Achievement(id: "ach.practices50", title: "Inner Discipline", detail: "Complete 50 practices.", systemImage: "figure.mind.and.body", requirement: .totalPractices(50), bonusPoints: 200),
         Achievement(id: "ach.firstLesson", title: "Eager Learner", detail: "Finish your first lesson.", systemImage: "graduationcap.fill", requirement: .lessonsCompleted(1), bonusPoints: 30),
         Achievement(id: "ach.lessons5", title: "Scholar", detail: "Finish 5 lessons.", systemImage: "books.vertical.fill", requirement: .lessonsCompleted(5), bonusPoints: 120),
-        Achievement(id: "ach.points500", title: "Five Hundred", detail: "Earn 500 Svara Points.", systemImage: "sparkles", requirement: .totalPoints(500), bonusPoints: 0),
+        Achievement(id: "ach.points100", title: "Practice Spark", detail: "Earn 100 Svara Points through practice and learning.", systemImage: "sparkles", requirement: .totalPoints(100), bonusPoints: 0),
+        Achievement(id: "ach.points250", title: "Growing Rhythm", detail: "Earn 250 Svara Points through practice and learning.", systemImage: "waveform.path", requirement: .totalPoints(250), bonusPoints: 0),
+        Achievement(id: "ach.points500", title: "Steady Light", detail: "Earn 500 Svara Points through practice and learning.", systemImage: "sun.max.fill", requirement: .totalPoints(500), bonusPoints: 0),
         Achievement(id: "ach.festival", title: "In the Spirit", detail: "Observe your first festival.", systemImage: "party.popper.fill", requirement: .festivalsObserved(1), bonusPoints: 50)
     ]
 

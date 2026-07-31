@@ -15,6 +15,7 @@ struct ProfileView: View {
                 VStack(alignment: .leading, spacing: SvaraTheme.Spacing.xl) {
                     profileHeader
                     statsRow
+                    pointsExplanation
                     if env.isPlusTierEnabled && !env.isPremium { upgradeCard }
                     achievementsSection
                 }
@@ -100,6 +101,51 @@ struct ProfileView: View {
         .buttonStyle(.plain)
     }
 
+    private var pointsExplanation: some View {
+        SvaraCard {
+            VStack(alignment: .leading, spacing: SvaraTheme.Spacing.md) {
+                Label("What Svara Points do", systemImage: "sparkles")
+                    .font(.svaraHeadline)
+                    .foregroundStyle(SvaraTheme.Colors.textPrimary)
+                Text("Earn points by completing practices, lessons, and festival activities. They unlock private milestone badges below—they are never money and never lock content.")
+                    .font(.svaraCallout)
+                    .foregroundStyle(SvaraTheme.Colors.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                if let milestone = viewModel.nextPointsMilestone(profile: env.profile) {
+                    Divider()
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Next points milestone")
+                                .font(.svaraCaption)
+                                .foregroundStyle(SvaraTheme.Colors.textSecondary)
+                            Text(milestone.title)
+                                .font(.svaraHeadline)
+                                .foregroundStyle(SvaraTheme.Colors.textPrimary)
+                        }
+                        Spacer()
+                        Text("\(env.profile.totalPoints) / \(milestone.target)")
+                            .font(.svaraCallout.weight(.semibold))
+                            .foregroundStyle(SvaraTheme.Colors.points)
+                    }
+                    ProgressView(
+                        value: Double(min(env.profile.totalPoints, milestone.target)),
+                        total: Double(milestone.target)
+                    )
+                    .tint(SvaraTheme.Colors.points)
+                    Text("\(milestone.target - env.profile.totalPoints) points to unlock this badge")
+                        .font(.svaraCaption)
+                        .foregroundStyle(SvaraTheme.Colors.textSecondary)
+                } else {
+                    Label("All points milestone badges unlocked", systemImage: "checkmark.seal.fill")
+                        .font(.svaraCallout.weight(.semibold))
+                        .foregroundStyle(SvaraTheme.Colors.success)
+                }
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
     private var achievementsSection: some View {
         VStack(alignment: .leading, spacing: SvaraTheme.Spacing.md) {
             SectionHeader(
@@ -181,7 +227,18 @@ private struct AchievementBadge: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(isUnlocked ? SvaraTheme.Colors.textPrimary : SvaraTheme.Colors.textSecondary)
                 .lineLimit(2)
+            Text(isUnlocked ? "Unlocked" : achievement.requirementLabel)
+                .font(.caption2)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(SvaraTheme.Colors.textSecondary)
+                .lineLimit(2)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            isUnlocked
+                ? "\(achievement.title), unlocked. \(achievement.detail)"
+                : "\(achievement.title), locked. Requires \(achievement.requirementLabel). \(achievement.detail)"
+        )
         .frame(maxWidth: .infinity)
         .opacity(isUnlocked ? 1 : 0.85)
     }

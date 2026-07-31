@@ -145,6 +145,8 @@ final class AppEnvironment {
         } else {
             await establishLocalProfile()
         }
+        let (reconciled, newlyUnlocked) = progress.reconcileAchievements(for: profile)
+        apply(reconciled, unlocked: newlyUnlocked)
         if isPlusTierEnabled {
             await store.loadProducts()
         }

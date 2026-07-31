@@ -30,6 +30,12 @@ Svara Plus or purchase UI.
   PCM; 138/138 unit tests pass, including the new bundle/decode regression; the
   focused Today auto-start/pause UI workflow passes; and an unsigned Release
   build succeeds with exactly nine M4A files, no MP3 files, and build number 3.
+- Free/points clarification: Plus remains disabled and all content remains
+  available without payment or points. The complete unit suite passes 143/143;
+  focused UI tests pass for the Profile explanation/next-unlock card and
+  absence of Plus at default and maximum Dynamic Type, while service tests
+  cover 100/250/500-point milestones, existing-profile reconciliation, and
+  same-transaction bonus unlocking. An unsigned Release build also passes.
 - App Factory registration verifier: passed at standard 0.4.0.
 - Exact build 2 candidate gate: 153 passed, 0 failed, 0 skipped, and 0 expected
   failures on iPhone 17 Pro, iOS 26.4.1 Simulator

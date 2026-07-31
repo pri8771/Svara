@@ -151,14 +151,18 @@ struct TodayView: View {
                     Text("\(env.profile.totalPoints)")
                         .font(.svaraTitle)
                         .foregroundStyle(SvaraTheme.Colors.textOnDark)
-                    Text("points")
+                    Text("Svara Points")
                         .font(.svaraCaption)
                         .foregroundStyle(SvaraTheme.Colors.textOnDark.opacity(0.7))
+                    Text("unlock badges")
+                        .font(.caption2)
+                        .foregroundStyle(SvaraTheme.Colors.textOnDark.opacity(0.65))
                 }
             }
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(env.profile.currentStreak) day streak. \(env.profile.totalPoints) Svara points.")
+        .accessibilityHint("Svara Points unlock private achievement badges in Profile and never gate content.")
     }
 
     private var practiceList: some View {

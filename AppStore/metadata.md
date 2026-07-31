@@ -6,7 +6,7 @@ Connect differs, update and approve the repository first.
 
 ## Approved TestFlight Configuration
 
-- Version/build: 1.0 (2)
+- Version/build: 1.0 (3)
 - Bundle ID: `com.primandir.svara`
 - Apple ID: `6785557134`
 - Platform: iPhone, iOS 17+
@@ -117,7 +117,8 @@ purchase flow is shown, and no user data leaves the device.
 
 1. Complete onboarding and confirm the Today tab opens without sign-in.
 2. Finish a practice and a lesson; relaunch and confirm points, streak, and
-   progress remain.
+   progress remain. In Profile, confirm Svara Points explain that they unlock
+   private 100/250/500-point badges and never lock content.
 3. Play and pause mantra audio from a practice and a listening lesson.
 4. Enable reminders, including the denied-permission path.
 5. Confirm all lessons and content open without a paywall or membership prompt.

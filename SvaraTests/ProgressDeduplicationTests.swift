@@ -82,6 +82,69 @@ final class ProgressDeduplicationTests: XCTestCase {
         XCTAssertEqual(svc.loadSessions().count, 2)
     }
 
+    func testAchievementBonusUnlocksPointsMilestoneInSameTransaction() {
+        let firstPractice = Achievement(
+            id: "first",
+            title: "First",
+            detail: "Complete one practice.",
+            systemImage: "figure.walk",
+            requirement: .totalPractices(1),
+            bonusPoints: 90
+        )
+        let pointsMilestone = Achievement(
+            id: "points100",
+            title: "Practice Spark",
+            detail: "Earn 100 points.",
+            systemImage: "sparkles",
+            requirement: .totalPoints(100),
+            bonusPoints: 0
+        )
+        let svc = LocalProgressService(
+            store: InMemoryStore(),
+            achievements: [firstPractice, pointsMilestone],
+            now: { self.date(2026, 6, 28) }
+        )
+        let session = PracticeSession(
+            practiceID: "morning",
+            practiceTitle: "Morning",
+            kind: .mantra,
+            durationSeconds: 60,
+            pointsEarned: 10
+        )
+
+        let (profile, unlocked) = svc.recordSession(session, for: .guest())
+
+        XCTAssertEqual(profile.totalPoints, 100)
+        XCTAssertEqual(unlocked.map(\.id), ["first", "points100"])
+        XCTAssertEqual(Set(profile.unlockedAchievementIDs), ["first", "points100"])
+    }
+
+    func testReconcileUnlocksNewMilestonesForExistingPoints() {
+        let milestones = [100, 250, 500].map { target in
+            Achievement(
+                id: "points\(target)",
+                title: "Points \(target)",
+                detail: "Earn \(target) points.",
+                systemImage: "sparkles",
+                requirement: .totalPoints(target),
+                bonusPoints: 0
+            )
+        }
+        let svc = LocalProgressService(
+            store: InMemoryStore(),
+            achievements: milestones,
+            now: { self.date(2026, 6, 28) }
+        )
+        var existing = UserProfile.guest()
+        existing.totalPoints = 250
+
+        let (profile, unlocked) = svc.reconcileAchievements(for: existing)
+
+        XCTAssertEqual(unlocked.map(\.id), ["points100", "points250"])
+        XCTAssertEqual(Set(profile.unlockedAchievementIDs), ["points100", "points250"])
+        XCTAssertEqual(profile.totalPoints, 250)
+    }
+
     // MARK: Streak once per local day
 
     func testStreakIncrementsOncePerLocalDay_ViaLessons() {

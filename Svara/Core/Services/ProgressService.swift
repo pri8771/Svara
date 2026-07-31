@@ -39,6 +39,8 @@ protocol ProgressService {
     func completeFestivalActivity(_ festival: Festival, points: Int, for profile: UserProfile) -> (UserProfile, [Achievement])
     /// Newly-unlocked achievements relative to what's already unlocked.
     func evaluateAchievements(for profile: UserProfile, catalogue: [Achievement]) -> [Achievement]
+    /// Applies any newly-authored achievement rules to persisted progress.
+    func reconcileAchievements(for profile: UserProfile) -> (UserProfile, [Achievement])
     /// Progress (0...1) toward an achievement for display.
     func progress(for achievement: Achievement, profile: UserProfile) -> Double
 
@@ -210,12 +212,21 @@ final class LocalProgressService: ProgressService {
 
     private func applyAchievements(to profile: UserProfile) -> (UserProfile, [Achievement]) {
         var updated = profile
-        let newly = evaluateAchievements(for: updated, catalogue: achievementsCatalogue)
-        for achievement in newly {
-            updated.unlockedAchievementIDs.append(achievement.id)
-            updated.totalPoints += achievement.bonusPoints
+        var allNew: [Achievement] = []
+
+        // An activity achievement can award enough bonus points to cross a
+        // points milestone. Re-evaluate the finite catalogue so both unlock in
+        // the same transaction instead of waiting for an unrelated next action.
+        while true {
+            let newly = evaluateAchievements(for: updated, catalogue: achievementsCatalogue)
+            guard !newly.isEmpty else { break }
+            for achievement in newly {
+                updated.unlockedAchievementIDs.append(achievement.id)
+                updated.totalPoints += achievement.bonusPoints
+            }
+            allNew.append(contentsOf: newly)
         }
-        return (updated, newly)
+        return (updated, allNew)
     }
 
     func evaluateAchievements(for profile: UserProfile, catalogue: [Achievement]) -> [Achievement] {
@@ -223,6 +234,10 @@ final class LocalProgressService: ProgressService {
             !profile.unlockedAchievementIDs.contains(achievement.id)
                 && meets(achievement.requirement, profile: profile)
         }
+    }
+
+    func reconcileAchievements(for profile: UserProfile) -> (UserProfile, [Achievement]) {
+        applyAchievements(to: profile)
     }
 
     private func meets(_ requirement: Achievement.Requirement, profile: UserProfile) -> Bool {

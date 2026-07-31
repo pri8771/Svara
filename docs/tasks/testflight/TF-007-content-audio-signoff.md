@@ -109,7 +109,7 @@ sign-off or an exact list of blocking inventory rows.
 
 | Source | Records | Current authored status |
 |---|---:|---|
-| `seed_achievements.json` | 10 | no cultural status field |
+| `seed_achievements.json` | 12 | no cultural status field |
 | `seed_festivals.json` | 8 | 8 `humanReviewed` |
 | `seed_lessons.json` | 9 | 8 `humanReviewed`, 1 `sourced` |
 | `seed_mantras.json` | 10 | 8 `humanReviewed`, 2 `sourced` |

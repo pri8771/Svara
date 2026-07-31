@@ -13,6 +13,10 @@ Owner: `TF-009`.
 - Audio-asset packaging/decode regression: every authored recording resolves
   from the app bundle, opens through `AVAudioPlayer`, prepares, and has positive
   duration.
+- Svara Points regressions: one-time awards, same-transaction milestone
+  unlocking after bonus points, authored 100/250/500 thresholds, visible
+  Profile explanation/next-unlock progress, explicit badge requirements, and
+  the invariant that points never gate content or expose Plus.
 - `SvaraUITests` onboarding and primary-loop smoke suite.
 - `ComprehensiveWorkflowUITests`: every app-owned workflow, all daily
   practices, every lesson and lesson step kind, free access from every lesson

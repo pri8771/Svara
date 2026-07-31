@@ -14,7 +14,7 @@ an account, ads, social pressure, or a network connection.
 - Aaroh lesson path and progress
 - Festival moments and activities
 - Stories, symbols, and private local reflections
-- Gentle local reminders
+- Gentle local progress, explained Svara Points, achievement milestones, and reminders
 - All bundled content available without payment in the owner testing build
 
 ### Excluded
@@ -32,7 +32,7 @@ an account, ads, social pressure, or a network connection.
 | FEAT-002 | Daily practice and audio | human_review_required | covered by FEAT-001 |
 | FEAT-003 | Aaroh learning path | human_review_required | covered by FEAT-001 |
 | FEAT-004 | Festivals and stories | human_review_required | covered by FEAT-001 |
-| FEAT-005 | Local progress and reminders | verification_pending | covered by FEAT-001 |
+| FEAT-005 | Local progress, Svara Points, achievements, and reminders | verification_pending | covered by FEAT-001; `DEC-008` |
 | FEAT-006 | Svara Plus | deferred; hidden in current build | covered by FEAT-001 |
 | FEAT-007 | Nonverbal breathing-practice audio cues | planned | `DEC-007`; plan below |
 
@@ -40,6 +40,15 @@ Release readiness for these features is executed through
 `docs/TESTFLIGHT_TASKS.md`. In particular, content/audio are gated by `TF-007`,
 device accessibility by `TF-010`. End-to-end Svara Plus behavior remains
 deferred to `TF-005` and `TF-012` before any future monetized build.
+
+### Svara Points behavior
+
+Every bundled practice, lesson, festival, story, and feature remains free;
+points never control access. Completing eligible activities awards points once.
+The Profile screen explains their purpose, shows progress toward the next
+100/250/500-point milestone, and displays each badge's unlock requirement.
+Milestones are private encouragement only: no spending, purchase, public
+ranking, competitive comparison, or devotional status.
 
 ## FEAT-007 implementation plan — breathing-practice audio cues
 

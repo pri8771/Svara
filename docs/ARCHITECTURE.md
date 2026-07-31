@@ -20,6 +20,11 @@ SwiftUI view
 - Authored content: bundled JSON under `Svara/Resources/SeedData`, with an
   in-code parity fallback.
 - Profile, progress, settings: Codable values in `UserDefaults`.
+- Points and achievements: `LocalProgressService` awards idempotent points,
+  repeatedly evaluates the finite achievement catalogue so bonus thresholds
+  unlock immediately, and persists unlocked badge IDs locally. Points never
+  participate in access control; `FeatureFlags.current.plusTierEnabled` remains
+  the separate, disabled commerce boundary.
 - Private reflections: `Documents/reflections.json`; not synced or collected.
 - Current access: every bundled content item is free while
   `FeatureFlags.current.plusTierEnabled` is false.

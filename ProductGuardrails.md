@@ -111,8 +111,9 @@ Gamification exists to build a **gentle daily habit**, not to exploit.
   designed to induce anxiety, no pay-to-win spirituality.
 - **Streaks are forgiving by design.** A missed day is a fresh start, framed
   kindly. (Future: streak freezes / grace days.)
-- **Points are intrinsic-leaning.** Svara Points celebrate consistency; they
-  buy nothing that pressures spending.
+- **Points are intrinsic-leaning.** Svara Points celebrate consistency and
+  unlock private milestone badges. They are not currency and never gate
+  practices, lessons, stories, festivals, or any paid/free content.
 - **No public ranking** of devotion. Spiritual practice is not a competition.
 - **Premium gates value, not guilt.** Free tier is genuinely useful; Plus adds
   depth, never removes basic dignity.

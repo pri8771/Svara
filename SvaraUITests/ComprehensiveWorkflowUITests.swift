@@ -658,6 +658,9 @@ final class ComprehensiveWorkflowUITests: XCTestCase {
         skipOnboarding(app)
         app.tabBars.buttons["Profile"].tap()
         XCTAssertTrue(app.staticTexts["Achievements"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.staticTexts["What Svara Points do"].exists)
+        XCTAssertTrue(app.staticTexts["Next points milestone"].exists)
+        XCTAssertTrue(app.staticTexts["Practice Spark"].exists)
 
         let settings = app.navigationBars.buttons.firstMatch
         XCTAssertTrue(settings.exists)

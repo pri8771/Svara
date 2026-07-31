@@ -20,7 +20,7 @@ inside seed JSON is not accepted as independent evidence.
 
 | File | Count | IDs/hashes frozen | Cultural accuracy | Sources | Tone/guardrails | Reviewer/date | Result |
 |---|---:|---|---|---|---|---|---|
-| `seed_achievements.json` | 10 | no | n/a | pending | pending | pending | human_review_required |
+| `seed_achievements.json` | 12 | no | n/a | pending | pending | pending | human_review_required |
 | `seed_festivals.json` | 8 | no | pending | pending | pending | pending | human_review_required |
 | `seed_lessons.json` | 9 | no | pending | pending | pending | pending | human_review_required |
 | `seed_mantras.json` | 10 | no | pending | pending | pending | pending | human_review_required |
