@@ -69,6 +69,11 @@ Svara Plus or purchase UI.
   one owner tester, and has build 1.0 (3) plus invalidated historical build 2
   attached. The bounded What to Test instructions are saved and the owner
   status is `Invited`; build 2 must be detached before TF-015 closure.
+- Per `DEC-009`, separate manual internal group `Svara Friends Internal` has
+  build 1.0 (3) and the owner attached. A Svara-only Marketing user invitation
+  was sent to one approved friend on 2026-08-02; Apple will not allow that user
+  into the TestFlight group until the App Store Connect invitation is accepted.
+  No external group or public link exists.
 - Comprehensive simulator UI audit: all app-owned workflow families traversed;
   13-test consolidated run passed with 8 ordinary passes, 4 expected product
   failures, one StoreKit environment skip, and no unexpected failures. Small
@@ -88,6 +93,9 @@ Svara Plus or purchase UI.
   Store/TestFlight metadata completion (`TF-006`, `TF-008`) before
   close-friends invitations. The corrected Pages deployment is live.
 - Owner-only TestFlight installation and smoke (`TF-015`).
+- Acceptance of the pending Svara-only App Store Connect invitation, followed
+  by adding that user to `Svara Friends Internal` and verifying the TestFlight
+  invitation. This interim internal cohort does not replace TF-014.
 - StoreKit setup/validation (`TF-005`, `TF-012`) is deferred while Plus is
   disabled. Beta operations and external rollout (`TF-013`, `TF-014`) are active.
 - Physical-device matrix, StoreKit sandbox, VoiceOver, and maximum Dynamic Type.

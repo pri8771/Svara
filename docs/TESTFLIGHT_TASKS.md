@@ -1,6 +1,6 @@
 # Canonical TestFlight Task Register
 
-_Last reconciled: 2026-07-31._
+_Last reconciled: 2026-08-02._
 
 This is the source of truth for TestFlight work. Jira and Notion may mirror
 these tasks, but they must not become authoritative. Every mirror uses the
@@ -17,6 +17,9 @@ unchanged `TF-###` ID and links to the corresponding repository file.
 - Team configured in Xcode: `796XH483R4`
 - Active target: owner internal smoke followed by an invitation-only,
   external close-friends beta (initial limit 10; no public link)
+- Interim internal distribution: `Svara Friends Internal` is a separate manual
+  group with build 3 and the owner. One approved friend's Svara-only App Store
+  Connect invitation is pending acceptance before Apple permits group addition.
 - Deferred target: public App Store release and all monetization
 - Factory lifecycle: `verification_pending` (build 3 automated gates and
   signed upload/processing pass; historical build 2 detachment and the owner

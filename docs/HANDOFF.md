@@ -9,7 +9,10 @@ learning, festival context, stories, and gentle progress.
 
 The external-eligible build 3 replacement is processed and attached for the
 owner TestFlight smoke; the invitation-only close-friends beta follows Apple
-review.
+review. A separate manual `Svara Friends Internal` group contains build 3 and
+the owner. One approved friend's Svara-only App Store Connect invitation is
+pending acceptance; add that user to the group only after Apple makes the user
+eligible. No external group or public link exists.
 Factory registration and current quality state live in `.factory/`,
 `quality/`, `docs/STATUS.md`, and the canonical
 `docs/TESTFLIGHT_TASKS.md`. Apple account scope, cloud-managed signing, and
@@ -58,6 +61,8 @@ See `docs/BUGS.md`.
 ## Next recommended task
 
 Detach historical build 2, install build 3 through TestFlight, and run the
-remaining TF-015 smoke. Close friends remain gated
+remaining TF-015 smoke. After the pending Svara-only user invitation is
+accepted, add that user to `Svara Friends Internal` and verify the TestFlight
+invite. External close friends remain gated
 by TF-006–TF-008,
 TF-010, TF-013, and TF-014.

@@ -107,3 +107,20 @@
   Profile explains how they are earned, shows the next unlock and progress,
   and labels every badge requirement. A bonus that crosses a points threshold
   unlocks the milestone in the same transaction.
+
+## DEC-009 — Separate internal friends group
+
+- **Status:** accepted
+- **Date:** 2026-08-02
+- **Decision:** Keep the one-owner `Svara Owner Smoke` group unchanged for
+  TF-015 and create a separate, manually distributed `Svara Friends Internal`
+  group for build 1.0 (3). Add the owner immediately. Invite one approved friend
+  as a Marketing user restricted to Svara because Apple requires internal
+  testers to be App Store Connect users with an eligible role.
+- **Current state:** The Svara-only App Store Connect user invitation was sent.
+  The friend cannot be added to the TestFlight group until that invitation is
+  accepted; the repository must not claim that the TestFlight invite was sent
+  before the user becomes selectable and is added to the group.
+- **Consequences:** This does not change TF-015's one-owner acceptance criteria,
+  approve an external group, enable a public link, or clear TF-006–TF-010 and
+  TF-014. Tester email addresses remain outside the repository.
