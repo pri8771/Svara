@@ -107,10 +107,11 @@ Read in order:
 
 ## Documentation gaps
 
-- `DEC-005` remains pending until `TF-001` records owner-approved release
-  configuration.
-- Apple account, signing, App Store Connect, and product state require
-  authorized external verification.
+- Replacement TestFlight group names, internal/external types, membership, and
+  build assignments remain intentionally undecided after the 2026-08-02 group
+  reset (`DEC-010`).
 - Cultural/content and audio-rights evidence require assigned human reviewers.
-- Current legal source is corrected but production deployment remains
-  unverified.
+- Corrected legal pages are deployed, but owner legal approval and physical
+  in-app link verification remain open.
+- The owner build 3 TestFlight installation and physical-device smoke remain
+  open after replacement owner-group creation.

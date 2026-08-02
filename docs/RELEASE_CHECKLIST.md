@@ -68,10 +68,12 @@ human/external gates prevent `done`.
 
 ## Owner internal smoke gate
 
-- [x] [`TF-015`] One owner-only internal group contains exactly the owner.
-- [x] [`TF-015`] Processed build 3 is attached to the one-owner manual group.
-- [ ] [`TF-015`] Historical build 2 is detached and build 3 is installed through
-  TestFlight on the owner's physical iPhone.
+- [ ] [`TF-015`] Recreate one owner-only internal group after the intentional
+  2026-08-02 group reset; it must contain exactly the owner.
+- [ ] [`TF-015`] Attach processed build 3—and no historical build—to the new
+  one-owner manual group.
+- [ ] [`TF-015`] Build 3 is installed through TestFlight on the owner's physical
+  iPhone.
 - [ ] [`TF-015`] The bounded onboarding, practice, lesson, audio, relaunch
   persistence, and notification-prompt smoke passes.
 
@@ -96,8 +98,10 @@ this external TestFlight gate unless the release owner explicitly adds them.
 ## Release decision
 
 - **Current state:** `verification_pending`
-- **Owner internal smoke allowed:** Yes for build 3 only. Detach historical
-  build 2, install build 3 through TestFlight, and perform/record TF-015.
+- **Owner internal smoke allowed:** Not currently distributable because no
+  group exists. After the owner approves the replacement layout, create one
+  owner-only internal group, attach build 3 only, install it through TestFlight,
+  and perform/record TF-015.
 - **External beta allowed:** No, until every blocker above is checked or an
   explicit, approved, time-bounded waiver is recorded in `quality/waivers/`.
 

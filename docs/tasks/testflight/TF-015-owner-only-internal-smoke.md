@@ -1,9 +1,11 @@
 # TF-015 — Run One-Owner Internal TestFlight Smoke
 
-- **Status:** `in_progress`
-- **Current state:** processed build 1.0 (3) is attached and available to the
-  sole owner. Install build 3 through TestFlight, run the bounded physical
-  smoke, and remove historical build 2 before closing the exact-one-build gate.
+- **Status:** `blocked`
+- **Current state:** processed build 1.0 (3) remains upload-valid, but all
+  internal and external groups were intentionally removed on 2026-08-02. No
+  build is assigned to a group. Resume only after the owner approves the
+  replacement group layout; then recreate one owner-only internal group and
+  attach build 3 only before installation and smoke testing.
 - **Gate:** active owner-only internal TestFlight milestone
 - **Execution type:** hybrid; App Store Connect setup plus physical-device test
 - **Owner:** product/release owner
@@ -39,12 +41,14 @@ ready.
 
 **Description:** As the release owner, I need distribution constrained to my
 authorized App Store Connect user. Confirm the owner has access to Svara and is
-eligible as an internal tester, then create or reuse the exact internal group
-recorded in DEC-005. Record the group name, tester count `1`, safe Apple role,
-and public-link state without copying the owner’s email or Apple Account. Do
-not add friends, clients, or external addresses. The expected change is one
-private internal group containing only the owner; stop if the account lacks app
-access or the group contains any unapproved tester.
+eligible as an internal tester. Obtain and record the owner's explicit approval
+for the replacement group name in DEC-010, then create that internal group with
+automatic distribution disabled. Add only the owner. Record the group name,
+tester count `1`, safe Apple role, and public-link state without copying the
+owner’s email or Apple Account. Do not add friends, clients, or external
+addresses. The expected change is one private internal group containing only
+the owner; stop if the name is not approved, the account lacks app access, or
+the group contains any unapproved tester.
 
 ### TF-015.2 — Attach the processed external-eligible build
 
@@ -111,8 +115,9 @@ App Store readiness.
 ## Procedure
 
 1. Confirm TF-011 is `done` and Apple reports the exact build `Complete`.
-2. Create or verify one internal group with only the owner’s authorized App
-   Store Connect user.
+2. Record the owner-approved replacement name in DEC-010, then create one
+   internal group with automatic distribution disabled and only the owner’s
+   authorized App Store Connect user.
 3. Attach only the TF-011 build and save bounded What to Test instructions.
 4. Install the build through TestFlight on one supported physical iPhone.
 5. Execute the TF-015.4 matrix and record expected/actual results.
@@ -122,9 +127,10 @@ App Store readiness.
 
 ## Acceptance criteria
 
-- [x] One internal group contains only the owner.
-- [ ] Build 3 is the only attached candidate; it is attached, but invalidated
-  historical build 2 still needs removal before closure.
+- [ ] One replacement internal group contains only the owner; the prior group
+  was intentionally deleted during the 2026-08-02 reset.
+- [ ] Build 3 is the only attached candidate; no build is currently assigned to
+  a TestFlight group.
 - [ ] The recorded build installs and launches through TestFlight.
 - [ ] Onboarding, one practice, one lesson, one audio playback, relaunch
   persistence, and the notification permission path complete without a blocker.

@@ -3,7 +3,9 @@
 - **Status:** `done`
 - **Completed:** 2026-07-31 for external-eligible Svara 1.0 (3), binary commit
   `ed29548cd782ae6859b7d7b63c216f60693e8705`. Apple reports the build ready
-  to test and it is attached to the owner-only internal group.
+  to test. It was attached to the owner-only internal group at closure; all
+  groups were intentionally removed on 2026-08-02, so it is currently
+  unassigned. The later group reset does not invalidate upload evidence.
 - **Gate:** TestFlight upload
 - **Execution type:** hybrid
 - **Owner:** release owner

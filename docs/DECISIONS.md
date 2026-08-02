@@ -110,7 +110,7 @@
 
 ## DEC-009 — Separate internal friends group
 
-- **Status:** accepted
+- **Status:** superseded by `DEC-010`
 - **Date:** 2026-08-02
 - **Decision:** Keep the one-owner `Svara Owner Smoke` group unchanged for
   TF-015 and create a separate, manually distributed `Svara Friends Internal`
@@ -124,3 +124,21 @@
 - **Consequences:** This does not change TF-015's one-owner acceptance criteria,
   approve an external group, enable a public link, or clear TF-006–TF-010 and
   TF-014. Tester email addresses remain outside the repository.
+
+## DEC-010 — Reset TestFlight groups before cohort redesign
+
+- **Status:** accepted
+- **Date:** 2026-08-02
+- **Decision:** Delete every internal and external TestFlight group, preserve
+  all App Store Connect users, and leave replacement groups uncreated until the
+  owner explicitly approves each group's name, type, and membership.
+- **Current state:** App Store Connect has zero internal groups and zero
+  external groups. Builds 1.0 (2) and 1.0 (3) are not assigned to a group. The
+  existing Svara-only user invitation remains pending and was not revoked.
+- **Why:** The owner wants the distribution cohorts remade deliberately without
+  deleting account access or guessing which users belong in which group.
+- **Consequences:** Prior group-based build access is removed. TF-015 is blocked
+  until an owner-only internal group is approved and recreated with build 3
+  only. External distribution remains blocked by its existing release gates,
+  and no public link may be enabled by inference. Tester email addresses remain
+  outside the repository.
