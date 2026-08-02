@@ -28,3 +28,9 @@ does not delete the users, processed builds, or upload evidence. Replacement
 groups must not be inferred. Record the owner-approved name, internal/external
 type, membership, build assignment, automatic-distribution setting, and public-
 link state before recreating each cohort.
+
+## Subsequent state
+
+Later on 2026-08-02, four empty replacement groups were created under
+`DEC-011`. The zero-group counts above remain the verified immediate outcome of
+the reset, not the current group count. See `GROUP-CREATION-2026-08-02.md`.

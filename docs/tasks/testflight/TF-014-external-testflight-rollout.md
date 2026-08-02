@@ -39,11 +39,13 @@ external-release preflight record.
 ### TF-014.2 — Configure the external group
 
 **Description:** As the beta operator, I need a group matching the approved
-cohort plan. Create or open the exact TF-013 external group, attach only the
-internally verified build, copy canonical What to Test, verify test information,
-choose automatic notification exactly as approved, and keep public link disabled
-unless explicitly authorized. Save/reload and record group/build/settings. The
-expected change is a review-ready group without invited testers yet.
+cohort plan. Obtain the owner's explicit choice of `external_family` or
+`external_family_and_friends`, record the mapping, and open that existing
+DEC-011 group; do not create a duplicate. Attach only the internally verified
+build, copy canonical What to Test, verify test information, choose automatic
+notification exactly as approved, and keep the public link disabled unless
+explicitly authorized. Save/reload and record group/build/settings. The
+expected change is one review-ready selected group without invited testers yet.
 
 ### TF-014.3 — Submit once and monitor TestFlight App Review
 
@@ -108,8 +110,8 @@ evidence.
 
 ## Procedure
 
-1. In TestFlight create the external group named in TF-001/TF-013. Apple
-   requires an internal group first.
+1. Record which existing DEC-011 external group the owner selects for the
+   initial cohort, then open it in TestFlight. Do not create another group.
 2. Add the exact internally verified build.
 3. Enter What to Test from repository copy.
 4. Verify Beta App Description, Feedback Email, review contact, and notes.

@@ -7,14 +7,15 @@ learning, festival context, stories, and gentle progress.
 
 ## Current state
 
-The external-eligible build 3 replacement is processed, but no TestFlight group
-currently exists. Per `DEC-010`, both prior internal groups were intentionally
-deleted on 2026-08-02 so the cohort layout can be remade from a clean slate.
-There are zero internal groups, zero external groups, no public link, and builds
-2 and 3 are unassigned. App Store Connect users were preserved. One approved
+The external-eligible build 3 replacement is processed. Per `DEC-010`, both
+prior internal groups were deleted on 2026-08-02 while users were preserved.
+Per `DEC-011`, four empty replacement groups now exist: internal
+`internal_family` and `internal_family_and_friends`, plus external
+`external_family` and `external_family_and_friends`. Internal automatic
+distribution is disabled. No tester or build is assigned, no public link is
+enabled, and no TestFlight App Review submission was made. One approved
 friend's Svara-only App Store Connect invitation remains pending acceptance;
-do not add that user to a TestFlight group until the owner approves the new
-group design.
+do not assign any user or build until the owner approves the mapping.
 Factory registration and current quality state live in `.factory/`,
 `quality/`, `docs/STATUS.md`, and the canonical
 `docs/TESTFLIGHT_TASKS.md`. Apple account scope, cloud-managed signing, and
@@ -34,7 +35,7 @@ The 2026-07-30 comprehensive simulator UI audit traversed the shipped workflow
 families. Its active product findings were remediated. Exact build 3 commit
 `ed29548` passes the locked Factory checks, 159/159 complete tests, Release
 analysis, archive inspection, remote CI, signed upload, and Apple processing.
-Replacement group creation, build 3 attachment, and human
+Group membership, build 3 attachment, and human
 audio/notification/accessibility checks govern release status. Read
 `quality/evidence/UI-WORKFLOW-AUDIT-2026-07-30.md`.
 
@@ -62,10 +63,10 @@ See `docs/BUGS.md`.
 
 ## Next recommended task
 
-Approve the replacement cohort names, types, and membership; recreate one
-owner-only internal group; attach build 3 only; then install it through
-TestFlight and run the remaining TF-015 smoke. The pending Svara-only user
-invitation may be retained, but the user must not be assigned to a group until
-the new design is approved. External close friends remain gated
+Approve the group membership and build allocation, designate one existing
+internal group as owner-only, add only the owner, attach build 3 only, then
+install it through TestFlight and run the remaining TF-015 smoke. The pending
+Svara-only user invitation may be retained, but the user must not be assigned
+until the mapping is approved. External close friends remain gated
 by TF-006–TF-008,
 TF-010, TF-013, and TF-014.

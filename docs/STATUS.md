@@ -64,14 +64,15 @@ Svara Plus or purchase UI.
 - GitHub CI run `30589193485` passed the complete simulator action, Release
   analysis, and unsigned Release archive inspection for canonical commit
   `a4b57ac`; TestResults and ReleaseArchiveInspection artifacts are retained.
-- Per `DEC-010`, all TestFlight groups were intentionally removed on 2026-08-02
-  so the cohort structure can be redesigned from a clean slate. App Store
-  Connect now has zero internal groups and zero external groups; builds 1.0 (2)
-  and 1.0 (3) are not assigned to a group. App Store Connect users were not
-  deleted or modified. The approved friend's Svara-only Marketing invitation
-  remains pending acceptance. No tester currently has group-based build access,
-  and no public link exists. See
-  `../quality/evidence/testflight/GROUP-RESET-2026-08-02.md`.
+- Per `DEC-010`, all prior TestFlight groups were intentionally removed on
+  2026-08-02 while App Store Connect users were preserved. Per `DEC-011`, four
+  empty replacements now exist: internal `internal_family` and
+  `internal_family_and_friends`, plus external `external_family` and
+  `external_family_and_friends`. The internal groups use manual distribution.
+  No group has a tester or build; builds 1.0 (2) and 1.0 (3) remain unassigned;
+  no public link is enabled; and no external review submission was made. The
+  approved friend's Svara-only Marketing invitation remains pending acceptance.
+  See `../quality/evidence/testflight/GROUP-CREATION-2026-08-02.md`.
 - Comprehensive simulator UI audit: all app-owned workflow families traversed;
   13-test consolidated run passed with 8 ordinary passes, 4 expected product
   failures, one StoreKit environment skip, and no unexpected failures. Small
@@ -90,9 +91,9 @@ Svara Plus or purchase UI.
 - Owner legal approval, physical in-app link verification, and App
   Store/TestFlight metadata completion (`TF-006`, `TF-008`) before
   close-friends invitations. The corrected Pages deployment is live.
-- Explicit owner approval of the replacement group names, types, and membership;
-  recreation of an owner-only internal group; attachment of build 3 only; and
-  the owner TestFlight installation and smoke (`TF-015`).
+- Explicit owner approval of group membership and build allocation; designation
+  of one existing internal group as the owner-only TF-015 group; attachment of
+  build 3 only; and the owner TestFlight installation and smoke (`TF-015`).
 - Acceptance of the pending Svara-only App Store Connect invitation. Do not add
   that user to any TestFlight group until the replacement cohort design is
   recorded and approved.
@@ -123,10 +124,10 @@ Jira and Notion are non-authoritative mirrors.
 
 ## Next action
 
-Record the replacement TestFlight cohort design, recreate an owner-only internal
-group, attach build 3 only, install it through TestFlight, and run the TF-015
-onboarding, practice, lesson, audio, relaunch, notification, and legal-link
-smoke.
+Record the membership and build-allocation decision, designate one existing
+internal group as owner-only, add only the owner, attach build 3 only, install
+it through TestFlight, and run the TF-015 onboarding, practice, lesson, audio,
+relaunch, notification, and legal-link smoke.
 Before inviting close friends, finish the human content/audio sign-off, live
 legal-page check, physical-device accessibility/audio/notification matrix, and
 TestFlight App Review.

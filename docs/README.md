@@ -107,11 +107,10 @@ Read in order:
 
 ## Documentation gaps
 
-- Replacement TestFlight group names, internal/external types, membership, and
-  build assignments remain intentionally undecided after the 2026-08-02 group
-  reset (`DEC-010`).
+- Replacement TestFlight group names and types are recorded in `DEC-011`;
+  membership and build assignments remain intentionally undecided.
 - Cultural/content and audio-rights evidence require assigned human reviewers.
 - Corrected legal pages are deployed, but owner legal approval and physical
   in-app link verification remain open.
 - The owner build 3 TestFlight installation and physical-device smoke remain
-  open after replacement owner-group creation.
+  open after owner-group designation, owner addition, and build attachment.

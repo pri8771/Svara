@@ -59,9 +59,11 @@
   targets iPhone on iOS 17+, and uses English (U.S.) as its primary language.
   Public links remain disabled. The existing App Store Connect record uses the
   immutable internal SKU `SVARA001` (reconciled on 2026-07-30; the earlier
-  fallback proposal `SVARA-IOS-001` was never created). The private external group is
-  `Svara Close Friends`, initially capped at 10 testers. The owner is the
-  release operator, QA/feedback owner, and stop authority.
+  fallback proposal `SVARA-IOS-001` was never created). The historical private
+  external-group proposal was `Svara Close Friends`, initially capped at 10
+  testers; `DEC-011` supersedes that group name with two empty external cohort
+  containers whose membership and rollout mapping remain pending. The owner is
+  the release operator, QA/feedback owner, and stop authority.
 - **Review contact:** Use the owner’s secure contact record in App Store
   Connect; do not copy phone or other private contact data into the repository.
 - **Commerce:** All content is free under `DEC-006`; IAP setup and testing are
@@ -132,13 +134,33 @@
 - **Decision:** Delete every internal and external TestFlight group, preserve
   all App Store Connect users, and leave replacement groups uncreated until the
   owner explicitly approves each group's name, type, and membership.
-- **Current state:** App Store Connect has zero internal groups and zero
-  external groups. Builds 1.0 (2) and 1.0 (3) are not assigned to a group. The
-  existing Svara-only user invitation remains pending and was not revoked.
+- **Reset outcome:** Immediately after deletion, App Store Connect had zero
+  internal and zero external groups; builds 1.0 (2) and 1.0 (3) were unassigned;
+  and the existing Svara-only user invitation remained pending. Replacement
+  group creation is recorded separately in `DEC-011`.
 - **Why:** The owner wants the distribution cohorts remade deliberately without
   deleting account access or guessing which users belong in which group.
-- **Consequences:** Prior group-based build access is removed. TF-015 is blocked
-  until an owner-only internal group is approved and recreated with build 3
-  only. External distribution remains blocked by its existing release gates,
-  and no public link may be enabled by inference. Tester email addresses remain
-  outside the repository.
+- **Consequences:** Prior group-based build access was removed. After `DEC-011`,
+  TF-015 remains blocked until one existing internal group is designated and
+  configured with only the owner and build 3. External distribution remains
+  blocked by its existing release gates, and no public link may be enabled by
+  inference. Tester email addresses remain outside the repository.
+
+## DEC-011 — Four family and friends TestFlight groups
+
+- **Status:** accepted
+- **Date:** 2026-08-02
+- **Decision:** Create internal groups `internal_family` and
+  `internal_family_and_friends`, and matching external groups `external_family`
+  and `external_family_and_friends`.
+- **Configuration:** Both internal groups use manual distribution. All four
+  groups start with zero testers and zero builds. No public link is enabled and
+  no build is submitted for TestFlight App Review as part of group creation.
+- **Why:** The owner wants separate family-only and combined family/friends
+  cohort containers for both internal and external distribution before deciding
+  membership and build allocation.
+- **Consequences:** Group existence does not authorize tester invitations,
+  attach a build, close TF-015, or clear any external-release gate. The owner
+  must explicitly map users and builds and designate one internal group for the
+  one-owner TF-015 smoke before distribution changes. Tester email addresses
+  remain outside the repository.

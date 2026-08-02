@@ -17,13 +17,15 @@ unchanged `TF-###` ID and links to the corresponding repository file.
 - Team configured in Xcode: `796XH483R4`
 - Active target: owner internal smoke followed by an invitation-only,
   external close-friends beta (initial limit 10; no public link)
-- Current group state: all internal and external TestFlight groups were
-  intentionally removed on 2026-08-02; App Store Connect users were preserved.
-  Replacement cohort names, types, and membership require explicit owner
-  approval before recreation. Builds 2 and 3 are currently unassigned.
+- Current group state: four owner-approved empty groups exist—internal
+  `internal_family` and `internal_family_and_friends`, and external
+  `external_family` and `external_family_and_friends`. Internal automatic
+  distribution is disabled. No tester or build is assigned, no public link is
+  enabled, and no external review submission was made. App Store Connect users
+  remain preserved; membership and build allocation are intentionally pending.
 - Deferred target: public App Store release and all monetization
 - Factory lifecycle: `verification_pending` (build 3 automated gates and
-  signed upload/processing pass; replacement owner-group creation, build 3
+  signed upload/processing pass; owner-group designation/membership, build 3
   attachment, and the owner physical smoke are pending)
 
 ## Status rules
@@ -81,7 +83,7 @@ canonical task.
 | TF-012 | Run future monetized TestFlight and live StoreKit sandbox validation | IAP | hybrid | deferred | TF-005; not applicable while Plus is disabled |
 | TF-013 | Define beta operations, monitoring, triage, and stop criteria | external | hybrid | done | TF-001 |
 | TF-014 | Submit TestFlight App Review and roll out the external cohort | external | human | blocked | TF-006, TF-007, TF-008, TF-010, TF-011, TF-013 |
-| TF-015 | Run one-owner internal TestFlight smoke | internal owner | hybrid | blocked | approve/recreate replacement owner group; attach/install/smoke build 3 |
+| TF-015 | Run one-owner internal TestFlight smoke | internal owner | hybrid | blocked | designate existing internal group; add owner; attach/install/smoke build 3 |
 
 ## Dependency graph
 
