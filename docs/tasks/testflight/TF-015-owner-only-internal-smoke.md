@@ -1,11 +1,15 @@
 # TF-015 — Run One-Owner Internal TestFlight Smoke
 
 - **Status:** `blocked`
-- **Current state:** processed build 1.0 (3) remains upload-valid. Two empty
-  internal groups now exist under `DEC-011`, both with automatic distribution
-  disabled. Neither is designated for the owner smoke; no tester or build is
-  assigned. Resume only after the owner chooses the TF-015 group; then add only
-  the owner and attach build 3 only before installation and smoke testing.
+- **Current state:** builds 1.0 (3) and 1.0 (4) are superseded. Build 1.0 (5)
+  (uploaded 2026-08-14, includes the CNT-001/CNT-002 audio fixes; see
+  `quality/evidence/appstoreconnect/BUILD-5-UPLOAD-2026-08-14.md`) is the
+  current candidate, pending human confirmation in App Store Connect that it
+  finished processing. Two empty internal groups still exist under `DEC-011`,
+  both with automatic distribution disabled. Neither is designated for the
+  owner smoke; no tester or build is assigned. Resume only after the owner
+  chooses the TF-015 group; then add only the owner and attach build 5 only
+  before installation and smoke testing.
 - **Gate:** active owner-only internal TestFlight milestone
 - **Execution type:** hybrid; App Store Connect setup plus physical-device test
 - **Owner:** product/release owner
@@ -130,7 +134,7 @@ App Store readiness.
 
 - [ ] One existing internal group is explicitly designated for TF-015 and
   contains only the owner; both replacement groups are currently empty.
-- [ ] Build 3 is the only attached candidate; no build is currently assigned to
+- [ ] Build 5 is the only attached candidate; no build is currently assigned to
   a TestFlight group.
 - [ ] The recorded build installs and launches through TestFlight.
 - [ ] Onboarding, one practice, one lesson, one audio playback, relaunch

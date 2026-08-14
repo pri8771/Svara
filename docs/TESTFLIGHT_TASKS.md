@@ -1,6 +1,6 @@
 # Canonical TestFlight Task Register
 
-_Last reconciled: 2026-08-02._
+_Last reconciled: 2026-08-14._
 
 This is the source of truth for TestFlight work. Jira and Notion may mirror
 these tasks, but they must not become authoritative. Every mirror uses the
@@ -12,8 +12,11 @@ unchanged `TF-###` ID and links to the corresponding repository file.
 - Platform: iPhone / iOS 17+
 - Bundle ID: `com.primandir.svara`
 - Marketing version: `1.0`
-- Current release-candidate build number: `3` (build 2 is retained as historical
-  processed evidence but cannot pass the owner audio smoke)
+- Current release-candidate build number: `5`, uploaded 2026-08-14 (builds 2
+  and 3 are retained as historical processed evidence; build 3 cannot pass the
+  owner audio smoke; build 4, uploaded 2026-08-13, is superseded because it
+  predates the CNT-001/CNT-002 audio fixes in `1e69d00`). See
+  `quality/evidence/appstoreconnect/BUILD-5-UPLOAD-2026-08-14.md`.
 - Team configured in Xcode: `796XH483R4`
 - Active target: owner internal smoke followed by an invitation-only,
   external close-friends beta (initial limit 10; no public link)
@@ -24,9 +27,10 @@ unchanged `TF-###` ID and links to the corresponding repository file.
   enabled, and no external review submission was made. App Store Connect users
   remain preserved; membership and build allocation are intentionally pending.
 - Deferred target: public App Store release and all monetization
-- Factory lifecycle: `verification_pending` (build 3 automated gates and
-  signed upload/processing pass; owner-group designation/membership, build 3
-  attachment, and the owner physical smoke are pending)
+- Factory lifecycle: `verification_pending` (build 5 automated pre-flight
+  checks and signed upload pass; Apple processing confirmation,
+  owner-group designation/membership, build 5 attachment, and the owner
+  physical smoke are pending)
 
 ## Status rules
 
@@ -54,6 +58,9 @@ task and evidence first, then copy the same state to Jira/Notion.
   `6e9d0b16de5713119770fa160292442dbe32baba`.
 - **Replacement build 3 binary commit:**
   `ed29548cd782ae6859b7d7b63c216f60693e8705`.
+- **Build 4 binary commit (superseded, predates CNT-001/CNT-002):**
+  `667b44c` (source unchanged from `9aa250b`).
+- **Build 5 binary commit (current candidate):** `1e69d00`.
 - **First processed-build evidence commit:**
   `df1dcdb` (`Record processed TestFlight build 2`). Later documentation-only
   reconciliation commits do not change the uploaded binary. Mirrors must
@@ -83,7 +90,7 @@ canonical task.
 | TF-012 | Run future monetized TestFlight and live StoreKit sandbox validation | IAP | hybrid | deferred | TF-005; not applicable while Plus is disabled |
 | TF-013 | Define beta operations, monitoring, triage, and stop criteria | external | hybrid | done | TF-001 |
 | TF-014 | Submit TestFlight App Review and roll out the external cohort | external | human | blocked | TF-006, TF-007, TF-008, TF-010, TF-011, TF-013 |
-| TF-015 | Run one-owner internal TestFlight smoke | internal owner | hybrid | blocked | designate existing internal group; add owner; attach/install/smoke build 3 |
+| TF-015 | Run one-owner internal TestFlight smoke | internal owner | hybrid | blocked | designate existing internal group; add owner; attach/install/smoke build 5 |
 
 ## Dependency graph
 
