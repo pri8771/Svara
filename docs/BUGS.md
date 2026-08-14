@@ -23,6 +23,7 @@
 | UI-013 | high | Accessibility | Settings now has an explicit label; dormant paywall close accessibility remains to be fixed before Plus returns. | partially_fixed_plus_deferred | `TF-010` | focused simulator verification; `quality/evidence/UI-WORKFLOW-AUDIT-2026-07-30.md` |
 | UI-014 | high | Audio | Playback has no interruption, route-change, background, or lock recovery handling. | code_complete_human_review_required | `TF-010` | Interruption/resume, route loss, and media-reset handling implemented; real-device accessories/lock QA pending |
 | UI-015 | high | Audio | The nine bundled MP3 recordings are rejected by Apple's audio stack (`fmt?`), so build 2 can show a playback state without audible output. | code_complete_verification_pending | `TF-009`, `TF-010`, `TF-015` | Re-encoded as AAC-in-M4A with non-silent output verified; decode regression passes; build 3 physical/TestFlight playback remains pending |
+| CNT-001 | high | Audio/content | Owner device review 2026-08-14: the "Breathe out Om" practice plays a full musical track instead of a plain repeated "Om" with a pause between repetitions. Regenerate in Suno as a simple Om chant (voice only or minimal drone, clear silence gaps); apply the same "plain chant, no production" standard when reviewing the other eight mantra tracks. | open | `TF-007` | Owner physical-device session, dev-signed build of `9aa250b` on iPhone 16 Pro Max |
 
 Resolved readiness defects belong in the completion report rather than being
 left as open bugs.
