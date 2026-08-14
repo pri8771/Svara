@@ -70,3 +70,11 @@ Svara-only user invitation may be retained, but the user must not be assigned
 until the mapping is approved. External close friends remain gated
 by TF-006–TF-008,
 TF-010, TF-013, and TF-014.
+
+## Marketing-page handoff
+
+The owner also opened a parallel public-website track. Use
+`docs/MARKETING_LANDING_PAGE_TASKS.md` for the three Svara page concepts, three
+icon candidates, real screenshots, HubSpot waitlist, and publication gates.
+Do not treat generated design output as cultural, content, audio, or release
+approval.

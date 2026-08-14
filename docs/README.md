@@ -45,6 +45,7 @@ Read in order:
 | Required feature behavior | `../quality/feature-contracts/` | Acceptance and state contracts |
 | Current release tasks | `TESTFLIGHT_TASKS.md` | Canonical backlog, order, dependencies, status |
 | Detailed task procedures | `tasks/testflight/` | Executable task instructions |
+| Marketing landing page, icon, screenshots, and waitlist | `MARKETING_LANDING_PAGE_TASKS.md` | Canonical public-website task track |
 | Apple beta requirements | `APPLE_TESTFLIGHT_REQUIREMENTS.md` | Official-source research baseline |
 | Current bugs | `BUGS.md` | Known defects and blockers |
 | Decisions | `DECISIONS.md` | Approved and explicitly pending decisions |

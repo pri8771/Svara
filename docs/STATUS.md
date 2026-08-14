@@ -15,6 +15,15 @@ not be marked TestFlight Internal Only.
 Per `DEC-006`, this testing build makes every content item free and exposes no
 Svara Plus or purchase UI.
 
+## Website marketing track
+
+`docs/MARKETING_LANDING_PAGE_TASKS.md` now owns the parallel Svara landing-page,
+three-concept/three-icon design review, real screenshot capture, HubSpot
+waitlist, privacy/consent, website handoff, verification, and publication
+tasks. The five-app Claude Design package is prepared, but no generated concept,
+icon, screenshot set, waitlist, or page is approved. ProductGuardrails,
+content/audio sign-off, and TestFlight gates continue to control claims.
+
 ## Code complete
 
 - Local-first onboarding and profile with no account wall.
