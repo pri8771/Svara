@@ -22,7 +22,8 @@ Owner: `TF-009`.
   practices, every lesson and lesson step kind, free access from every lesson
   entry point, absence of Plus UI, all festival details/activities, all
   stories/symbol sheets, profile, reminders, persistence, error/empty states,
-  and bounded presentation states.
+  bounded presentation states, and truthful first/repeat practice completion
+  copy.
 - Release static analysis.
 - Unsigned generic iOS Release archive with product validation.
 - Archive inspection: architecture, deployment target, dSYM, app icon,

@@ -173,7 +173,8 @@ final class AppEnvironment {
 
     // MARK: - Progress mutations
 
-    func completePractice(_ practice: DailyPractice, durationSeconds: Int) {
+    @discardableResult
+    func completePractice(_ practice: DailyPractice, durationSeconds: Int) -> Bool {
         let session = PracticeSession(
             practiceID: practice.id,
             practiceTitle: practice.title,
@@ -182,7 +183,9 @@ final class AppEnvironment {
             pointsEarned: practice.points
         )
         let (updated, unlocked) = progress.recordSession(session, for: profile)
+        let earnedPoints = updated.totalPoints > profile.totalPoints
         apply(updated, unlocked: unlocked)
+        return earnedPoints
     }
 
     /// Records a single lesson step as the learner moves through it (resume +

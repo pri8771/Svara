@@ -14,6 +14,7 @@ struct PracticePlayerView: View {
     @State private var secondsRemaining: Int
     @State private var timer: Timer?
     @State private var elapsedSeconds = 0
+    @State private var earnedPoints = false
 
     enum Phase { case intro, active, complete }
 
@@ -125,7 +126,7 @@ struct PracticePlayerView: View {
                 Text("Well done")
                     .font(.svaraDisplay)
                     .foregroundStyle(.white)
-                Text("You earned +\(practice.points) Svara Points")
+                Text(earnedPoints ? "You earned +\(practice.points) Svara Points" : "Practice complete")
                     .font(.svaraHeadline)
                     .foregroundStyle(.white.opacity(0.9))
                 Label("\(env.profile.currentStreak)-day streak", systemImage: "flame.fill")
@@ -207,7 +208,7 @@ struct PracticePlayerView: View {
     private func complete() {
         timer?.invalidate()
         env.audioPlayback.stop()
-        env.completePractice(practice, durationSeconds: max(1, elapsedSeconds))
+        earnedPoints = env.completePractice(practice, durationSeconds: max(1, elapsedSeconds))
         withAnimation { phase = .complete }
     }
 }

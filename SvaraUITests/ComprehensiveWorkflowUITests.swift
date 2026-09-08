@@ -235,24 +235,35 @@ final class ComprehensiveWorkflowUITests: XCTestCase {
         let app = freshApp()
         skipOnboarding(app)
 
-        func finishMorningPractice() {
-            let card = practiceButton("Morning Mantra", app: app)
+        func finishMorningPractice(expectsAward: Bool) {
+            let card = app.buttons.matching(
+                NSPredicate(format: "label CONTAINS[c] ' practice:'")
+            ).firstMatch
             XCTAssertTrue(scrollTo(card, in: app))
             card.tap()
             tapPrimaryButton("Begin", app: app)
             XCTAssertTrue(app.buttons["Finish now"].waitForExistence(timeout: 5))
             app.buttons["Finish now"].tap()
+            let completionCopy = expectsAward
+                ? app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] 'You earned +'")).firstMatch
+                : app.staticTexts["Practice complete"]
+            XCTAssertTrue(
+                completionCopy.waitForExistence(timeout: 5),
+                expectsAward
+                    ? "The first completion should report the awarded points"
+                    : "A repeat completion must not claim that points were awarded"
+            )
             tapPrimaryButton("Done", app: app)
         }
 
-        finishMorningPractice()
+        finishMorningPractice(expectsAward: true)
         app.tabBars.buttons["Profile"].tap()
         let pointsAfterFirst = app.descendants(matching: .any).matching(
             NSPredicate(format: "label BEGINSWITH[c] 'Svara Points:'")
         ).firstMatch.label
 
         app.tabBars.buttons["Today"].tap()
-        finishMorningPractice()
+        finishMorningPractice(expectsAward: false)
         app.tabBars.buttons["Profile"].tap()
         let pointsAfterRepeat = app.descendants(matching: .any).matching(
             NSPredicate(format: "label BEGINSWITH[c] 'Svara Points:'")
