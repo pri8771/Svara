@@ -1,0 +1,48 @@
+{
+  "project": "Svara",
+  "remote": "https://github.com/pri8771/Svara",
+  "visibility": null,
+  "previous_dev": "b03912a2d4564a1a9fec51d35ce736a6e1a42485",
+  "status": "in_progress",
+  "source_tip_count": 6,
+  "recovery": [],
+  "excluded": [],
+  "source_merged": [
+    "66d1ca8bb21fdb49a58d654975c19ea7577af616",
+    "579a36885e577122ad091932807b3b89e41897a5"
+  ],
+  "windows_imports": [],
+  "source_tips": {
+    "b03912a2d4564a1a9fec51d35ce736a6e1a42485": [
+      "refs/source-heads/0",
+      "refs/source-heads/5",
+      "refs/source/654d3472/cursor/compwave-s14-svara-20260909",
+      "refs/source/654d3472/dev",
+      "refs/source/654d3472/main",
+      "refs/source/654d3472/qa"
+    ],
+    "66d1ca8bb21fdb49a58d654975c19ea7577af616": [
+      "refs/source-heads/1",
+      "refs/source-heads/6",
+      "refs/source/654d3472/codex/overnight-20260911-svara",
+      "refs/source/654d3472/cursor/intwave-s06-svara-20260909"
+    ],
+    "fc92f13b1c912fbcee93f28756b12d6e5e325b3f": [
+      "refs/source-heads/2",
+      "refs/source-heads/3",
+      "refs/source/654d3472/cursor/svara-12h-20260908",
+      "refs/source/654d3472/cursor/svara-200h-s06-20260909"
+    ],
+    "579a36885e577122ad091932807b3b89e41897a5": [
+      "refs/source-heads/4",
+      "refs/source/654d3472/cursor/svara-200h-s07-20260909"
+    ],
+    "e56fce4fafe370ad866e408c5896ba659ba728ba": [
+      "refs/source/654d3472/claude/svara-ios-swiftui-tohljs"
+    ],
+    "c2ddb150438f8b66ee0f1e93ee989a1c79c67091": [
+      "refs/remotes/origin/claude/svara-ios-swiftui-tohljs"
+    ]
+  },
+  "captured_worktrees": []
+}
